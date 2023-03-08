@@ -20,14 +20,6 @@ class APIService {
               body: payload);
 
       return response;
-      // if (response.statusCode >= 200 && response.statusCode <= 300) {
-      //   accessToken = json.decode(response.body)['token'];
-      //   SharedPreferences prefs = await SharedPreferences.getInstance();
-
-      //   return json.decode(response.body);
-      // } else {
-      //   R;
-      // }
     } on Exception catch (err) {
       return {
         "body": "{'message': 'Oops! Something went wrong','error': '$err'}",
@@ -43,6 +35,120 @@ class APIService {
       await prefs.clear();
     } on Exception catch (_) {
       throw Exception("Something went wrong");
+    }
+  }
+
+  static Future getTaskCount() async {
+    try {
+      final response = await http.get(
+        Uri.http(globals.serverUrl, globals.statusCountPath),
+        headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+        },
+      );
+
+      return response;
+    } on Exception catch (err) {
+      return {
+        "body": "{'message': 'Oops! Something went wrong','error': '$err'}",
+        "statusCode": 0
+      };
+    }
+  }
+
+  static Future getBarGraphDataList(String encoded) async {
+    try {
+      final response =
+          await http.post(Uri.http(globals.serverUrl, globals.barGraphDataPath),
+              headers: {
+                'Content-type': 'application/json',
+                'Accept': 'application/json',
+              },
+              body: encoded);
+
+      return response;
+    } on Exception catch (err) {
+      return {
+        "body": "{'message': 'Oops! Something went wrong','error': '$err'}",
+        "statusCode": 0
+      };
+    }
+  }
+
+  static Future getPieGraphDataList(String encoded) async {
+    try {
+      final response =
+          await http.post(Uri.http(globals.serverUrl, globals.pieGraphDataPath),
+              headers: {
+                'Content-type': 'application/json',
+                'Accept': 'application/json',
+              },
+              body: encoded);
+
+      return response;
+    } on Exception catch (err) {
+      return {
+        "body": "{'message': 'Oops! Something went wrong','error': '$err'}",
+        "statusCode": 0
+      };
+    }
+  }
+
+  static Future getAllTaskData(String encoded) async {
+    try {
+      final response =
+          await http.post(Uri.http(globals.serverUrl, globals.taskDataPath),
+              headers: {
+                'Content-type': 'application/json',
+                'Accept': 'application/json',
+              },
+              body: encoded);
+
+      return response;
+    } on Exception catch (err) {
+      return {
+        "body": "{'message': 'Oops! Something went wrong','error': '$err'}",
+        "statusCode": 0
+      };
+    }
+  }
+
+  static Future getAllZoneData() async {
+    try {
+      final response = await http.get(
+        Uri.http(globals.serverUrl, globals.zoneDataPath),
+        headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+        },
+      );
+
+      return response;
+    } on Exception catch (err) {
+      return {
+        "body": "{'message': 'Oops! Something went wrong','error': '$err'}",
+        "statusCode": 0
+      };
+    }
+  }
+
+  static Future getWorkerAttendanceData(String encoded) async {
+    try {
+      final response = await http.post(
+          Uri.http(globals.serverUrl, globals.workerAttendanceDataPath),
+          headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+          },
+          body: encoded);
+
+      return response;
+    } on Exception catch (err) {
+      return {
+        "body": "{'message': 'Oops! Something went wrong','error': '$err'}",
+        "statusCode": 0
+      };
     }
   }
 }

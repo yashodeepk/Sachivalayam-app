@@ -124,7 +124,7 @@ class _AppRootState extends State<AppRoot> {
         ),
       ),
       extendedTheme: const SidebarXTheme(
-        width: 250,
+        width: 220,
         decoration: BoxDecoration(color: Colors.white
             // darkColorScheme.background,
             ),
@@ -208,14 +208,14 @@ class _AppRootState extends State<AppRoot> {
                       children: [
                         if (isSmallScreen)
                           IconButton(
-                              icon: Icon(Icons.menu_rounded),
+                              icon: const Icon(Icons.menu_rounded),
                               onPressed: () {
                                 _scaffoldKey.currentState?.openDrawer();
                               }),
                         Padding(
                           padding: !isSmallScreen
-                              ? EdgeInsetsDirectional.fromSTEB(30, 20, 0, 20)
-                              : EdgeInsetsDirectional.fromSTEB(0, 20, 0, 20),
+                              ? EdgeInsetsDirectional.fromSTEB(30, 10, 0, 10)
+                              : EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
                           child: Container(
                             width: 320,
                             child: TextFormField(
@@ -226,12 +226,6 @@ class _AppRootState extends State<AppRoot> {
                                 hintText: 'Search',
                                 hintStyle:
                                     TextStyle(fontWeight: FontWeight.normal),
-                                // FlutterFlowTheme.of(context)
-                                //     .bodyText2
-                                //     .override(
-                                //       fontFamily: 'Poppins',
-                                //       fontWeight: FontWeight.normal,
-                                //     ),
                                 enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Color(0x00000000),

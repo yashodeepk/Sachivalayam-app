@@ -7,7 +7,6 @@ import 'package:ap_admin_portal/app/widgets/animated.column.dart';
 import 'package:ap_admin_portal/main.dart';
 import 'package:ap_admin_portal/utils/constants/dimens.dart';
 import 'package:ap_admin_portal/utils/constants/theme_colors.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ap_admin_portal/global/globals.dart' as globals;
@@ -41,12 +40,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isSmallScreen = MediaQuery.of(context).size.width < 640;
     return Scaffold(
       backgroundColor: ThemeColor.kScaffoldBg,
       body: SafeArea(
         child: Center(
           child: Container(
-            width: kIsWeb
+            width: !isSmallScreen
                 ? MediaQuery.of(context).size.width * 0.5
                 : MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
@@ -234,9 +234,6 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  // onForgotPasswordTapped() =>
-  //     switchScreen(context, ForgotPasswordScreen.routeName);
-
   Future<void> onLoginTapped(BuildContext context) async {
     if (validateForm(_loginFormKey)) {
       Map data = {
@@ -244,10 +241,8 @@ class _LoginScreenState extends State<LoginScreen> {
         "password": _passwordController.text
       };
       var res = await APIService.login(jsonEncode(data));
-      print(res.statusCode);
       if (res.statusCode >= 200 && res.statusCode <= 300) {
         var resDecoded = jsonDecode(res.body);
-        print(resDecoded['results']['data']);
         if (resDecoded['results'] != null) {
           if (resDecoded['results']['data'] != null) {
             SharedPreferences prefs = await SharedPreferences.getInstance();
