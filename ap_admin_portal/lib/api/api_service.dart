@@ -1,6 +1,5 @@
-import 'dart:io';
+// ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:ap_admin_portal/global/globals.dart' as globals;
@@ -21,10 +20,8 @@ class APIService {
 
       return response;
     } on Exception catch (err) {
-      return {
-        "body": "{'message': 'Oops! Something went wrong','error': '$err'}",
-        "statusCode": 0
-      };
+      return http.Response(
+          "{'message': 'Oops! Something went wrong','error': '$err'}", 503);
     }
   }
 
@@ -50,10 +47,8 @@ class APIService {
 
       return response;
     } on Exception catch (err) {
-      return {
-        "body": "{'message': 'Oops! Something went wrong','error': '$err'}",
-        "statusCode": 0
-      };
+      return http.Response(
+          "{'message': 'Oops! Something went wrong','error': '$err'}", 503);
     }
   }
 
@@ -69,10 +64,8 @@ class APIService {
 
       return response;
     } on Exception catch (err) {
-      return {
-        "body": "{'message': 'Oops! Something went wrong','error': '$err'}",
-        "statusCode": 0
-      };
+      return http.Response(
+          "{'message': 'Oops! Something went wrong','error': '$err'}", 503);
     }
   }
 
@@ -88,10 +81,8 @@ class APIService {
 
       return response;
     } on Exception catch (err) {
-      return {
-        "body": "{'message': 'Oops! Something went wrong','error': '$err'}",
-        "statusCode": 0
-      };
+      return http.Response(
+          "{'message': 'Oops! Something went wrong','error': '$err'}", 503);
     }
   }
 
@@ -107,10 +98,8 @@ class APIService {
 
       return response;
     } on Exception catch (err) {
-      return {
-        "body": "{'message': 'Oops! Something went wrong','error': '$err'}",
-        "statusCode": 0
-      };
+      return http.Response(
+          "{'message': 'Oops! Something went wrong','error': '$err'}", 503);
     }
   }
 
@@ -126,10 +115,8 @@ class APIService {
 
       return response;
     } on Exception catch (err) {
-      return {
-        "body": "{'message': 'Oops! Something went wrong','error': '$err'}",
-        "statusCode": 0
-      };
+      return http.Response(
+          "{'message': 'Oops! Something went wrong','error': '$err'}", 503);
     }
   }
 
@@ -145,10 +132,8 @@ class APIService {
 
       return response;
     } on Exception catch (err) {
-      return {
-        "body": "{'message': 'Oops! Something went wrong','error': '$err'}",
-        "statusCode": 0
-      };
+      return http.Response(
+          "{'message': 'Oops! Something went wrong','error': '$err'}", 503);
     }
   }
 }

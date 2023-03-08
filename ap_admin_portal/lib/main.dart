@@ -1,7 +1,9 @@
+import 'package:ap_admin_portal/api/api_service.dart';
 import 'package:ap_admin_portal/app/view/Secretory/secretory_page.dart';
 import 'package:ap_admin_portal/app/view/Home/home_page.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -224,52 +226,45 @@ class _AppRootState extends State<AppRoot> {
                               obscureText: false,
                               decoration: InputDecoration(
                                 hintText: 'Search',
-                                hintStyle:
-                                    TextStyle(fontWeight: FontWeight.normal),
+                                hintStyle: const TextStyle(
+                                    fontWeight: FontWeight.normal),
                                 enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 errorBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 focusedErrorBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 filled: true,
-                                fillColor: Color(0xFFF5F5F5),
-                                prefixIcon: Icon(
+                                fillColor: const Color(0xFFF5F5F5),
+                                prefixIcon: const Icon(
                                   Icons.search,
                                   size: 18,
                                 ),
                               ),
-                              style: TextStyle(fontWeight: FontWeight.normal),
-                              // FlutterFlowTheme.of(context)
-                              //     .bodyText1
-                              //     .override(
-                              //       fontFamily: 'Poppins',
-                              //       fontWeight: FontWeight.normal,
-                              //     ),
-                              // validator: _model.textControllerValidator
-                              // .asValidator(context),
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.normal),
                             ),
                           ),
                         ),
@@ -280,7 +275,7 @@ class _AppRootState extends State<AppRoot> {
                               borderRadius: BorderRadius.circular(10),
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: Color(0xFFF5F5F5),
+                                  color: const Color(0xFFF5F5F5),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: IconButton(
@@ -289,11 +284,9 @@ class _AppRootState extends State<AppRoot> {
                                   // borderWidth: 1,
                                   // buttonSize: 40,
                                   color: Colors.transparent,
-                                  icon: FaIcon(
+                                  icon: const FaIcon(
                                     FontAwesomeIcons.bell,
                                     color: Color(0xff101213),
-                                    // FlutterFlowTheme.of(context)
-                                    // .primaryText,
                                     size: 18,
                                   ),
                                   onPressed: () {
@@ -304,20 +297,57 @@ class _AppRootState extends State<AppRoot> {
                             ),
                             Padding(
                               padding: !isSmallScreen
-                                  ? EdgeInsetsDirectional.fromSTEB(
+                                  ? const EdgeInsetsDirectional.fromSTEB(
                                       30, 20, 20, 20)
-                                  : EdgeInsetsDirectional.fromSTEB(
+                                  : const EdgeInsetsDirectional.fromSTEB(
                                       10, 20, 20, 20),
-                              child: Container(
-                                width: 40,
-                                height: 40,
-                                clipBehavior: Clip.antiAlias,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Image.asset(
-                                  'images/Ellipse_123.png',
-                                  fit: BoxFit.cover,
+                              child: PopupMenuButton<int>(
+                                itemBuilder: (context) => [
+                                  // popupmenu item 1
+                                  PopupMenuItem(
+                                    value: 1,
+                                    onTap: () async {
+                                      await APIService.logout();
+                                      if (mounted) {
+                                        Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const LoginScreen()));
+                                      }
+                                    },
+                                    // row has two child icon and text.
+                                    child: Row(
+                                      children: const [
+                                        Icon(
+                                          Icons.logout_outlined,
+                                          size: 18,
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text("Logout",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.normal,
+                                                fontSize: 14))
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                                offset: Offset(50, 50),
+                                // color: Colors.grey,
+                                elevation: 2,
+                                child: Container(
+                                  width: 40,
+                                  height: 40,
+                                  clipBehavior: Clip.antiAlias,
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: SvgPicture.asset(
+                                    'images/profile.svg',
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                             ),
