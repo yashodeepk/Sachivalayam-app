@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:ap_admin_portal/generated/assets.dart';
 import 'package:ap_admin_portal/utils/regex.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,7 +22,6 @@ import 'package:url_launcher/url_launcher.dart';
 import '../app/widgets/custom_dialog_box.dart';
 // import '../core/data/services/user-service.dart';
 // import '../core/injections/locator.dart';
-import '../gen/assets.gen.dart';
 import '../generated/l10n.dart';
 import 'constants/dimens.dart';
 import 'constants/theme_colors.dart';
@@ -31,8 +31,7 @@ var logger = Logger(printer: PrettyPrinter(lineLength: 500));
 
 RegExp validPassword = RegExp(r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)");
 
-RegExp validUrl = RegExp(
-    r"([-A-Z0-9.]+)(/[-A-Z0-9+&@#/%=~_|!:,.;]*)?(\?[A-Z0-9+&@#/%=~_|!:‌​,.;]*)?");
+RegExp validUrl = RegExp(r"([-A-Z0-9.]+)(/[-A-Z0-9+&@#/%=~_|!:,.;]*)?(\?[A-Z0-9+&@#/%=~_|!:‌​,.;]*)?");
 
 Future<void> appLaunchUrl(url, {bool inAppLaunch = false}) async {
   try {
@@ -46,8 +45,7 @@ Future<void> appLaunchUrl(url, {bool inAppLaunch = false}) async {
       }
     }
   } catch (e, stackTrace) {
-    unawaited(FirebaseCrashlytics.instance
-        .recordError(e, stackTrace, reason: e.toString()));
+    unawaited(FirebaseCrashlytics.instance.recordError(e, stackTrace, reason: e.toString()));
     rethrow;
   }
 }
@@ -79,8 +77,8 @@ Widget backButton(BuildContext context,
 //image compress
 Future<File> compressFile(File input) async {
   var targetPath = await getApplicationDocumentsDirectory();
-  return (await FlutterImageCompress.compressAndGetFile(input.absolute.path,
-          '${targetPath.absolute.path}/${DateTime.now().millisecondsSinceEpoch}.jpg',
+  return (await FlutterImageCompress.compressAndGetFile(
+          input.absolute.path, '${targetPath.absolute.path}/${DateTime.now().millisecondsSinceEpoch}.jpg',
           quality: 75, minWidth: 512, minHeight: 512)) ??
       input;
 }
@@ -124,8 +122,7 @@ String dateFormatter({required String formatType, required DateTime dateTime}) {
 }
 
 //decimal filtering
-FilteringTextInputFormatter decimalFiltering() =>
-    FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}'));
+FilteringTextInputFormatter decimalFiltering() => FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}'));
 
 /// Formats bytes and returns a string
 String formatBytes(int bytes, int decimals) {
@@ -151,8 +148,7 @@ String formatBytes(int bytes, int decimals) {
 String getFileNameAndExtension({required File file}) {
   String fileName = path.basename(file.path).split('.').first;
   String extension = path.basename(file.path).split('.').last;
-  fileName = fileName.replaceAll(
-      fileName, 'IMG_${DateTime.now().microsecondsSinceEpoch}');
+  fileName = fileName.replaceAll(fileName, 'IMG_${DateTime.now().microsecondsSinceEpoch}');
   return '$fileName.$extension';
 }
 
@@ -172,8 +168,7 @@ Future loader({required BuildContext context}) {
           child: Builder(builder: (context) {
             return BackdropFilter(
               filter: ImageFilter.blur(sigmaX: fourDp, sigmaY: fourDp),
-              child: Lottie.asset(Assets.lotties.loader,
-                  width: twoHundredDp, height: twoHundredDp),
+              child: Lottie.asset(Assets.lottiesLoader, width: twoHundredDp, height: twoHundredDp),
             );
           }),
         );
@@ -182,13 +177,10 @@ Future loader({required BuildContext context}) {
 
 //handles back
 //number filtering
-FilteringTextInputFormatter numberFiltering() =>
-    FilteringTextInputFormatter.allow(RegExp('[0-9]'));
+FilteringTextInputFormatter numberFiltering() => FilteringTextInputFormatter.allow(RegExp('[0-9]'));
 
-onWidgetBindingComplete(
-    {required Duration duration, required Function() onComplete}) {
-  WidgetsBinding.instance
-      .addPostFrameCallback((_) => Timer(duration, onComplete));
+onWidgetBindingComplete({required Duration duration, required Function() onComplete}) {
+  WidgetsBinding.instance.addPostFrameCallback((_) => Timer(duration, onComplete));
 }
 
 ///goes back
@@ -214,11 +206,9 @@ showAlertDialog(
       ? AlertDialog(
           title: Text(title),
           content: Text(content),
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(sixteenDp)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(sixteenDp)),
           actions: actions)
-      : CupertinoAlertDialog(
-          title: Text(title), content: Text(content), actions: actions);
+      : CupertinoAlertDialog(title: Text(title), content: Text(content), actions: actions);
 
   if (Platform.isAndroid) {
     showDialog(
@@ -262,9 +252,7 @@ showBtSheet(
 Future<dynamic> switchScreen(BuildContext context, String destination,
     {bool replace = false, bool popAndPush = false, dynamic args}) {
   return replace
-      ? Navigator.of(context).pushNamedAndRemoveUntil(
-          destination, (route) => false,
-          arguments: args)
+      ? Navigator.of(context).pushNamedAndRemoveUntil(destination, (route) => false, arguments: args)
       : popAndPush
           ? Navigator.of(context).popAndPushNamed(destination, arguments: args)
           : Navigator.of(context).pushNamed(destination, arguments: args);
@@ -276,20 +264,15 @@ Future<dynamic> switchScreenWithConstructor(
   bool replace = false,
 }) {
   return replace
-      ? Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => page), (route) => true)
-      : Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => page));
+      ? Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => page), (route) => true)
+      : Navigator.of(context).push(MaterialPageRoute(builder: (context) => page));
 }
 
 ///take and return file for pictures
 Future<File?> takePicture(AppImageSource imageSource) async {
   //get image from camera or gallery
-  final filePicked = await ImagePicker().pickImage(
-      source: imageSource == AppImageSource.camera
-          ? ImageSource.camera
-          : ImageSource.gallery,
-      imageQuality: 100);
+  final filePicked = await ImagePicker()
+      .pickImage(source: imageSource == AppImageSource.camera ? ImageSource.camera : ImageSource.gallery, imageQuality: 100);
   // final filePickedPath = filePicked!.path;
 
   //var imagePath = await cropImage(filePickedPath: filePickedPath);
@@ -323,8 +306,7 @@ bool validateForm(GlobalKey<FormState> formKey) {
   return formKey.currentState!.validate();
 }
 
-FilteringTextInputFormatter whiteSpaceFiltering() =>
-    FilteringTextInputFormatter.deny(RegExp(r'\s'));
+FilteringTextInputFormatter whiteSpaceFiltering() => FilteringTextInputFormatter.deny(RegExp(r'\s'));
 
 Future<Map<String, String>> xTokenHeader() async {
   // final UserService authService = sl<UserService>();
@@ -332,8 +314,7 @@ Future<Map<String, String>> xTokenHeader() async {
   return {'x-access-token': "accessToken!"};
 }
 
-List<DropdownMenuItem<String>> addDividersAfterItems(
-    {required List<String> items}) {
+List<DropdownMenuItem<String>> addDividersAfterItems({required List<String> items}) {
   List<DropdownMenuItem<String>> menuItems = [];
   for (var item in items) {
     menuItems.addAll(
@@ -395,5 +376,4 @@ BoxDecoration buttonDecoration() {
   );
 }
 
-String capitalizeFirstLetter(String value) =>
-    '${value[0].toUpperCase()}${value.substring(1).toLowerCase()}';
+String capitalizeFirstLetter(String value) => '${value[0].toUpperCase()}${value.substring(1).toLowerCase()}';

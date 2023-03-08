@@ -12,163 +12,87 @@ import 'package:flutter/widgets.dart';
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
-  /// File path: assets/images/dummy.png
-  AssetGenImage get dummy => const AssetGenImage('assets/images/dummy.png');
+  /// File path: assets/images/Ellipse_123.png
+  AssetGenImage get ellipse123 =>
+      const AssetGenImage('assets/images/Ellipse_123.png');
+
+  /// File path: assets/images/Ellipse_128.png
+  AssetGenImage get ellipse128 =>
+      const AssetGenImage('assets/images/Ellipse_128.png');
+
+  /// File path: assets/images/Ellipse_128_blue.svg
+  String get ellipse128Blue => 'assets/images/Ellipse_128_blue.svg';
+
+  /// File path: assets/images/Ellipse_128_green.png
+  AssetGenImage get ellipse128GreenPng =>
+      const AssetGenImage('assets/images/Ellipse_128_green.png');
+
+  /// File path: assets/images/Ellipse_128_green.svg
+  String get ellipse128GreenSvg => 'assets/images/Ellipse_128_green.svg';
+
+  /// File path: assets/images/Ellipse_128_pink.svg
+  String get ellipse128Pink => 'assets/images/Ellipse_128_pink.svg';
+
+  /// File path: assets/images/Group_177780.png
+  AssetGenImage get group177780 =>
+      const AssetGenImage('assets/images/Group_177780.png');
+
+  /// File path: assets/images/Group_177873.png
+  AssetGenImage get group177873 =>
+      const AssetGenImage('assets/images/Group_177873.png');
+
+  /// File path: assets/images/Group_177882.png
+  AssetGenImage get group177882 =>
+      const AssetGenImage('assets/images/Group_177882.png');
+
+  /// File path: assets/images/Rectangle_5397.png
+  AssetGenImage get rectangle5397 =>
+      const AssetGenImage('assets/images/Rectangle_5397.png');
+
+  /// File path: assets/images/Rectangle_5630.png
+  AssetGenImage get rectangle5630 =>
+      const AssetGenImage('assets/images/Rectangle_5630.png');
+
+  /// File path: assets/images/archive-book.png
+  AssetGenImage get archiveBookPng =>
+      const AssetGenImage('assets/images/archive-book.png');
+
+  /// File path: assets/images/archive-book.svg
+  String get archiveBookSvg => 'assets/images/archive-book.svg';
+
+  /// File path: assets/images/clipboard-tick.png
+  AssetGenImage get clipboardTickPng =>
+      const AssetGenImage('assets/images/clipboard-tick.png');
+
+  /// File path: assets/images/clipboard-tick.svg
+  String get clipboardTickSvg => 'assets/images/clipboard-tick.svg';
+
+  /// File path: assets/images/document-text.png
+  AssetGenImage get documentTextPng =>
+      const AssetGenImage('assets/images/document-text.png');
+
+  /// File path: assets/images/document-text.svg
+  String get documentTextSvg => 'assets/images/document-text.svg';
 
   /// List of all assets
-  List<AssetGenImage> get values => [dummy];
-}
-
-class $AssetsLogoGen {
-  const $AssetsLogoGen();
-
-  /// File path: assets/logo/fotter.png
-  AssetGenImage get fotter => const AssetGenImage('assets/logo/fotter.png');
-
-  /// File path: assets/logo/logo.png
-  AssetGenImage get logo => const AssetGenImage('assets/logo/logo.png');
-
-  /// List of all assets
-  List<AssetGenImage> get values => [fotter, logo];
-}
-
-class $AssetsLottiesGen {
-  const $AssetsLottiesGen();
-
-  /// File path: assets/lotties/add.json
-  String get add => 'assets/lotties/add.json';
-
-  /// File path: assets/lotties/call.json
-  String get call => 'assets/lotties/call.json';
-
-  /// File path: assets/lotties/email.json
-  String get email => 'assets/lotties/email.json';
-
-  /// File path: assets/lotties/error.json
-  String get error => 'assets/lotties/error.json';
-
-  /// File path: assets/lotties/forgotPassword.json
-  String get forgotPassword => 'assets/lotties/forgotPassword.json';
-
-  /// File path: assets/lotties/loader.json
-  String get loader => 'assets/lotties/loader.json';
-
-  /// File path: assets/lotties/noTask.json
-  String get noTask => 'assets/lotties/noTask.json';
-
-  /// File path: assets/lotties/noWorker.json
-  String get noWorker => 'assets/lotties/noWorker.json';
-
-  /// File path: assets/lotties/notification.json
-  String get notification => 'assets/lotties/notification.json';
-
-  /// File path: assets/lotties/splashHeader.json
-  String get splashHeader => 'assets/lotties/splashHeader.json';
-
-  /// File path: assets/lotties/success.json
-  String get success => 'assets/lotties/success.json';
-
-  /// File path: assets/lotties/trash.json
-  String get trash => 'assets/lotties/trash.json';
-
-  /// List of all assets
-  List<String> get values => [
-        add,
-        call,
-        email,
-        error,
-        forgotPassword,
-        loader,
-        noTask,
-        noWorker,
-        notification,
-        splashHeader,
-        success,
-        trash
-      ];
-}
-
-class $AssetsSvgGen {
-  const $AssetsSvgGen();
-
-  /// File path: assets/svg/approved.svg
-  String get approved => 'assets/svg/approved.svg';
-
-  /// File path: assets/svg/bulk.svg
-  String get bulk => 'assets/svg/bulk.svg';
-
-  /// File path: assets/svg/call.svg
-  String get call => 'assets/svg/call.svg';
-
-  /// File path: assets/svg/deleteWorker.svg
-  String get deleteWorker => 'assets/svg/deleteWorker.svg';
-
-  /// File path: assets/svg/edit.svg
-  String get edit => 'assets/svg/edit.svg';
-
-  /// File path: assets/svg/file.svg
-  String get file => 'assets/svg/file.svg';
-
-  /// File path: assets/svg/home.svg
-  String get home => 'assets/svg/home.svg';
-
-  /// File path: assets/svg/location.svg
-  String get location => 'assets/svg/location.svg';
-
-  /// File path: assets/svg/logout.svg
-  String get logout => 'assets/svg/logout.svg';
-
-  /// File path: assets/svg/ongoing.svg
-  String get ongoing => 'assets/svg/ongoing.svg';
-
-  /// File path: assets/svg/profile.svg
-  String get profile => 'assets/svg/profile.svg';
-
-  /// File path: assets/svg/routing.svg
-  String get routing => 'assets/svg/routing.svg';
-
-  /// File path: assets/svg/search.svg
-  String get search => 'assets/svg/search.svg';
-
-  /// File path: assets/svg/single.svg
-  String get single => 'assets/svg/single.svg';
-
-  /// File path: assets/svg/task.svg
-  String get task => 'assets/svg/task.svg';
-
-  /// File path: assets/svg/taskWorkers.svg
-  String get taskWorkers => 'assets/svg/taskWorkers.svg';
-
-  /// File path: assets/svg/trash.svg
-  String get trash => 'assets/svg/trash.svg';
-
-  /// File path: assets/svg/upload.svg
-  String get upload => 'assets/svg/upload.svg';
-
-  /// File path: assets/svg/workers.svg
-  String get workers => 'assets/svg/workers.svg';
-
-  /// List of all assets
-  List<String> get values => [
-        approved,
-        bulk,
-        call,
-        deleteWorker,
-        edit,
-        file,
-        home,
-        location,
-        logout,
-        ongoing,
-        profile,
-        routing,
-        search,
-        single,
-        task,
-        taskWorkers,
-        trash,
-        upload,
-        workers
+  List<dynamic> get values => [
+        ellipse123,
+        ellipse128,
+        ellipse128Blue,
+        ellipse128GreenPng,
+        ellipse128GreenSvg,
+        ellipse128Pink,
+        group177780,
+        group177873,
+        group177882,
+        rectangle5397,
+        rectangle5630,
+        archiveBookPng,
+        archiveBookSvg,
+        clipboardTickPng,
+        clipboardTickSvg,
+        documentTextPng,
+        documentTextSvg
       ];
 }
 
@@ -176,9 +100,6 @@ class Assets {
   Assets._();
 
   static const $AssetsImagesGen images = $AssetsImagesGen();
-  static const $AssetsLogoGen logo = $AssetsLogoGen();
-  static const $AssetsLottiesGen lotties = $AssetsLottiesGen();
-  static const $AssetsSvgGen svg = $AssetsSvgGen();
 }
 
 class AssetGenImage {

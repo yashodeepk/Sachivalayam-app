@@ -2,9 +2,23 @@
 class Assets {
   Assets._();
 
-  static const String imagesDummy = 'assets/images/dummy.png';
-  static const String logoFotter = 'assets/logo/fotter.png';
-  static const String logoLogo = 'assets/logo/logo.png';
+  static const String assetsImagesArchiveBook = 'assets/images/archive-book.svg';
+  static const String assetsImagesClipboardTick = 'assets/images/clipboard-tick.svg';
+  static const String assetsImagesDocumentText = 'assets/images/document-text.svg';
+  static const String assetsImagesEllipse128Green = 'assets/images/Ellipse_128_green.svg';
+  static const String imagesArchiveBook = 'assets/images/archive-book.png';
+  static const String imagesClipboardTick = 'assets/images/clipboard-tick.png';
+  static const String imagesDocumentText = 'assets/images/document-text.png';
+  static const String imagesEllipse123 = 'assets/images/Ellipse_123.png';
+  static const String imagesEllipse128 = 'assets/images/Ellipse_128.png';
+  static const String imagesEllipse128Blue = 'assets/images/Ellipse_128_blue.svg';
+  static const String imagesEllipse128Green = 'assets/images/Ellipse_128_green.png';
+  static const String imagesEllipse128Pink = 'assets/images/Ellipse_128_pink.svg';
+  static const String imagesGroup177780 = 'assets/images/Group_177780.png';
+  static const String imagesGroup177873 = 'assets/images/Group_177873.png';
+  static const String imagesGroup177882 = 'assets/images/Group_177882.png';
+  static const String imagesRectangle5397 = 'assets/images/Rectangle_5397.png';
+  static const String imagesRectangle5630 = 'assets/images/Rectangle_5630.png';
   static const String lottiesAdd = 'assets/lotties/add.json';
   static const String lottiesCall = 'assets/lotties/call.json';
   static const String lottiesEmail = 'assets/lotties/email.json';
@@ -17,23 +31,4 @@ class Assets {
   static const String lottiesSplashHeader = 'assets/lotties/splashHeader.json';
   static const String lottiesSuccess = 'assets/lotties/success.json';
   static const String lottiesTrash = 'assets/lotties/trash.json';
-  static const String svgApproved = 'assets/svg/approved.svg';
-  static const String svgBulk = 'assets/svg/bulk.svg';
-  static const String svgCall = 'assets/svg/call.svg';
-  static const String svgDeleteWorker = 'assets/svg/deleteWorker.svg';
-  static const String svgEdit = 'assets/svg/edit.svg';
-  static const String svgFile = 'assets/svg/file.svg';
-  static const String svgHome = 'assets/svg/home.svg';
-  static const String svgLocation = 'assets/svg/location.svg';
-  static const String svgLogout = 'assets/svg/logout.svg';
-  static const String svgOngoing = 'assets/svg/ongoing.svg';
-  static const String svgProfile = 'assets/svg/profile.svg';
-  static const String svgRouting = 'assets/svg/routing.svg';
-  static const String svgSearch = 'assets/svg/search.svg';
-  static const String svgSingle = 'assets/svg/single.svg';
-  static const String svgTask = 'assets/svg/task.svg';
-  static const String svgTaskWorkers = 'assets/svg/taskWorkers.svg';
-  static const String svgTrash = 'assets/svg/trash.svg';
-  static const String svgUpload = 'assets/svg/upload.svg';
-  static const String svgWorkers = 'assets/svg/workers.svg';
 }
