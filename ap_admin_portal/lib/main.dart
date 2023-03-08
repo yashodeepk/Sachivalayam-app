@@ -3,7 +3,6 @@ import 'package:ap_admin_portal/app/view/Secretory/secretory_page.dart';
 import 'package:ap_admin_portal/app/view/Home/home_page.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -344,8 +343,8 @@ class _AppRootState extends State<AppRoot> {
                                   decoration: const BoxDecoration(
                                     shape: BoxShape.circle,
                                   ),
-                                  child: SvgPicture.asset(
-                                    'images/profile.svg',
+                                  child: Image.asset(
+                                    'images/Ellipse_123.png',
                                     fit: BoxFit.cover,
                                   ),
                                 ),
