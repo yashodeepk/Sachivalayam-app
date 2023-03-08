@@ -6,7 +6,7 @@
   "areYouSureToLogout": "Are you sure you want to log out?",
   "all": "All",
   "addNewTask": "Add New Task",
-  "addWorkers": "Add Workers",
+  "addSecretary": "Add Secretary",
   "approved": "Approved",
   "addSlot": "Add Slot",
   "age": "Age",
@@ -36,7 +36,7 @@
 
   "done": "Done",
   "detailsUpdated": "Details updated !",
-  "downloadBulkUploadTemplate": "Download Bulk worker upload template",
+  "downloadBulkUploadTemplate": "Download Bulk secretary upload template",
   "download": "Download",
 
   "email": "Email",
@@ -46,9 +46,11 @@
   "error_enter_valid_email": "Please enter a valid email address",
   "error_email_too_long": "Email must not be more than 100 characters",
   "edit": "Edit",
-  "enterWorkerName": "Enter worker name here",
+  "enterSecretaryName": "Enter secretary name here",
   "enterContactNumber": "Enter contact number",
-  "enterWorkerAge": "Enter worker age",
+  "enterSecretaryAge": "Enter secretary age",
+  "error_enter_valid_age": "Please enter a valid age",
+  "error_enter_valid_phone_number": "Please enter a valid phone number",
 
   "forgotPassword": "Forgot Password?",
   "forgotPasswordDescription": "For reset password, contact admin with your Email or Phone number",
@@ -94,6 +96,7 @@
 
   "okay": "Ok",
   "ongoing": "Ongoing",
+  "orDropFile": "Or drop a file here",
 
   "profile": "Profile",
   "phone_number": "Phone number",
@@ -102,6 +105,7 @@
   "pleaseAddBeforeImages": "Please add before images",
   "pleaseAddAfterImages": "Please add after images",
   "pm": "PM",
+  "personalInfo": "Personal Information",
 
   "requestTimeout": "Your request took soo long and has timed out.\nPlease try again",
   "required": "Required",
@@ -124,9 +128,13 @@
   "searchTask": "Search Task",
   "selectTask": "Select Task",
   "searchWorker": "Search Worker",
+  "searchWard": "Search Ward",
+  "searchZone": "Search Zone",
+  "searchSach": "Search Swachlayam",
   "selectOption": "Select Option",
-  "selectWorkArea": "Select Work Area",
-  "selectWorker": "Select Worker",
+  "selectWorkWard": "Select work ward ",
+  "selectWorkZone": "Select work zone",
+  "selectWorkSwachlayam": "Select work Swachlayam",
   "singleUpload": "Single upload",
   "save": "Save",
 
@@ -148,10 +156,11 @@
   "uploadAfterImageHere": "Upload After Image here",
   "uploadBeforeImageHere": "Upload Before Image here",
   "uploadedImages": "Uploaded Images",
-  "upload": "Upload",
+  "uploadFile": "Upload file",
   "uploadWorkerList": "Upload Worker List",
-  "uploadedWorkerListHere": "Upload worker list here",
-  "uploadedWorkerList": "Uploaded worker list",
+  "uploadSecretaryListHere": "Upload secretary list here",
+  "uploadSecretaryList": "Upload Secretary List",
+  "uploadedSecretaryList": "Uploaded Secretary List",
 
 
   "waitingForInternet": "Waiting for internet connection ...",
@@ -164,6 +173,7 @@
   "workerDeleted": "Worker deleted",
   "workerDeletedSuccessfully": "Worker deleted successfully !",
   "workerUpdatedSuccessfully": "Worker details updated successfully",
+  "workAreaInfo": "Work Area  Information",
 
   "youCanSelectMultiRole": "*You can select multiple role",
   "youHaveSuccessfullyCreatedTask": "You have successfully created task",

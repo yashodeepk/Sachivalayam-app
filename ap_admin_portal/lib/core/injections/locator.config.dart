@@ -5,10 +5,11 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:ap_admin_portal/app/view-models/user-vm.dart' as _i10;
 import 'package:ap_admin_portal/core/data/data-source/user-ds.dart' as _i7;
 import 'package:ap_admin_portal/core/data/repository/user-repo.dart' as _i8;
 import 'package:ap_admin_portal/core/data/services/user-service.dart' as _i9;
-import 'package:ap_admin_portal/utils/async-function.dart' as _i10;
+import 'package:ap_admin_portal/utils/async-function.dart' as _i11;
 import 'package:ap_admin_portal/utils/network/networkInfo.dart' as _i5;
 import 'package:dio/dio.dart' as _i3;
 import 'package:get_it/get_it.dart' as _i1;
@@ -17,7 +18,7 @@ import 'package:internet_connection_checker_plus/internet_connection_checker_plu
     as _i4;
 import 'package:package_info_plus/package_info_plus.dart' as _i6;
 
-import 'register_module.dart' as _i11;
+import 'register_module.dart' as _i12;
 
 // ignore_for_file: unnecessary_lambdas
 // ignore_for_file: lines_longer_than_80_chars
@@ -47,9 +48,10 @@ Future<_i1.GetIt> init(
       () => _i8.UserRepositoryImpl(gh<_i7.UserDataSource>()));
   gh.lazySingleton<_i9.UserService>(
       () => _i9.UserServiceImpl(gh<_i8.UserRepository>()));
-  gh.lazySingleton<_i10.AsyncFunctionWrapper>(
-      () => _i10.AsyncFunctionImpl(gh<_i5.NetworkInfo>()));
+  gh.lazySingleton<_i10.UserVm>(() => _i10.UserVm());
+  gh.lazySingleton<_i11.AsyncFunctionWrapper>(
+      () => _i11.AsyncFunctionImpl(gh<_i5.NetworkInfo>()));
   return getIt;
 }
 
-class _$RegisterModule extends _i11.RegisterModule {}
+class _$RegisterModule extends _i12.RegisterModule {}

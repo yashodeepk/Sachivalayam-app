@@ -4,6 +4,7 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:ap_admin_portal/generated/assets.dart';
+import 'package:ap_admin_portal/generated/l10n.dart';
 import 'package:ap_admin_portal/utils/regex.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
@@ -22,7 +23,6 @@ import 'package:url_launcher/url_launcher.dart';
 import '../app/widgets/custom_dialog_box.dart';
 // import '../core/data/services/user-service.dart';
 // import '../core/injections/locator.dart';
-import '../generated/l10n.dart';
 import 'constants/dimens.dart';
 import 'constants/theme_colors.dart';
 import 'enums.dart';
@@ -372,8 +372,31 @@ EdgeInsetsGeometry searchPadding() {
 BoxDecoration buttonDecoration() {
   return BoxDecoration(
     borderRadius: BorderRadius.circular(tenDp),
-    color: ThemeColor.kGrayLight,
+    color: ThemeColor.kFillColor,
   );
 }
 
 String capitalizeFirstLetter(String value) => '${value[0].toUpperCase()}${value.substring(1).toLowerCase()}';
+
+validateAge(String? value) {
+  if (value == null || value.isEmpty) {
+    return S.current.required;
+  }
+  if (value.length > 2) {
+    return S.current.error_enter_valid_age;
+  }
+  return null;
+}
+
+validatePhoneNumber(String? value) {
+  if (value == null || value.isEmpty) {
+    return S.current.required;
+  }
+  if (value.length != 12) {
+    return S.current.error_enter_valid_phone_number;
+  }
+  if (!value.startsWith('91')) {
+    return S.current.error_enter_valid_phone_number;
+  }
+  return null;
+}

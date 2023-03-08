@@ -1,3 +1,5 @@
+import 'package:ap_admin_portal/app/view/Secretory/add_secretary_page.dart';
+import 'package:ap_admin_portal/app/widgets/custom_dialog_box.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
@@ -69,20 +71,16 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
                       padding: EdgeInsetsDirectional.fromSTEB(40, 0, 0, 0),
                       child: TextButton(
                         onPressed: () {
-                          print('Button pressed ...');
+                          onAddSecretaryTapped();
                         },
                         child: Text(
                           'Add Secretary',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500),
+                          style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500),
                         ),
                         style: TextButton.styleFrom(
                             backgroundColor: Color(0xff558F60),
                             minimumSize: Size(170, 50),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10))),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
                       ),
                     ),
                   ],
@@ -312,6 +310,18 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
           ),
         ),
       ),
+    );
+  }
+
+  void onAddSecretaryTapped() {
+    showDialog(
+      context: context,
+      builder: (context) => const CustomDialogBox(
+        sigmaX: 0,
+        sigmaY: 0,
+        child: AddSecretaryPage(),
+      ),
+      barrierDismissible: false,
     );
   }
 }

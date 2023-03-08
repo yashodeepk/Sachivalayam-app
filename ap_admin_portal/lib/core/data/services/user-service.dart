@@ -1,6 +1,5 @@
 import 'package:ap_admin_portal/core/data/repository/user-repo.dart';
 import 'package:dartz/dartz.dart';
-import 'package:hive/hive.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../models/user/user.dart';
@@ -15,7 +14,6 @@ abstract class UserService {
 @LazySingleton(as: UserService)
 class UserServiceImpl extends UserService {
   final UserRepository userRepository;
-  var userBox = Hive.lazyBox('userDb');
 
   UserServiceImpl(this.userRepository);
 

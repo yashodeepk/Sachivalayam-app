@@ -31,4 +31,23 @@ class Assets {
   static const String lottiesSplashHeader = 'assets/lotties/splashHeader.json';
   static const String lottiesSuccess = 'assets/lotties/success.json';
   static const String lottiesTrash = 'assets/lotties/trash.json';
+  static const String svgApproved = 'assets/svg/approved.svg';
+  static const String svgBulk = 'assets/svg/bulk.svg';
+  static const String svgCall = 'assets/svg/call.svg';
+  static const String svgDeleteWorker = 'assets/svg/deleteWorker.svg';
+  static const String svgEdit = 'assets/svg/edit.svg';
+  static const String svgFile = 'assets/svg/file.svg';
+  static const String svgHome = 'assets/svg/home.svg';
+  static const String svgLocation = 'assets/svg/location.svg';
+  static const String svgLogout = 'assets/svg/logout.svg';
+  static const String svgOngoing = 'assets/svg/ongoing.svg';
+  static const String svgProfile = 'assets/svg/profile.svg';
+  static const String svgRouting = 'assets/svg/routing.svg';
+  static const String svgSearch = 'assets/svg/search.svg';
+  static const String svgSingle = 'assets/svg/single.svg';
+  static const String svgTask = 'assets/svg/task.svg';
+  static const String svgTaskWorkers = 'assets/svg/taskWorkers.svg';
+  static const String svgTrash = 'assets/svg/trash.svg';
+  static const String svgUpload = 'assets/svg/upload.svg';
+  static const String svgWorkers = 'assets/svg/workers.svg';
 }

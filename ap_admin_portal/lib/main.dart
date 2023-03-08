@@ -1,5 +1,7 @@
-import 'package:ap_admin_portal/app/view/Secretory/secretory_page.dart';
 import 'package:ap_admin_portal/app/view/Home/home_page.dart';
+import 'package:ap_admin_portal/app/view/Secretory/secretory_page.dart';
+import 'package:ap_admin_portal/app/view/auth/login/login-screen.dart';
+import 'package:ap_admin_portal/global/globals.dart' as globals;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -7,8 +9,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sidebarx/sidebarx.dart';
 
-import 'package:ap_admin_portal/global/globals.dart' as globals;
-import 'app/view/auth/login/login-screen.dart';
+import 'core/injections/locator.dart';
+import 'generated/l10n.dart';
+import 'l10n/L10n.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,10 +19,13 @@ Future<void> main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var accessToken = prefs.getString('ap_admin_portal_access_token');
 
-  accessToken?.isEmpty ?? true
-      ? globals.isLoggedIn = false
-      : globals.isLoggedIn = true;
+  accessToken?.isEmpty ?? true ? globals.isLoggedIn = false : globals.isLoggedIn = true;
+  await initDependencies();
   runApp(const MyApp());
+}
+
+initDependencies() async {
+  await configureDependencies();
 }
 
 class MyApp extends StatelessWidget {
@@ -37,6 +43,13 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.poppinsTextTheme().apply(),
       ),
       home: globals.isLoggedIn ? const MainApp() : const LoginScreen(),
+      localizationsDelegates: const [
+        AppLocalizationDelegate(),
+        /* GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,*/
+      ],
+      supportedLocales: L10n.all,
     );
   }
 }
@@ -142,8 +155,7 @@ class _AppRootState extends State<AppRoot> {
                     AutoSizeText(
                       "Logo",
                       overflow: TextOverflow.ellipsis,
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
                     ),
                   ],
                 ),
@@ -224,8 +236,7 @@ class _AppRootState extends State<AppRoot> {
                               obscureText: false,
                               decoration: InputDecoration(
                                 hintText: 'Search',
-                                hintStyle:
-                                    TextStyle(fontWeight: FontWeight.normal),
+                                hintStyle: TextStyle(fontWeight: FontWeight.normal),
                                 // FlutterFlowTheme.of(context)
                                 //     .bodyText2
                                 //     .override(
@@ -310,10 +321,8 @@ class _AppRootState extends State<AppRoot> {
                             ),
                             Padding(
                               padding: !isSmallScreen
-                                  ? EdgeInsetsDirectional.fromSTEB(
-                                      30, 20, 20, 20)
-                                  : EdgeInsetsDirectional.fromSTEB(
-                                      10, 20, 20, 20),
+                                  ? EdgeInsetsDirectional.fromSTEB(30, 20, 20, 20)
+                                  : EdgeInsetsDirectional.fromSTEB(10, 20, 20, 20),
                               child: Container(
                                 width: 40,
                                 height: 40,

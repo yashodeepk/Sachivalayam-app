@@ -107,11 +107,11 @@ class S {
     );
   }
 
-  /// `Add Workers`
-  String get addWorkers {
+  /// `Add Secretary`
+  String get addSecretary {
     return Intl.message(
-      'Add Workers',
-      name: 'addWorkers',
+      'Add Secretary',
+      name: 'addSecretary',
       desc: '',
       args: [],
     );
@@ -357,10 +357,10 @@ class S {
     );
   }
 
-  /// `Download Bulk worker upload template`
+  /// `Download Bulk secretary upload template`
   String get downloadBulkUploadTemplate {
     return Intl.message(
-      'Download Bulk worker upload template',
+      'Download Bulk secretary upload template',
       name: 'downloadBulkUploadTemplate',
       desc: '',
       args: [],
@@ -447,11 +447,11 @@ class S {
     );
   }
 
-  /// `Enter worker name here`
-  String get enterWorkerName {
+  /// `Enter secretary name here`
+  String get enterSecretaryName {
     return Intl.message(
-      'Enter worker name here',
-      name: 'enterWorkerName',
+      'Enter secretary name here',
+      name: 'enterSecretaryName',
       desc: '',
       args: [],
     );
@@ -467,11 +467,31 @@ class S {
     );
   }
 
-  /// `Enter worker age`
-  String get enterWorkerAge {
+  /// `Enter secretary age`
+  String get enterSecretaryAge {
     return Intl.message(
-      'Enter worker age',
-      name: 'enterWorkerAge',
+      'Enter secretary age',
+      name: 'enterSecretaryAge',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter a valid age`
+  String get error_enter_valid_age {
+    return Intl.message(
+      'Please enter a valid age',
+      name: 'error_enter_valid_age',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter a valid phone number`
+  String get error_enter_valid_phone_number {
+    return Intl.message(
+      'Please enter a valid phone number',
+      name: 'error_enter_valid_phone_number',
       desc: '',
       args: [],
     );
@@ -817,6 +837,16 @@ class S {
     );
   }
 
+  /// `Or drop a file here`
+  String get orDropFile {
+    return Intl.message(
+      'Or drop a file here',
+      name: 'orDropFile',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Profile`
   String get profile {
     return Intl.message(
@@ -882,6 +912,16 @@ class S {
     return Intl.message(
       'PM',
       name: 'pm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Personal Information`
+  String get personalInfo {
+    return Intl.message(
+      'Personal Information',
+      name: 'personalInfo',
       desc: '',
       args: [],
     );
@@ -1087,6 +1127,36 @@ class S {
     );
   }
 
+  /// `Search Ward`
+  String get searchWard {
+    return Intl.message(
+      'Search Ward',
+      name: 'searchWard',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search Zone`
+  String get searchZone {
+    return Intl.message(
+      'Search Zone',
+      name: 'searchZone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search Swachlayam`
+  String get searchSach {
+    return Intl.message(
+      'Search Swachlayam',
+      name: 'searchSach',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Select Option`
   String get selectOption {
     return Intl.message(
@@ -1097,21 +1167,31 @@ class S {
     );
   }
 
-  /// `Select Work Area`
-  String get selectWorkArea {
+  /// `Select work ward `
+  String get selectWorkWard {
     return Intl.message(
-      'Select Work Area',
-      name: 'selectWorkArea',
+      'Select work ward ',
+      name: 'selectWorkWard',
       desc: '',
       args: [],
     );
   }
 
-  /// `Select Worker`
-  String get selectWorker {
+  /// `Select work zone`
+  String get selectWorkZone {
     return Intl.message(
-      'Select Worker',
-      name: 'selectWorker',
+      'Select work zone',
+      name: 'selectWorkZone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select work Swachlayam`
+  String get selectWorkSwachlayam {
+    return Intl.message(
+      'Select work Swachlayam',
+      name: 'selectWorkSwachlayam',
       desc: '',
       args: [],
     );
@@ -1287,11 +1367,11 @@ class S {
     );
   }
 
-  /// `Upload`
-  String get upload {
+  /// `Upload file`
+  String get uploadFile {
     return Intl.message(
-      'Upload',
-      name: 'upload',
+      'Upload file',
+      name: 'uploadFile',
       desc: '',
       args: [],
     );
@@ -1307,21 +1387,31 @@ class S {
     );
   }
 
-  /// `Upload worker list here`
-  String get uploadedWorkerListHere {
+  /// `Upload secretary list here`
+  String get uploadSecretaryListHere {
     return Intl.message(
-      'Upload worker list here',
-      name: 'uploadedWorkerListHere',
+      'Upload secretary list here',
+      name: 'uploadSecretaryListHere',
       desc: '',
       args: [],
     );
   }
 
-  /// `Uploaded worker list`
-  String get uploadedWorkerList {
+  /// `Upload Secretary List`
+  String get uploadSecretaryList {
     return Intl.message(
-      'Uploaded worker list',
-      name: 'uploadedWorkerList',
+      'Upload Secretary List',
+      name: 'uploadSecretaryList',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Uploaded Secretary List`
+  String get uploadedSecretaryList {
+    return Intl.message(
+      'Uploaded Secretary List',
+      name: 'uploadedSecretaryList',
       desc: '',
       args: [],
     );
@@ -1422,6 +1512,16 @@ class S {
     return Intl.message(
       'Worker details updated successfully',
       name: 'workerUpdatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Work Area  Information`
+  String get workAreaInfo {
+    return Intl.message(
+      'Work Area  Information',
+      name: 'workAreaInfo',
       desc: '',
       args: [],
     );
