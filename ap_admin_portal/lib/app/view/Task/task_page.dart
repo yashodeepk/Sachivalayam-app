@@ -184,7 +184,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                           context: context,
                           initialDate: selectedDate,
                           firstDate: DateTime(2015, 8),
-                          lastDate: selectedDate,
+                          lastDate: DateTime.now(),
                           builder: (BuildContext context, Widget? child) {
                             return Theme(
                               data: Theme.of(context).copyWith(
