@@ -1778,8 +1778,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                         fontSize: 20)),
                               ),
                               Container(
-                                width: 741,
-                                height: 331,
+                                width: MediaQuery.of(context).size.width * 0.6,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.5,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(10),
