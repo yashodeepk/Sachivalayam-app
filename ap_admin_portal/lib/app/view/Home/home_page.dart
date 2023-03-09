@@ -843,7 +843,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                             .white,
                                                                     surface:
                                                                         ThemeColor
-                                                                            .kPrimaryGreen,
+                                                                            .kWhite,
                                                                     onSurface:
                                                                         Colors
                                                                             .black, // body text color
