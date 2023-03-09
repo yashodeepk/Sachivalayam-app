@@ -352,7 +352,7 @@ class _AppRootState extends State<AppRoot> {
                                     shape: BoxShape.circle,
                                   ),
                                   child: Image.asset(
-                                    'images/Ellipse_123.png',
+                                    'assets/images/Ellipse_123.png',
                                     fit: BoxFit.cover,
                                   ),
                                 ),

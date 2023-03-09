@@ -510,14 +510,14 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       alignment: AlignmentDirectional.centerEnd,
                                       children: [
                                         SvgPicture.asset(
-                                          'images/Ellipse_128_pink.svg',
+                                          'assets/images/Ellipse_128_pink.svg',
                                           fit: BoxFit.fill,
                                         ),
                                         Align(
                                           alignment: const AlignmentDirectional(
                                               0.07, -0.09),
                                           child: SvgPicture.asset(
-                                            'images/archive-book.svg',
+                                            'assets/images/archive-book.svg',
                                             width: 60,
                                             height: 60,
                                             fit: BoxFit.none,
@@ -615,14 +615,14 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       alignment: AlignmentDirectional.centerEnd,
                                       children: [
                                         SvgPicture.asset(
-                                          'images/Ellipse_128_blue.svg',
+                                          'assets/images/Ellipse_128_blue.svg',
                                           fit: BoxFit.fill,
                                         ),
                                         Align(
                                           alignment: const AlignmentDirectional(
                                               0.07, -0.09),
                                           child: SvgPicture.asset(
-                                            'images/document-text.svg',
+                                            'assets/images/document-text.svg',
                                             width: 60,
                                             height: 60,
                                             fit: BoxFit.none,
@@ -715,14 +715,14 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                     alignment: AlignmentDirectional.centerEnd,
                                     children: [
                                       SvgPicture.asset(
-                                        'images/Ellipse_128_green.svg',
+                                        'assets/images/Ellipse_128_green.svg',
                                         fit: BoxFit.fill,
                                       ),
                                       Align(
                                         alignment: const AlignmentDirectional(
                                             0.07, -0.09),
                                         child: SvgPicture.asset(
-                                          'images/clipboard-tick.svg',
+                                          'assets/images/clipboard-tick.svg',
                                           width: 60,
                                           height: 60,
                                           fit: BoxFit.none,

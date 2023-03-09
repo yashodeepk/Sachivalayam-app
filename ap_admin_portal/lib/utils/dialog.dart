@@ -18,7 +18,7 @@ showErrorDialog(BuildContext context, String message) {
             ),
             textAlign: TextAlign.center),
         SvgPicture.asset(
-          'images/error.svg',
+          'assets/images/error.svg',
           fit: BoxFit.fill,
         ),
         const Text("Something went wrong\n",

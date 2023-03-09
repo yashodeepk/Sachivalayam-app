@@ -299,7 +299,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         textAlign: TextAlign.center),
                     SvgPicture.asset(
-                      'images/error.svg',
+                      'assets/images/error.svg',
                       fit: BoxFit.fill,
                     ),
                     const Text("Require Admin Role\n",
@@ -341,7 +341,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       textAlign: TextAlign.center),
                   SvgPicture.asset(
-                    'images/error.svg',
+                    'assets/images/error.svg',
                     fit: BoxFit.fill,
                   ),
                   const Text("Something went wrong\n",
@@ -398,7 +398,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   textAlign: TextAlign.center),
               SvgPicture.asset(
-                'images/error.svg',
+                'assets/images/error.svg',
                 fit: BoxFit.fill,
               ),
               const Text("Something went wrong\n",
