@@ -99,7 +99,7 @@ dependencies:
   flutter_animate: ^1.0.0
   flutter_cache_manager: ^3.3.0
   from_css_color: ^2.0.0
-  google_fonts: ^3.0.1
+  google_fonts: ^4.0.3
   json_path: ^0.4.1
   page_transition: ^2.0.4
   sqflite: ^2.2.0+2
