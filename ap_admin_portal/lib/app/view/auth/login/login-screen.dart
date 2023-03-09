@@ -7,10 +7,12 @@ import 'package:ap_admin_portal/app/widgets/animated.column.dart';
 import 'package:ap_admin_portal/main.dart';
 import 'package:ap_admin_portal/utils/constants/dimens.dart';
 import 'package:ap_admin_portal/utils/constants/theme_colors.dart';
-import 'package:flutter/foundation.dart';
+import 'package:ap_admin_portal/utils/dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ap_admin_portal/global/globals.dart' as globals;
+import 'package:http/http.dart' as http;
 
 // import '../../../../core/injections/locator.dart';
 import '../../../../gen/fonts.gen.dart';
@@ -41,12 +43,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isSmallScreen = MediaQuery.of(context).size.width < 640;
     return Scaffold(
       backgroundColor: ThemeColor.kScaffoldBg,
       body: SafeArea(
         child: Center(
           child: Container(
-            width: kIsWeb
+            width: !isSmallScreen
                 ? MediaQuery.of(context).size.width * 0.5
                 : MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
@@ -192,8 +195,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                           child: InkWell(
                                             onTap: () {},
                                             // onForgotPasswordTapped(),
-                                            child: Text("Forgot Password",
-                                                style: const TextStyle(
+                                            child: const Text("Forgot Password",
+                                                style: TextStyle(
                                                     fontFamily:
                                                         FontFamily.regular,
                                                     color: ThemeColor
@@ -213,6 +216,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                           onLoginTapped(context),
                                       width: MediaQuery.of(context).size.width,
                                       buttonColor: ThemeColor.kPrimaryGreen,
+                                      buttonTextStyle: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500),
                                       edgeInsetsGeometry:
                                           const EdgeInsets.symmetric(
                                               vertical: sixteenDp),
@@ -234,20 +240,16 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  // onForgotPasswordTapped() =>
-  //     switchScreen(context, ForgotPasswordScreen.routeName);
-
   Future<void> onLoginTapped(BuildContext context) async {
     if (validateForm(_loginFormKey)) {
+      showLoaderDialog(context);
       Map data = {
         "username": _emailController.text,
         "password": _passwordController.text
       };
-      var res = await APIService.login(jsonEncode(data));
-      print(res.statusCode);
+      http.Response res = await APIService.login(jsonEncode(data));
       if (res.statusCode >= 200 && res.statusCode <= 300) {
         var resDecoded = jsonDecode(res.body);
-        print(resDecoded['results']['data']);
         if (resDecoded['results'] != null) {
           if (resDecoded['results']['data'] != null) {
             SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -275,10 +277,66 @@ class _LoginScreenState extends State<LoginScreen> {
                 resDecoded['results']['data']['sachivalyam'].toString());
             globals.isLoggedIn = true;
             if (mounted) {
+              Navigator.of(context).pop();
               Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (context) => const MainApp()));
             }
           }
+        }
+      } else if (res.statusCode == 503) {
+        AlertDialog alert = AlertDialog(
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(32.0))),
+          title: Center(
+              child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text("Oops!",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xff165083),
+                  ),
+                  textAlign: TextAlign.center),
+              SvgPicture.asset(
+                'images/error.svg',
+                fit: BoxFit.fill,
+              ),
+              const Text("Something went wrong\n",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                  ),
+                  textAlign: TextAlign.center),
+              const Text("Failed while connecting to server\n",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                  ),
+                  textAlign: TextAlign.center),
+              const Text("Please try again later",
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.grey,
+                  ),
+                  textAlign: TextAlign.center),
+            ],
+          )),
+          // actions: [closeButton, okButton],
+        );
+
+        // show the dialog
+        if (mounted) {
+          Navigator.of(context).pop();
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return alert;
+            },
+          );
         }
       }
     }

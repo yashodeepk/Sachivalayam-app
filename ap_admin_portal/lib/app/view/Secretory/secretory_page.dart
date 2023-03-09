@@ -34,7 +34,7 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
           color: Colors.transparent,
         ),
         child: Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(30, 30, 30, 0),
+          padding: const EdgeInsetsDirectional.fromSTEB(10, 10, 10, 0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -49,7 +49,7 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
+                        children: const [
                           Text('Secretary',
                               style: TextStyle(
                                 color: Color(0xFF2D2D2D),

@@ -9,7 +9,7 @@ class ThemeColor {
   static const Color kLightBlack = Color(0xff202020);
   static const Color kLightBlack1 = Color(0xff414141);
   static const Color kBlue = Color(0xff1487c0);
-  static const Color kSeaBlue = Color(0xffdaeeff);
+  static const Color kSeaBlue = Color(0xFFECF6FF);
 
   ///home tab colors
   static const Color kSecondaryGreen = Color(0xff00b167);
@@ -39,4 +39,10 @@ class ThemeColor {
   static const Color kActiveTab = Color(0xffedf7ff);
   static const Color kActiveTabText = Color(0xff165083);
   static const Color kVerticalDividerColor = Color(0xffeeeeee);
+
+  //History Graph
+  static const Color kAssignedTask = Color(0xff3A6FE6);
+  static const Color kCompletedTask = Color(0xffB4CBFF);
+
+  //Drop Down Background Color
 }

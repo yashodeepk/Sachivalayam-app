@@ -1,3 +1,4 @@
+import 'package:ap_admin_portal/api/api_service.dart';
 import 'package:ap_admin_portal/app/view/Secretory/secretory_page.dart';
 import 'package:ap_admin_portal/app/view/Home/home_page.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -8,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sidebarx/sidebarx.dart';
 
 import 'package:ap_admin_portal/global/globals.dart' as globals;
+import 'app/view/Task/task_page.dart';
 import 'app/view/auth/login/login-screen.dart';
 
 Future<void> main() async {
@@ -74,16 +76,20 @@ class _AppRootState extends State<AppRoot> {
     _controller.setExtended(true);
   }
 
-  var pages = [const HomePageWidget(), const SecretaryWidget()];
+  var pages = [
+    const HomePageWidget(),
+    const SecretaryWidget(),
+    const TaskWidget()
+  ];
 
-  String _getTitleByIndex(int index) {
-    switch (index) {
-      case 0:
-        return 'Home';
-      default:
-        return 'Page Title Not found';
-    }
-  }
+  // String _getTitleByIndex(int index) {
+  //   switch (index) {
+  //     case 0:
+  //       return 'Home';
+  //     default:
+  //       return 'Page Title Not found';
+  //   }
+  // }
 
   Widget showDrawer() {
     return SidebarX(
@@ -124,7 +130,7 @@ class _AppRootState extends State<AppRoot> {
         ),
       ),
       extendedTheme: const SidebarXTheme(
-        width: 250,
+        width: 220,
         decoration: BoxDecoration(color: Colors.white
             // darkColorScheme.background,
             ),
@@ -160,27 +166,27 @@ class _AppRootState extends State<AppRoot> {
             _onItemTapped(0);
           },
         ),
-        SidebarXItem(
-          icon: Icons.people,
-          label: 'Secretary',
-          onTap: () {
-            _onItemTapped(1);
-          },
-        ),
+        // SidebarXItem(
+        //   icon: Icons.people,
+        //   label: 'Secretary',
+        //   onTap: () {
+        //     _onItemTapped(1);
+        //   },
+        // ),
         SidebarXItem(
           icon: Icons.file_present_rounded,
           label: 'Tasks',
           onTap: () {
-            // _onItemTapped(2);
+            _onItemTapped(2);
           },
         ),
-        SidebarXItem(
-          icon: Icons.my_location,
-          label: 'Zone',
-          onTap: () {
-            // _onItemTapped(3);
-          },
-        ),
+        // SidebarXItem(
+        //   icon: Icons.my_location,
+        //   label: 'Zone',
+        //   onTap: () {
+        //     // _onItemTapped(3);
+        //   },
+        // ),
       ],
     );
   }
@@ -189,6 +195,7 @@ class _AppRootState extends State<AppRoot> {
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
       final isSmallScreen = MediaQuery.of(context).size.width < 640;
+      final isSmallScreen2 = MediaQuery.of(context).size.width < 1200;
       return Scaffold(
         key: _scaffoldKey,
         drawer: showDrawer(),
@@ -199,7 +206,7 @@ class _AppRootState extends State<AppRoot> {
               child: Column(
                 children: [
                   Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Colors.white,
                     ),
                     child: Row(
@@ -208,14 +215,16 @@ class _AppRootState extends State<AppRoot> {
                       children: [
                         if (isSmallScreen)
                           IconButton(
-                              icon: Icon(Icons.menu_rounded),
+                              icon: const Icon(Icons.menu_rounded),
                               onPressed: () {
                                 _scaffoldKey.currentState?.openDrawer();
                               }),
                         Padding(
                           padding: !isSmallScreen
-                              ? EdgeInsetsDirectional.fromSTEB(30, 20, 0, 20)
-                              : EdgeInsetsDirectional.fromSTEB(0, 20, 0, 20),
+                              ? const EdgeInsetsDirectional.fromSTEB(
+                                  30, 10, 0, 10)
+                              : const EdgeInsetsDirectional.fromSTEB(
+                                  0, 10, 0, 10),
                           child: Container(
                             width: 320,
                             child: TextFormField(
@@ -224,58 +233,45 @@ class _AppRootState extends State<AppRoot> {
                               obscureText: false,
                               decoration: InputDecoration(
                                 hintText: 'Search',
-                                hintStyle:
-                                    TextStyle(fontWeight: FontWeight.normal),
-                                // FlutterFlowTheme.of(context)
-                                //     .bodyText2
-                                //     .override(
-                                //       fontFamily: 'Poppins',
-                                //       fontWeight: FontWeight.normal,
-                                //     ),
+                                hintStyle: const TextStyle(
+                                    fontWeight: FontWeight.normal),
                                 enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 errorBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 focusedErrorBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 filled: true,
-                                fillColor: Color(0xFFF5F5F5),
-                                prefixIcon: Icon(
+                                fillColor: const Color(0xFFF5F5F5),
+                                prefixIcon: const Icon(
                                   Icons.search,
                                   size: 18,
                                 ),
                               ),
-                              style: TextStyle(fontWeight: FontWeight.normal),
-                              // FlutterFlowTheme.of(context)
-                              //     .bodyText1
-                              //     .override(
-                              //       fontFamily: 'Poppins',
-                              //       fontWeight: FontWeight.normal,
-                              //     ),
-                              // validator: _model.textControllerValidator
-                              // .asValidator(context),
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.normal),
                             ),
                           ),
                         ),
@@ -286,7 +282,7 @@ class _AppRootState extends State<AppRoot> {
                               borderRadius: BorderRadius.circular(10),
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: Color(0xFFF5F5F5),
+                                  color: const Color(0xFFF5F5F5),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: IconButton(
@@ -295,11 +291,9 @@ class _AppRootState extends State<AppRoot> {
                                   // borderWidth: 1,
                                   // buttonSize: 40,
                                   color: Colors.transparent,
-                                  icon: FaIcon(
+                                  icon: const FaIcon(
                                     FontAwesomeIcons.bell,
                                     color: Color(0xff101213),
-                                    // FlutterFlowTheme.of(context)
-                                    // .primaryText,
                                     size: 18,
                                   ),
                                   onPressed: () {
@@ -310,20 +304,57 @@ class _AppRootState extends State<AppRoot> {
                             ),
                             Padding(
                               padding: !isSmallScreen
-                                  ? EdgeInsetsDirectional.fromSTEB(
+                                  ? const EdgeInsetsDirectional.fromSTEB(
                                       30, 20, 20, 20)
-                                  : EdgeInsetsDirectional.fromSTEB(
+                                  : const EdgeInsetsDirectional.fromSTEB(
                                       10, 20, 20, 20),
-                              child: Container(
-                                width: 40,
-                                height: 40,
-                                clipBehavior: Clip.antiAlias,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Image.asset(
-                                  'images/Ellipse_123.png',
-                                  fit: BoxFit.cover,
+                              child: PopupMenuButton<int>(
+                                itemBuilder: (context) => [
+                                  // popupmenu item 1
+                                  PopupMenuItem(
+                                    value: 1,
+                                    onTap: () async {
+                                      await APIService.logout();
+                                      if (mounted) {
+                                        Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const LoginScreen()));
+                                      }
+                                    },
+                                    // row has two child icon and text.
+                                    child: Row(
+                                      children: const [
+                                        Icon(
+                                          Icons.logout_outlined,
+                                          size: 18,
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text("Logout",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.normal,
+                                                fontSize: 14))
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                                offset: Offset(50, 50),
+                                // color: Colors.grey,
+                                elevation: 2,
+                                child: Container(
+                                  width: 40,
+                                  height: 40,
+                                  clipBehavior: Clip.antiAlias,
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Image.asset(
+                                    'images/Ellipse_123.png',
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                             ),
@@ -332,7 +363,7 @@ class _AppRootState extends State<AppRoot> {
                       ],
                     ),
                   ),
-                  if (!isSmallScreen) pages[_selectedIndex],
+                  if (!isSmallScreen2) pages[_selectedIndex],
                 ],
               ),
             ),
