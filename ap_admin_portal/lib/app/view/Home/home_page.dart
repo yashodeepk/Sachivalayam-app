@@ -889,7 +889,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                     mainAxisSize:
                                                         MainAxisSize.max,
                                                     children: [
-                                                      Icon(
+                                                      const Icon(
                                                         Icons.calendar_today,
                                                         color:
                                                             Color(0xFF202020),
