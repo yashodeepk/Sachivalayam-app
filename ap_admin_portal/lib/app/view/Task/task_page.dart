@@ -970,133 +970,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                         if (i < taskDataFound.length)
                           DataRow(
                               // onSelectChanged: (value) {
-                              //   AlertDialog alert = AlertDialog(
-                              //     shape: const RoundedRectangleBorder(
-                              //         borderRadius: BorderRadius.all(
-                              //             Radius.circular(15.0))),
-                              //     title: Center(
-                              //         child: Column(
-                              //       mainAxisSize: MainAxisSize.min,
-                              //       children: [
-                              //         Padding(
-                              //           padding: const EdgeInsets.all(10),
-                              //           child: Row(
-                              //             mainAxisAlignment:
-                              //                 MainAxisAlignment.spaceBetween,
-                              //             children: const [
-                              //               Text("Task Details",
-                              //                   style: TextStyle(
-                              //                     fontSize: 16,
-                              //                     fontWeight: FontWeight.w500,
-                              //                     color: Color(0xff2D2D2D),
-                              //                   ),
-                              //                   textAlign: TextAlign.center),
-                              //               Icon(
-                              //                 Icons.close,
-                              //                 color: Color(0xff2D2D2D),
-                              //               )
-                              //             ],
-                              //           ),
-                              //         ),
-                              //         const Padding(
-                              //           padding:
-                              //               EdgeInsets.fromLTRB(0, 0, 0, 10),
-                              //           child: Divider(
-                              //             color: Color(0xffD7D7D7),
-                              //           ),
-                              //         ),
-                              //         Row(
-                              //           children: [
-                              //             Column(
-                              //               children: [
-                              //                 Row(
-                              //                   mainAxisAlignment:
-                              //                       MainAxisAlignment
-                              //                           .spaceBetween,
-                              //                   children: [
-                              //                     Text('Task Name',
-                              //                         style: TextStyle(
-                              //                           fontSize: 14,
-                              //                           fontWeight:
-                              //                               FontWeight.w500,
-                              //                           color:
-                              //                               Color(0xff2D2D2D),
-                              //                         ),
-                              //                         textAlign:
-                              //                             TextAlign.center),
-                              //                     Text(':',
-                              //                         style: TextStyle(
-                              //                           fontSize: 14,
-                              //                           fontWeight:
-                              //                               FontWeight.w500,
-                              //                           color:
-                              //                               Color(0xff2D2D2D),
-                              //                         ),
-                              //                         textAlign:
-                              //                             TextAlign.center),
-                              //                     Text(
-                              //                         taskDataFound[i][
-                              //                                     'task_name'] !=
-                              //                                 null
-                              //                             ? '${taskDataFound[i]['task_name']}'
-                              //                             : '',
-                              //                         style: TextStyle(
-                              //                           fontSize: 14,
-                              //                           fontWeight:
-                              //                               FontWeight.w500,
-                              //                           color:
-                              //                               Color(0xff2D2D2D),
-                              //                         ),
-                              //                         textAlign:
-                              //                             TextAlign.center),
-                              //                   ],
-                              //                 )
-                              //               ],
-                              //             ),
-                              //             const Padding(
-                              //               padding: EdgeInsets.fromLTRB(
-                              //                   10, 0, 10, 0),
-                              //               child: VerticalDivider(
-                              //                 color: Color(0xffD7D7D7),
-                              //               ),
-                              //             ),
-                              //             Column(
-                              //               children: [],
-                              //             ),
-                              //           ],
-                              //         )
-                              //         // const Text("Something went wrong\n",
-                              //         //     style: TextStyle(
-                              //         //       fontSize: 16,
-                              //         //       fontWeight: FontWeight.w500,
-                              //         //       color: Colors.black,
-                              //         //     ),
-                              //         //     textAlign: TextAlign.center),
-                              //         // Text("$message\n",
-                              //         //     style: const TextStyle(
-                              //         //       fontSize: 16,
-                              //         //       fontWeight: FontWeight.w500,
-                              //         //       color: Colors.black,
-                              //         //     ),
-                              //         //     textAlign: TextAlign.center),
-                              //         // const Text("Please try again later",
-                              //         //     style: TextStyle(
-                              //         //       fontSize: 14,
-                              //         //       fontWeight: FontWeight.w400,
-                              //         //       color: Colors.grey,
-                              //         //     ),
-                              //         //     textAlign: TextAlign.center),
-                              //       ],
-                              //     )),
-                              //     // actions: [closeButton, okButton],
-                              //   );
-                              //   showDialog(
-                              //     barrierDismissible: true,
-                              //     context: context,
-                              //     builder: (BuildContext context) {
-                              //       return alert;
-                              //     },
-                              //   );
+                              //
                               // },
                               cells: [
                                 DataCell(Text(
@@ -1171,12 +1045,12 @@ class _TaskWidgetState extends State<TaskWidget> {
                                 )),
                                 DataCell(Container(
                                   decoration: BoxDecoration(
-                                    color: Color(0xffF2F2F2),
+                                    color: const Color(0xffF2F2F2),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   width: 100,
                                   height: 30,
-                                  padding: EdgeInsets.all(3),
+                                  padding: const EdgeInsets.all(3),
                                   child: taskDataFound[i]['task_status'] != null
                                       ? taskDataFound[i]['task_status'] ==
                                               'Completed'
@@ -1247,18 +1121,547 @@ class _TaskWidgetState extends State<TaskWidget> {
                                                   : Container()
                                       : Container(),
                                 )),
-                                // DataCell(Container(
-                                //   decoration: BoxDecoration(
-                                //     color: Color(0xffF2F2F2),
-                                //     borderRadius: BorderRadius.circular(10),
-                                //   ),
-                                //   width: 100,
-                                //   height: 30,
-                                //   padding: EdgeInsets.all(3),
-                                //   child: Icon(
-                                //     Icons.fiber_manual_record,
-                                //     color: Color(0xff117E22),
-                                //     size: 10,
+                                // DataCell(InkWell(
+                                //   onTap: () {
+                                //     AlertDialog alert = AlertDialog(
+                                //       shape: const RoundedRectangleBorder(
+                                //           borderRadius: BorderRadius.all(
+                                //               Radius.circular(15.0))),
+                                //       title: Center(
+                                //           child: Column(
+                                //         mainAxisSize: MainAxisSize.min,
+                                //         mainAxisAlignment:
+                                //             MainAxisAlignment.start,
+                                //         crossAxisAlignment:
+                                //             CrossAxisAlignment.start,
+                                //         children: [
+                                //           Padding(
+                                //             padding: const EdgeInsets.all(10),
+                                //             child: Row(
+                                //               mainAxisAlignment:
+                                //                   MainAxisAlignment
+                                //                       .spaceBetween,
+                                //               children: const [
+                                //                 Text("Task Details",
+                                //                     style: TextStyle(
+                                //                       fontSize: 16,
+                                //                       fontWeight:
+                                //                           FontWeight.w500,
+                                //                       color: Color(0xff2D2D2D),
+                                //                     ),
+                                //                     textAlign:
+                                //                         TextAlign.center),
+                                //                 Icon(
+                                //                   Icons.close,
+                                //                   color: Color(0xff2D2D2D),
+                                //                 )
+                                //               ],
+                                //             ),
+                                //           ),
+                                //           const Padding(
+                                //             padding: EdgeInsets.fromLTRB(
+                                //                 0, 0, 0, 10),
+                                //             child: Divider(
+                                //               color: Color(0xffD7D7D7),
+                                //             ),
+                                //           ),
+                                //           Row(
+                                //             mainAxisSize: MainAxisSize.min,
+                                //             mainAxisAlignment:
+                                //                 MainAxisAlignment.start,
+                                //             crossAxisAlignment:
+                                //                 CrossAxisAlignment.start,
+                                //             children: [
+                                //               Row(
+                                //                 mainAxisSize: MainAxisSize.min,
+                                //                 mainAxisAlignment:
+                                //                     MainAxisAlignment.start,
+                                //                 crossAxisAlignment:
+                                //                     CrossAxisAlignment.start,
+                                //                 children: [
+                                //                   Column(
+                                //                     mainAxisAlignment:
+                                //                         MainAxisAlignment.start,
+                                //                     crossAxisAlignment:
+                                //                         CrossAxisAlignment
+                                //                             .start,
+                                //                     children: const [
+                                //                       SizedBox(
+                                //                         height: 30,
+                                //                         child: Text(
+                                //                           'Task Name',
+                                //                           style: TextStyle(
+                                //                             fontSize: 14,
+                                //                             fontWeight:
+                                //                                 FontWeight.w500,
+                                //                             color: Color(
+                                //                                 0xff2D2D2D),
+                                //                           ),
+                                //                         ),
+                                //                       ),
+                                //                       SizedBox(
+                                //                         height: 30,
+                                //                         child: Text(
+                                //                           'Status',
+                                //                           style: TextStyle(
+                                //                             fontSize: 14,
+                                //                             fontWeight:
+                                //                                 FontWeight.w500,
+                                //                             color: Color(
+                                //                                 0xff2D2D2D),
+                                //                           ),
+                                //                         ),
+                                //                       ),
+                                //                       SizedBox(
+                                //                         height: 30,
+                                //                         child: Text(
+                                //                           'Work area',
+                                //                           style: TextStyle(
+                                //                             fontSize: 14,
+                                //                             fontWeight:
+                                //                                 FontWeight.w500,
+                                //                             color: Color(
+                                //                                 0xff2D2D2D),
+                                //                           ),
+                                //                         ),
+                                //                       ),
+                                //                       SizedBox(
+                                //                         height: 30,
+                                //                         child: Text(
+                                //                           'Zone',
+                                //                           style: TextStyle(
+                                //                             fontSize: 14,
+                                //                             fontWeight:
+                                //                                 FontWeight.w500,
+                                //                             color: Color(
+                                //                                 0xff2D2D2D),
+                                //                           ),
+                                //                         ),
+                                //                       ),
+                                //                       SizedBox(
+                                //                         height: 30,
+                                //                         child: Text(
+                                //                           'Ward',
+                                //                           style: TextStyle(
+                                //                             fontSize: 14,
+                                //                             fontWeight:
+                                //                                 FontWeight.w500,
+                                //                             color: Color(
+                                //                                 0xff2D2D2D),
+                                //                           ),
+                                //                         ),
+                                //                       ),
+                                //                       SizedBox(
+                                //                         height: 30,
+                                //                         child: Text(
+                                //                           'Swachlaym',
+                                //                           style: TextStyle(
+                                //                             fontSize: 14,
+                                //                             fontWeight:
+                                //                                 FontWeight.w500,
+                                //                             color: Color(
+                                //                                 0xff2D2D2D),
+                                //                           ),
+                                //                         ),
+                                //                       ),
+                                //                       SizedBox(
+                                //                         height: 30,
+                                //                         child: Text(
+                                //                           'Assign Worker',
+                                //                           style: TextStyle(
+                                //                             fontSize: 14,
+                                //                             fontWeight:
+                                //                                 FontWeight.w500,
+                                //                             color: Color(
+                                //                                 0xff2D2D2D),
+                                //                           ),
+                                //                         ),
+                                //                       ),
+                                //                     ],
+                                //                   ),
+                                //                   Column(
+                                //                     mainAxisAlignment:
+                                //                         MainAxisAlignment.start,
+                                //                     crossAxisAlignment:
+                                //                         CrossAxisAlignment
+                                //                             .start,
+                                //                     children: const [
+                                //                       SizedBox(
+                                //                         height: 30,
+                                //                         child: Text(
+                                //                           ':',
+                                //                           style: TextStyle(
+                                //                             fontSize: 14,
+                                //                             fontWeight:
+                                //                                 FontWeight.w500,
+                                //                             color: Color(
+                                //                                 0xff2D2D2D),
+                                //                           ),
+                                //                         ),
+                                //                       ),
+                                //                       SizedBox(
+                                //                         height: 30,
+                                //                         child: Text(
+                                //                           ':',
+                                //                           style: TextStyle(
+                                //                             fontSize: 14,
+                                //                             fontWeight:
+                                //                                 FontWeight.w500,
+                                //                             color: Color(
+                                //                                 0xff2D2D2D),
+                                //                           ),
+                                //                         ),
+                                //                       ),
+                                //                       SizedBox(
+                                //                         height: 30,
+                                //                         child: Text(
+                                //                           ':',
+                                //                           style: TextStyle(
+                                //                             fontSize: 14,
+                                //                             fontWeight:
+                                //                                 FontWeight.w500,
+                                //                             color: Color(
+                                //                                 0xff2D2D2D),
+                                //                           ),
+                                //                         ),
+                                //                       ),
+                                //                       SizedBox(
+                                //                         height: 30,
+                                //                         child: Text(
+                                //                           ':',
+                                //                           style: TextStyle(
+                                //                             fontSize: 14,
+                                //                             fontWeight:
+                                //                                 FontWeight.w500,
+                                //                             color: Color(
+                                //                                 0xff2D2D2D),
+                                //                           ),
+                                //                         ),
+                                //                       ),
+                                //                       SizedBox(
+                                //                         height: 30,
+                                //                         child: Text(
+                                //                           ':',
+                                //                           style: TextStyle(
+                                //                             fontSize: 14,
+                                //                             fontWeight:
+                                //                                 FontWeight.w500,
+                                //                             color: Color(
+                                //                                 0xff2D2D2D),
+                                //                           ),
+                                //                         ),
+                                //                       ),
+                                //                       SizedBox(
+                                //                         height: 30,
+                                //                         child: Text(
+                                //                           ':',
+                                //                           style: TextStyle(
+                                //                             fontSize: 14,
+                                //                             fontWeight:
+                                //                                 FontWeight.w500,
+                                //                             color: Color(
+                                //                                 0xff2D2D2D),
+                                //                           ),
+                                //                         ),
+                                //                       ),
+                                //                       SizedBox(
+                                //                         height: 30,
+                                //                         child: Text(
+                                //                           ':',
+                                //                           style: TextStyle(
+                                //                             fontSize: 14,
+                                //                             fontWeight:
+                                //                                 FontWeight.w500,
+                                //                             color: Color(
+                                //                                 0xff2D2D2D),
+                                //                           ),
+                                //                         ),
+                                //                       ),
+                                //                     ],
+                                //                   ),
+                                //                   Column(
+                                //                     mainAxisAlignment:
+                                //                         MainAxisAlignment.start,
+                                //                     crossAxisAlignment:
+                                //                         CrossAxisAlignment
+                                //                             .start,
+                                //                     children: [
+                                //                       SizedBox(
+                                //                         height: 30,
+                                //                         child: Text(
+                                //                           taskDataFound[i][
+                                //                                       'task_name'] !=
+                                //                                   null
+                                //                               ? '${taskDataFound[i]['task_name']}'
+                                //                               : '',
+                                //                           style:
+                                //                               const TextStyle(
+                                //                             fontSize: 14,
+                                //                             fontWeight:
+                                //                                 FontWeight.w500,
+                                //                             color: Color(
+                                //                                 0xff2D2D2D),
+                                //                           ),
+                                //                         ),
+                                //                       ),
+                                //                       Container(
+                                //                         decoration:
+                                //                             BoxDecoration(
+                                //                           color: const Color(
+                                //                               0xffF2F2F2),
+                                //                           borderRadius:
+                                //                               BorderRadius
+                                //                                   .circular(10),
+                                //                         ),
+                                //                         width: 100,
+                                //                         height: 30,
+                                //                         padding:
+                                //                             EdgeInsets.all(3),
+                                //                         child: taskDataFound[i][
+                                //                                     'task_status'] !=
+                                //                                 null
+                                //                             ? taskDataFound[i][
+                                //                                         'task_status'] ==
+                                //                                     'Completed'
+                                //                                 ? Row(
+                                //                                     mainAxisAlignment:
+                                //                                         MainAxisAlignment
+                                //                                             .center,
+                                //                                     children: const [
+                                //                                       Icon(
+                                //                                         Icons
+                                //                                             .fiber_manual_record,
+                                //                                         color: Color(
+                                //                                             0xff117E22),
+                                //                                         size:
+                                //                                             10,
+                                //                                       ),
+                                //                                       Text(
+                                //                                         'Completed',
+                                //                                         style:
+                                //                                             TextStyle(
+                                //                                           fontSize:
+                                //                                               12,
+                                //                                           color:
+                                //                                               Color(0xff117E22),
+                                //                                         ),
+                                //                                       ),
+                                //                                     ],
+                                //                                   )
+                                //                                 : taskDataFound[i]
+                                //                                             [
+                                //                                             'task_status'] ==
+                                //                                         'Ongoing'
+                                //                                     ? Row(
+                                //                                         mainAxisAlignment:
+                                //                                             MainAxisAlignment.center,
+                                //                                         children: const [
+                                //                                           Icon(
+                                //                                             Icons.fiber_manual_record,
+                                //                                             color:
+                                //                                                 Color(0xffEBA900),
+                                //                                             size:
+                                //                                                 10,
+                                //                                           ),
+                                //                                           Text(
+                                //                                             'Ongoing',
+                                //                                             style:
+                                //                                                 TextStyle(
+                                //                                               fontSize: 12,
+                                //                                               color: Color(0xffEBA900),
+                                //                                             ),
+                                //                                           ),
+                                //                                         ],
+                                //                                       )
+                                //                                     : taskDataFound[i]['task_status'] ==
+                                //                                             'In-review'
+                                //                                         ? Row(
+                                //                                             mainAxisAlignment:
+                                //                                                 MainAxisAlignment.center,
+                                //                                             children: const [
+                                //                                               Icon(
+                                //                                                 Icons.fiber_manual_record,
+                                //                                                 color: Color(0xff006BFE),
+                                //                                                 size: 10,
+                                //                                               ),
+                                //                                               Text(
+                                //                                                 'In-review',
+                                //                                                 style: TextStyle(
+                                //                                                   fontSize: 12,
+                                //                                                   color: Color(0xff006BFE),
+                                //                                                 ),
+                                //                                               ),
+                                //                                             ],
+                                //                                           )
+                                //                                         : Container()
+                                //                             : Container(),
+                                //                       ),
+                                //                       SizedBox(
+                                //                         height: 30,
+                                //                         child: Text(
+                                //                           taskDataFound[i][
+                                //                                           'from_work_area'] !=
+                                //                                       null &&
+                                //                                   taskDataFound[
+                                //                                               i]
+                                //                                           [
+                                //                                           'to_work_area'] !=
+                                //                                       null
+                                //                               ? '${taskDataFound[i]['from_work_area']} to ${taskDataFound[i]['to_work_area']}'
+                                //                               : '',
+                                //                           style:
+                                //                               const TextStyle(
+                                //                             fontSize: 14,
+                                //                             fontWeight:
+                                //                                 FontWeight.w500,
+                                //                             color: Color(
+                                //                                 0xff2D2D2D),
+                                //                           ),
+                                //                         ),
+                                //                       ),
+                                //                       SizedBox(
+                                //                         height: 30,
+                                //                         child: Text(
+                                //                           taskDataFound[i][
+                                //                                       'zone'] !=
+                                //                                   null
+                                //                               ? '${taskDataFound[i]['zone']}'
+                                //                               : '',
+                                //                           style:
+                                //                               const TextStyle(
+                                //                             fontSize: 14,
+                                //                             fontWeight:
+                                //                                 FontWeight.w500,
+                                //                             color: Color(
+                                //                                 0xff2D2D2D),
+                                //                           ),
+                                //                         ),
+                                //                       ),
+                                //                       SizedBox(
+                                //                         height: 30,
+                                //                         child: Text(
+                                //                           taskDataFound[i][
+                                //                                       'ward'] !=
+                                //                                   null
+                                //                               ? '${taskDataFound[i]['ward']}'
+                                //                               : '',
+                                //                           style:
+                                //                               const TextStyle(
+                                //                             fontSize: 14,
+                                //                             fontWeight:
+                                //                                 FontWeight.w500,
+                                //                             color: Color(
+                                //                                 0xff2D2D2D),
+                                //                           ),
+                                //                         ),
+                                //                       ),
+                                //                       SizedBox(
+                                //                         height: 30,
+                                //                         child: Text(
+                                //                           taskDataFound[i][
+                                //                                       'sachivalyam'] !=
+                                //                                   null
+                                //                               ? '${taskDataFound[i]['sachivalyam']}'
+                                //                               : '',
+                                //                           style:
+                                //                               const TextStyle(
+                                //                             fontSize: 14,
+                                //                             fontWeight:
+                                //                                 FontWeight.w500,
+                                //                             color: Color(
+                                //                                 0xff2D2D2D),
+                                //                           ),
+                                //                         ),
+                                //                       ),
+                                //                       Column(
+                                //                         mainAxisAlignment:
+                                //                             MainAxisAlignment
+                                //                                 .start,
+                                //                         crossAxisAlignment:
+                                //                             CrossAxisAlignment
+                                //                                 .start,
+                                //                         children: [
+                                //                           if (taskDataFound[i][
+                                //                                   'assigned_worker'] !=
+                                //                               null)
+                                //                             for (int j = 0;
+                                //                                 j <
+                                //                                     taskDataFound[i]
+                                //                                             [
+                                //                                             'assigned_worker']
+                                //                                         .length;
+                                //                                 j++)
+                                //                               Text(
+                                //                                   "${j + 1}. ${taskDataFound[i]['assigned_worker'][j]}",
+                                //                                   style:
+                                //                                       const TextStyle(
+                                //                                     fontSize:
+                                //                                         14,
+                                //                                     fontWeight:
+                                //                                         FontWeight
+                                //                                             .w500,
+                                //                                     color: Color(
+                                //                                         0xff2D2D2D),
+                                //                                   ),
+                                //                                   textAlign:
+                                //                                       TextAlign
+                                //                                           .center),
+                                //                         ],
+                                //                       ),
+                                //                     ],
+                                //                   ),
+                                //                 ],
+                                //               ),
+                                //               const Padding(
+                                //                 padding: EdgeInsets.fromLTRB(
+                                //                     10, 0, 10, 0),
+                                //                 child: VerticalDivider(
+                                //                   width: 1,
+                                //                   color: Color(0xffD7D7D7),
+                                //                 ),
+                                //               ),
+                                //               Column(
+                                //                 children: [],
+                                //               ),
+                                //             ],
+                                //           )
+                                //           // const Text("Something went wrong\n",
+                                //           //     style: TextStyle(
+                                //           //       fontSize: 16,
+                                //           //       fontWeight: FontWeight.w500,
+                                //           //       color: Colors.black,
+                                //           //     ),
+                                //           //     textAlign: TextAlign.center),
+                                //           // Text("$message\n",
+                                //           //     style: const TextStyle(
+                                //           //       fontSize: 16,
+                                //           //       fontWeight: FontWeight.w500,
+                                //           //       color: Colors.black,
+                                //           //     ),
+                                //           //     textAlign: TextAlign.center),
+                                //           // const Text("Please try again later",
+                                //           //     style: TextStyle(
+                                //           //       fontSize: 14,
+                                //           //       fontWeight: FontWeight.w400,
+                                //           //       color: Colors.grey,
+                                //           //     ),
+                                //           //     textAlign: TextAlign.center),
+                                //         ],
+                                //       )),
+                                //       // actions: [closeButton, okButton],
+                                //     );
+                                //     // showDialog(
+                                //     //   barrierDismissible: true,
+                                //     //   context: context,
+                                //     //   builder: (BuildContext context) {
+                                //     //     return alert;
+                                //     //   },
+                                //     // );
+                                //   },
+                                //   child: const Icon(
+                                //     Icons.open_in_new,
+                                //     color: Color(0xff202020),
+                                //     size: 18,
                                 //   ),
                                 // )),
                               ])
