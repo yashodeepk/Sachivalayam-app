@@ -110,32 +110,3 @@ showLoaderDialog(BuildContext context) {
     },
   );
 }
-
-showAddCustomerLoaderDialog(BuildContext context) {
-  AlertDialog alert = AlertDialog(
-    content: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        CircularProgressIndicator(
-          color: Colors.redAccent.shade400,
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Container(
-            margin: const EdgeInsets.only(left: 7),
-            child: const Text(
-              "Adding Customer...",
-              style: TextStyle(color: Color(0xFF000000)),
-            )),
-      ],
-    ),
-  );
-  showDialog(
-    barrierDismissible: false,
-    context: context,
-    builder: (BuildContext context) {
-      return alert;
-    },
-  );
-}

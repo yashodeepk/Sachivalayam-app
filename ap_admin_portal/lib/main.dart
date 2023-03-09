@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sidebarx/sidebarx.dart';
 
 import 'package:ap_admin_portal/global/globals.dart' as globals;
+import 'app/view/Task/task_page.dart';
 import 'app/view/auth/login/login-screen.dart';
 
 Future<void> main() async {
@@ -75,16 +76,20 @@ class _AppRootState extends State<AppRoot> {
     _controller.setExtended(true);
   }
 
-  var pages = [const HomePageWidget(), const SecretaryWidget()];
+  var pages = [
+    const HomePageWidget(),
+    const SecretaryWidget(),
+    const TaskWidget()
+  ];
 
-  String _getTitleByIndex(int index) {
-    switch (index) {
-      case 0:
-        return 'Home';
-      default:
-        return 'Page Title Not found';
-    }
-  }
+  // String _getTitleByIndex(int index) {
+  //   switch (index) {
+  //     case 0:
+  //       return 'Home';
+  //     default:
+  //       return 'Page Title Not found';
+  //   }
+  // }
 
   Widget showDrawer() {
     return SidebarX(
@@ -161,27 +166,27 @@ class _AppRootState extends State<AppRoot> {
             _onItemTapped(0);
           },
         ),
-        SidebarXItem(
-          icon: Icons.people,
-          label: 'Secretary',
-          onTap: () {
-            _onItemTapped(1);
-          },
-        ),
+        // SidebarXItem(
+        //   icon: Icons.people,
+        //   label: 'Secretary',
+        //   onTap: () {
+        //     _onItemTapped(1);
+        //   },
+        // ),
         SidebarXItem(
           icon: Icons.file_present_rounded,
           label: 'Tasks',
           onTap: () {
-            // _onItemTapped(2);
+            _onItemTapped(2);
           },
         ),
-        SidebarXItem(
-          icon: Icons.my_location,
-          label: 'Zone',
-          onTap: () {
-            // _onItemTapped(3);
-          },
-        ),
+        // SidebarXItem(
+        //   icon: Icons.my_location,
+        //   label: 'Zone',
+        //   onTap: () {
+        //     // _onItemTapped(3);
+        //   },
+        // ),
       ],
     );
   }
@@ -190,6 +195,7 @@ class _AppRootState extends State<AppRoot> {
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
       final isSmallScreen = MediaQuery.of(context).size.width < 640;
+      final isSmallScreen2 = MediaQuery.of(context).size.width < 1200;
       return Scaffold(
         key: _scaffoldKey,
         drawer: showDrawer(),
@@ -200,7 +206,7 @@ class _AppRootState extends State<AppRoot> {
               child: Column(
                 children: [
                   Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Colors.white,
                     ),
                     child: Row(
@@ -215,8 +221,10 @@ class _AppRootState extends State<AppRoot> {
                               }),
                         Padding(
                           padding: !isSmallScreen
-                              ? EdgeInsetsDirectional.fromSTEB(30, 10, 0, 10)
-                              : EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                              ? const EdgeInsetsDirectional.fromSTEB(
+                                  30, 10, 0, 10)
+                              : const EdgeInsetsDirectional.fromSTEB(
+                                  0, 10, 0, 10),
                           child: Container(
                             width: 320,
                             child: TextFormField(
@@ -355,7 +363,7 @@ class _AppRootState extends State<AppRoot> {
                       ],
                     ),
                   ),
-                  if (!isSmallScreen) pages[_selectedIndex],
+                  if (!isSmallScreen2) pages[_selectedIndex],
                 ],
               ),
             ),

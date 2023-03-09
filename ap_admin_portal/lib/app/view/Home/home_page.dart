@@ -178,6 +178,21 @@ class _HomePageWidgetState extends State<HomePageWidget> {
               selectedDate.day, 23, 59, 59)
           .toString()
     };
+    if (selectedZone2.isNotEmpty) {
+      data.addAll({
+        "Zone": selectedZone2,
+      });
+    }
+    if (selectedWard2.isNotEmpty) {
+      data.addAll({
+        "Ward": selectedWard2,
+      });
+    }
+    if (selectedSwachlayam2.isNotEmpty) {
+      data.addAll({
+        "Swachlayam": selectedSwachlayam2,
+      });
+    }
     var res = await APIService.getWorkerAttendanceData(jsonEncode(data));
     if (res.statusCode >= 200 && res.statusCode <= 300) {
       var resDecoded = jsonDecode(res.body);
@@ -1448,9 +1463,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                     .all(Radius
                                                                         .circular(
                                                                             10))),
-                                                            child: Center(
+                                                            child: const Center(
                                                               child: Icon(
-                                                                  Icons.add,
+                                                                  Icons.done,
                                                                   color: ThemeColor
                                                                       .kWhite),
                                                             ),
@@ -1488,9 +1503,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                     .all(Radius
                                                                         .circular(
                                                                             10))),
-                                                            child: Center(
+                                                            child: const Center(
                                                               child: Icon(
-                                                                  Icons.remove,
+                                                                  Icons
+                                                                      .delete_outline,
                                                                   color: ThemeColor
                                                                       .kWhite),
                                                             ),
@@ -1786,8 +1802,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                     await showDatePicker(
                                                   context: context,
                                                   initialDate: selectedDate,
-                                                  firstDate: DateTime(2015, 8),
-                                                  lastDate: selectedDate,
+                                                  firstDate: DateTime(2023, 02),
+                                                  lastDate: DateTime.now(),
                                                   builder:
                                                       (BuildContext context,
                                                           Widget? child) {
@@ -2408,6 +2424,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                         child: InkWell(
                                                           onTap: () {
                                                             pieGraphData();
+                                                            workerAttendance();
                                                           },
                                                           child: Container(
                                                             height: 30,
@@ -2424,7 +2441,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                             10))),
                                                             child: const Center(
                                                               child: Icon(
-                                                                  Icons.add,
+                                                                  Icons.done,
                                                                   color: ThemeColor
                                                                       .kWhite),
                                                             ),
@@ -2464,9 +2481,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                     .all(Radius
                                                                         .circular(
                                                                             10))),
-                                                            child: Center(
+                                                            child: const Center(
                                                               child: Icon(
-                                                                  Icons.remove,
+                                                                  Icons
+                                                                      .delete_outline,
                                                                   color: ThemeColor
                                                                       .kWhite),
                                                             ),
