@@ -252,34 +252,133 @@ class _LoginScreenState extends State<LoginScreen> {
         var resDecoded = jsonDecode(res.body);
         if (resDecoded['results'] != null) {
           if (resDecoded['results']['data'] != null) {
-            SharedPreferences prefs = await SharedPreferences.getInstance();
-            prefs.setString('ap_admin_portal_access_token',
-                resDecoded['results']['data']["accessToken"]);
-            prefs.setString('ap_admin_portal_user_id',
-                resDecoded['results']['data']['id'].toString());
-            prefs.setString('ap_admin_portal_user_roles',
-                resDecoded['results']['data']['roles'].toString());
-            prefs.setString('ap_admin_portal_user_age',
-                resDecoded['results']['data']['age'].toString());
-            prefs.setString('ap_admin_portal_user_gender',
-                resDecoded['results']['data']['gender'].toString());
-            prefs.setString('ap_admin_portal_user_email',
-                resDecoded['results']['data']['email'].toString());
-            prefs.setString('ap_admin_portal_user_name',
-                resDecoded['results']['data']['name'].toString());
-            prefs.setString('ap_admin_portal_user_phonenumber',
-                resDecoded['results']['data']['phone'].toString());
-            prefs.setString('ap_admin_portal_user_zone',
-                resDecoded['results']['data']['zone'].toString());
-            prefs.setString('ap_admin_portal_user_ward',
-                resDecoded['results']['data']['ward'].toString());
-            prefs.setString('ap_admin_portal_user_sachivalyam',
-                resDecoded['results']['data']['sachivalyam'].toString());
-            globals.isLoggedIn = true;
+            if (resDecoded['results']['data']['roles'] != null &&
+                resDecoded['results']['data']['roles'] == 'ROLE_ADMIN') {
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              prefs.setString('ap_admin_portal_access_token',
+                  resDecoded['results']['data']["accessToken"]);
+              prefs.setString('ap_admin_portal_user_id',
+                  resDecoded['results']['data']['id'].toString());
+              prefs.setString('ap_admin_portal_user_roles',
+                  resDecoded['results']['data']['roles'].toString());
+              prefs.setString('ap_admin_portal_user_age',
+                  resDecoded['results']['data']['age'].toString());
+              prefs.setString('ap_admin_portal_user_gender',
+                  resDecoded['results']['data']['gender'].toString());
+              prefs.setString('ap_admin_portal_user_email',
+                  resDecoded['results']['data']['email'].toString());
+              prefs.setString('ap_admin_portal_user_name',
+                  resDecoded['results']['data']['name'].toString());
+              prefs.setString('ap_admin_portal_user_phonenumber',
+                  resDecoded['results']['data']['phone'].toString());
+              prefs.setString('ap_admin_portal_user_zone',
+                  resDecoded['results']['data']['zone'].toString());
+              prefs.setString('ap_admin_portal_user_ward',
+                  resDecoded['results']['data']['ward'].toString());
+              prefs.setString('ap_admin_portal_user_sachivalyam',
+                  resDecoded['results']['data']['sachivalyam'].toString());
+              globals.isLoggedIn = true;
+              if (mounted) {
+                Navigator.of(context).pop();
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => const MainApp()));
+              }
+            } else {
+              AlertDialog alert = AlertDialog(
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(32.0))),
+                title: Center(
+                    child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text("Oops!",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Color(0xff165083),
+                        ),
+                        textAlign: TextAlign.center),
+                    SvgPicture.asset(
+                      'images/error.svg',
+                      fit: BoxFit.fill,
+                    ),
+                    const Text("Require Admin Role\n",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
+                        ),
+                        textAlign: TextAlign.center),
+                  ],
+                )),
+                // actions: [closeButton, okButton],
+              );
+
+              // show the dialog
+              if (mounted) {
+                Navigator.of(context).pop();
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return alert;
+                  },
+                );
+              }
+            }
+          } else {
+            AlertDialog alert = AlertDialog(
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(32.0))),
+              title: Center(
+                  child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text("Oops!",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xff165083),
+                      ),
+                      textAlign: TextAlign.center),
+                  SvgPicture.asset(
+                    'images/error.svg',
+                    fit: BoxFit.fill,
+                  ),
+                  const Text("Something went wrong\n",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                      ),
+                      textAlign: TextAlign.center),
+                  const Text("Failed to receive data\n",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                      ),
+                      textAlign: TextAlign.center),
+                  const Text("Please try again later",
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.grey,
+                      ),
+                      textAlign: TextAlign.center),
+                ],
+              )),
+              // actions: [closeButton, okButton],
+            );
+
+            // show the dialog
             if (mounted) {
               Navigator.of(context).pop();
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => const MainApp()));
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return alert;
+                },
+              );
             }
           }
         }
