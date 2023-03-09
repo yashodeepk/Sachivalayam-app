@@ -22,7 +22,7 @@ class _TaskWidgetState extends State<TaskWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _unfocusNode = FocusNode();
   List taskDataFound = [];
-  bool hasMore = false;
+  bool hasMore = true;
   int limit = 20;
   int pageNo = 0;
   final _scrollController = ScrollController();
@@ -174,7 +174,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
@@ -958,713 +958,908 @@ class _TaskWidgetState extends State<TaskWidget> {
                           ),
                         ),
                       ),
-                      // DataColumn2(
-                      //   fixedWidth: 50,
-                      //   label: Text(
-                      //     '',
-                      //   ),
-                      // ),
+                      DataColumn2(
+                        fixedWidth: 50,
+                        label: Text(
+                          '',
+                        ),
+                      ),
                     ],
                     rows: [
                       for (int i = 0; i < taskDataFound.length + 1; i++)
                         if (i < taskDataFound.length)
-                          DataRow(
-                              // onSelectChanged: (value) {
-                              //
-                              // },
-                              cells: [
-                                DataCell(Text(
-                                  '0${i + 1}',
-                                  textAlign: TextAlign.start,
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    color: Color(0xff202020),
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  taskDataFound[i]['task_name'] != null
-                                      ? '${taskDataFound[i]['task_name']}'
-                                      : '',
-                                  textAlign: TextAlign.start,
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    color: Color(0xff202020),
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  taskDataFound[i]['from_work_area'] != null &&
-                                          taskDataFound[i]['to_work_area'] !=
-                                              null
-                                      ? '${taskDataFound[i]['from_work_area']} to ${taskDataFound[i]['to_work_area']}'
-                                      : '',
-                                  textAlign: TextAlign.start,
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    color: Color(0xff202020),
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  taskDataFound[i]['zone'] != null
-                                      ? '${taskDataFound[i]['zone']}'
-                                      : '',
-                                  textAlign: TextAlign.start,
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    color: Color(0xff202020),
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  taskDataFound[i]['ward'] != null
-                                      ? '${taskDataFound[i]['ward']}'
-                                      : '',
-                                  textAlign: TextAlign.start,
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    color: Color(0xff202020),
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  taskDataFound[i]['sachivalyam'] != null
-                                      ? '${taskDataFound[i]['sachivalyam']}'
-                                      : '',
-                                  textAlign: TextAlign.start,
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    color: Color(0xff202020),
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  taskDataFound[i]['assigned_worker'] != null
-                                      ? '0${taskDataFound[i]['assigned_worker'].length}'
-                                      : '',
-                                  textAlign: TextAlign.start,
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    color: Color(0xff202020),
-                                  ),
-                                )),
-                                DataCell(Container(
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xffF2F2F2),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  width: 100,
-                                  height: 30,
-                                  padding: const EdgeInsets.all(3),
-                                  child: taskDataFound[i]['task_status'] != null
-                                      ? taskDataFound[i]['task_status'] ==
-                                              'Completed'
+                          DataRow(cells: [
+                            DataCell(Text(
+                              '0${i + 1}',
+                              textAlign: TextAlign.start,
+                              style: const TextStyle(
+                                fontSize: 12,
+                                color: Color(0xff202020),
+                              ),
+                            )),
+                            DataCell(Text(
+                              taskDataFound[i]['task_name'] != null
+                                  ? '${taskDataFound[i]['task_name']}'
+                                  : '',
+                              textAlign: TextAlign.start,
+                              style: const TextStyle(
+                                fontSize: 12,
+                                color: Color(0xff202020),
+                              ),
+                            )),
+                            DataCell(Text(
+                              taskDataFound[i]['from_work_area'] != null &&
+                                      taskDataFound[i]['to_work_area'] != null
+                                  ? '${taskDataFound[i]['from_work_area']} to ${taskDataFound[i]['to_work_area']}'
+                                  : '',
+                              textAlign: TextAlign.start,
+                              style: const TextStyle(
+                                fontSize: 12,
+                                color: Color(0xff202020),
+                              ),
+                            )),
+                            DataCell(Text(
+                              taskDataFound[i]['zone'] != null
+                                  ? '${taskDataFound[i]['zone']}'
+                                  : '',
+                              textAlign: TextAlign.start,
+                              style: const TextStyle(
+                                fontSize: 12,
+                                color: Color(0xff202020),
+                              ),
+                            )),
+                            DataCell(Text(
+                              taskDataFound[i]['ward'] != null
+                                  ? '${taskDataFound[i]['ward']}'
+                                  : '',
+                              textAlign: TextAlign.start,
+                              style: const TextStyle(
+                                fontSize: 12,
+                                color: Color(0xff202020),
+                              ),
+                            )),
+                            DataCell(Text(
+                              taskDataFound[i]['sachivalyam'] != null
+                                  ? '${taskDataFound[i]['sachivalyam']}'
+                                  : '',
+                              textAlign: TextAlign.start,
+                              style: const TextStyle(
+                                fontSize: 12,
+                                color: Color(0xff202020),
+                              ),
+                            )),
+                            DataCell(Text(
+                              taskDataFound[i]['assigned_worker'] != null
+                                  ? '0${taskDataFound[i]['assigned_worker'].length}'
+                                  : '',
+                              textAlign: TextAlign.start,
+                              style: const TextStyle(
+                                fontSize: 12,
+                                color: Color(0xff202020),
+                              ),
+                            )),
+                            DataCell(Container(
+                              decoration: BoxDecoration(
+                                color: const Color(0xffF2F2F2),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              width: 100,
+                              height: 30,
+                              padding: const EdgeInsets.all(3),
+                              child: taskDataFound[i]['task_status'] != null
+                                  ? taskDataFound[i]['task_status'] ==
+                                          'Completed'
+                                      ? Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: const [
+                                            Icon(
+                                              Icons.fiber_manual_record,
+                                              color: Color(0xff117E22),
+                                              size: 10,
+                                            ),
+                                            Text(
+                                              'Completed',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color: Color(0xff117E22),
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      : taskDataFound[i]['task_status'] ==
+                                              'Ongoing'
                                           ? Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
                                               children: const [
                                                 Icon(
                                                   Icons.fiber_manual_record,
-                                                  color: Color(0xff117E22),
+                                                  color: Color(0xffEBA900),
                                                   size: 10,
                                                 ),
                                                 Text(
-                                                  'Completed',
+                                                  'Ongoing',
                                                   style: TextStyle(
                                                     fontSize: 12,
-                                                    color: Color(0xff117E22),
+                                                    color: Color(0xffEBA900),
                                                   ),
                                                 ),
                                               ],
                                             )
                                           : taskDataFound[i]['task_status'] ==
-                                                  'Ongoing'
+                                                  'In-review'
                                               ? Row(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
                                                   children: const [
                                                     Icon(
                                                       Icons.fiber_manual_record,
-                                                      color: Color(0xffEBA900),
+                                                      color: Color(0xff006BFE),
                                                       size: 10,
                                                     ),
                                                     Text(
-                                                      'Ongoing',
+                                                      'In-review',
                                                       style: TextStyle(
                                                         fontSize: 12,
                                                         color:
-                                                            Color(0xffEBA900),
+                                                            Color(0xff006BFE),
                                                       ),
                                                     ),
                                                   ],
                                                 )
-                                              : taskDataFound[i]
-                                                          ['task_status'] ==
-                                                      'In-review'
-                                                  ? Row(
+                                              : Container()
+                                  : Container(),
+                            )),
+                            DataCell(InkWell(
+                              onTap: () {
+                                AlertDialog alert = AlertDialog(
+                                  shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(15.0))),
+                                  title: SizedBox(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.59,
+                                    // height: MediaQuery.of(context).size.height *
+                                    //     0.56,
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(10),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              const Text("Task Details",
+                                                  style: TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: Color(0xff2D2D2D),
+                                                  ),
+                                                  textAlign: TextAlign.center),
+                                              InkWell(
+                                                onTap: () {
+                                                  if (mounted) {
+                                                    Navigator.pop(context);
+                                                  }
+                                                },
+                                                child: const Icon(
+                                                  Icons.close,
+                                                  color: Color(0xff2D2D2D),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        const Padding(
+                                          padding:
+                                              EdgeInsets.fromLTRB(0, 0, 0, 10),
+                                          child: Divider(
+                                            color: Color(0xffD7D7D7),
+                                          ),
+                                        ),
+                                        IntrinsicHeight(
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: const [
+                                                      SizedBox(
+                                                        height: 30,
+                                                        child: Text(
+                                                          'Task Name',
+                                                          style: TextStyle(
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            color: Color(
+                                                                0xff2D2D2D),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 30,
+                                                        child: Text(
+                                                          'Status',
+                                                          style: TextStyle(
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            color: Color(
+                                                                0xff2D2D2D),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 30,
+                                                        child: Text(
+                                                          'Work area',
+                                                          style: TextStyle(
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            color: Color(
+                                                                0xff2D2D2D),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 30,
+                                                        child: Text(
+                                                          'Zone',
+                                                          style: TextStyle(
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            color: Color(
+                                                                0xff2D2D2D),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 30,
+                                                        child: Text(
+                                                          'Ward',
+                                                          style: TextStyle(
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            color: Color(
+                                                                0xff2D2D2D),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 30,
+                                                        child: Text(
+                                                          'Swachlaym',
+                                                          style: TextStyle(
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            color: Color(
+                                                                0xff2D2D2D),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 30,
+                                                        child: Text(
+                                                          'Assign Worker',
+                                                          style: TextStyle(
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            color: Color(
+                                                                0xff2D2D2D),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Padding(
+                                                    padding: const EdgeInsets
+                                                        .fromLTRB(10, 0, 10, 0),
+                                                    child: Column(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
-                                                              .center,
+                                                              .start,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
                                                       children: const [
-                                                        Icon(
-                                                          Icons
-                                                              .fiber_manual_record,
-                                                          color:
-                                                              Color(0xff006BFE),
-                                                          size: 10,
+                                                        SizedBox(
+                                                          height: 30,
+                                                          child: Text(
+                                                            ':',
+                                                            style: TextStyle(
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              color: Color(
+                                                                  0xff2D2D2D),
+                                                            ),
+                                                          ),
                                                         ),
-                                                        Text(
-                                                          'In-review',
-                                                          style: TextStyle(
-                                                            fontSize: 12,
-                                                            color: Color(
-                                                                0xff006BFE),
+                                                        SizedBox(
+                                                          height: 30,
+                                                          child: Text(
+                                                            ':',
+                                                            style: TextStyle(
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              color: Color(
+                                                                  0xff2D2D2D),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          height: 30,
+                                                          child: Text(
+                                                            ':',
+                                                            style: TextStyle(
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              color: Color(
+                                                                  0xff2D2D2D),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          height: 30,
+                                                          child: Text(
+                                                            ':',
+                                                            style: TextStyle(
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              color: Color(
+                                                                  0xff2D2D2D),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          height: 30,
+                                                          child: Text(
+                                                            ':',
+                                                            style: TextStyle(
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              color: Color(
+                                                                  0xff2D2D2D),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          height: 30,
+                                                          child: Text(
+                                                            ':',
+                                                            style: TextStyle(
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              color: Color(
+                                                                  0xff2D2D2D),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          height: 30,
+                                                          child: Text(
+                                                            ':',
+                                                            style: TextStyle(
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              color: Color(
+                                                                  0xff2D2D2D),
+                                                            ),
                                                           ),
                                                         ),
                                                       ],
-                                                    )
-                                                  : Container()
-                                      : Container(),
-                                )),
-                                // DataCell(InkWell(
-                                //   onTap: () {
-                                //     AlertDialog alert = AlertDialog(
-                                //       shape: const RoundedRectangleBorder(
-                                //           borderRadius: BorderRadius.all(
-                                //               Radius.circular(15.0))),
-                                //       title: Center(
-                                //           child: Column(
-                                //         mainAxisSize: MainAxisSize.min,
-                                //         mainAxisAlignment:
-                                //             MainAxisAlignment.start,
-                                //         crossAxisAlignment:
-                                //             CrossAxisAlignment.start,
-                                //         children: [
-                                //           Padding(
-                                //             padding: const EdgeInsets.all(10),
-                                //             child: Row(
-                                //               mainAxisAlignment:
-                                //                   MainAxisAlignment
-                                //                       .spaceBetween,
-                                //               children: const [
-                                //                 Text("Task Details",
-                                //                     style: TextStyle(
-                                //                       fontSize: 16,
-                                //                       fontWeight:
-                                //                           FontWeight.w500,
-                                //                       color: Color(0xff2D2D2D),
-                                //                     ),
-                                //                     textAlign:
-                                //                         TextAlign.center),
-                                //                 Icon(
-                                //                   Icons.close,
-                                //                   color: Color(0xff2D2D2D),
-                                //                 )
-                                //               ],
-                                //             ),
-                                //           ),
-                                //           const Padding(
-                                //             padding: EdgeInsets.fromLTRB(
-                                //                 0, 0, 0, 10),
-                                //             child: Divider(
-                                //               color: Color(0xffD7D7D7),
-                                //             ),
-                                //           ),
-                                //           Row(
-                                //             mainAxisSize: MainAxisSize.min,
-                                //             mainAxisAlignment:
-                                //                 MainAxisAlignment.start,
-                                //             crossAxisAlignment:
-                                //                 CrossAxisAlignment.start,
-                                //             children: [
-                                //               Row(
-                                //                 mainAxisSize: MainAxisSize.min,
-                                //                 mainAxisAlignment:
-                                //                     MainAxisAlignment.start,
-                                //                 crossAxisAlignment:
-                                //                     CrossAxisAlignment.start,
-                                //                 children: [
-                                //                   Column(
-                                //                     mainAxisAlignment:
-                                //                         MainAxisAlignment.start,
-                                //                     crossAxisAlignment:
-                                //                         CrossAxisAlignment
-                                //                             .start,
-                                //                     children: const [
-                                //                       SizedBox(
-                                //                         height: 30,
-                                //                         child: Text(
-                                //                           'Task Name',
-                                //                           style: TextStyle(
-                                //                             fontSize: 14,
-                                //                             fontWeight:
-                                //                                 FontWeight.w500,
-                                //                             color: Color(
-                                //                                 0xff2D2D2D),
-                                //                           ),
-                                //                         ),
-                                //                       ),
-                                //                       SizedBox(
-                                //                         height: 30,
-                                //                         child: Text(
-                                //                           'Status',
-                                //                           style: TextStyle(
-                                //                             fontSize: 14,
-                                //                             fontWeight:
-                                //                                 FontWeight.w500,
-                                //                             color: Color(
-                                //                                 0xff2D2D2D),
-                                //                           ),
-                                //                         ),
-                                //                       ),
-                                //                       SizedBox(
-                                //                         height: 30,
-                                //                         child: Text(
-                                //                           'Work area',
-                                //                           style: TextStyle(
-                                //                             fontSize: 14,
-                                //                             fontWeight:
-                                //                                 FontWeight.w500,
-                                //                             color: Color(
-                                //                                 0xff2D2D2D),
-                                //                           ),
-                                //                         ),
-                                //                       ),
-                                //                       SizedBox(
-                                //                         height: 30,
-                                //                         child: Text(
-                                //                           'Zone',
-                                //                           style: TextStyle(
-                                //                             fontSize: 14,
-                                //                             fontWeight:
-                                //                                 FontWeight.w500,
-                                //                             color: Color(
-                                //                                 0xff2D2D2D),
-                                //                           ),
-                                //                         ),
-                                //                       ),
-                                //                       SizedBox(
-                                //                         height: 30,
-                                //                         child: Text(
-                                //                           'Ward',
-                                //                           style: TextStyle(
-                                //                             fontSize: 14,
-                                //                             fontWeight:
-                                //                                 FontWeight.w500,
-                                //                             color: Color(
-                                //                                 0xff2D2D2D),
-                                //                           ),
-                                //                         ),
-                                //                       ),
-                                //                       SizedBox(
-                                //                         height: 30,
-                                //                         child: Text(
-                                //                           'Swachlaym',
-                                //                           style: TextStyle(
-                                //                             fontSize: 14,
-                                //                             fontWeight:
-                                //                                 FontWeight.w500,
-                                //                             color: Color(
-                                //                                 0xff2D2D2D),
-                                //                           ),
-                                //                         ),
-                                //                       ),
-                                //                       SizedBox(
-                                //                         height: 30,
-                                //                         child: Text(
-                                //                           'Assign Worker',
-                                //                           style: TextStyle(
-                                //                             fontSize: 14,
-                                //                             fontWeight:
-                                //                                 FontWeight.w500,
-                                //                             color: Color(
-                                //                                 0xff2D2D2D),
-                                //                           ),
-                                //                         ),
-                                //                       ),
-                                //                     ],
-                                //                   ),
-                                //                   Column(
-                                //                     mainAxisAlignment:
-                                //                         MainAxisAlignment.start,
-                                //                     crossAxisAlignment:
-                                //                         CrossAxisAlignment
-                                //                             .start,
-                                //                     children: const [
-                                //                       SizedBox(
-                                //                         height: 30,
-                                //                         child: Text(
-                                //                           ':',
-                                //                           style: TextStyle(
-                                //                             fontSize: 14,
-                                //                             fontWeight:
-                                //                                 FontWeight.w500,
-                                //                             color: Color(
-                                //                                 0xff2D2D2D),
-                                //                           ),
-                                //                         ),
-                                //                       ),
-                                //                       SizedBox(
-                                //                         height: 30,
-                                //                         child: Text(
-                                //                           ':',
-                                //                           style: TextStyle(
-                                //                             fontSize: 14,
-                                //                             fontWeight:
-                                //                                 FontWeight.w500,
-                                //                             color: Color(
-                                //                                 0xff2D2D2D),
-                                //                           ),
-                                //                         ),
-                                //                       ),
-                                //                       SizedBox(
-                                //                         height: 30,
-                                //                         child: Text(
-                                //                           ':',
-                                //                           style: TextStyle(
-                                //                             fontSize: 14,
-                                //                             fontWeight:
-                                //                                 FontWeight.w500,
-                                //                             color: Color(
-                                //                                 0xff2D2D2D),
-                                //                           ),
-                                //                         ),
-                                //                       ),
-                                //                       SizedBox(
-                                //                         height: 30,
-                                //                         child: Text(
-                                //                           ':',
-                                //                           style: TextStyle(
-                                //                             fontSize: 14,
-                                //                             fontWeight:
-                                //                                 FontWeight.w500,
-                                //                             color: Color(
-                                //                                 0xff2D2D2D),
-                                //                           ),
-                                //                         ),
-                                //                       ),
-                                //                       SizedBox(
-                                //                         height: 30,
-                                //                         child: Text(
-                                //                           ':',
-                                //                           style: TextStyle(
-                                //                             fontSize: 14,
-                                //                             fontWeight:
-                                //                                 FontWeight.w500,
-                                //                             color: Color(
-                                //                                 0xff2D2D2D),
-                                //                           ),
-                                //                         ),
-                                //                       ),
-                                //                       SizedBox(
-                                //                         height: 30,
-                                //                         child: Text(
-                                //                           ':',
-                                //                           style: TextStyle(
-                                //                             fontSize: 14,
-                                //                             fontWeight:
-                                //                                 FontWeight.w500,
-                                //                             color: Color(
-                                //                                 0xff2D2D2D),
-                                //                           ),
-                                //                         ),
-                                //                       ),
-                                //                       SizedBox(
-                                //                         height: 30,
-                                //                         child: Text(
-                                //                           ':',
-                                //                           style: TextStyle(
-                                //                             fontSize: 14,
-                                //                             fontWeight:
-                                //                                 FontWeight.w500,
-                                //                             color: Color(
-                                //                                 0xff2D2D2D),
-                                //                           ),
-                                //                         ),
-                                //                       ),
-                                //                     ],
-                                //                   ),
-                                //                   Column(
-                                //                     mainAxisAlignment:
-                                //                         MainAxisAlignment.start,
-                                //                     crossAxisAlignment:
-                                //                         CrossAxisAlignment
-                                //                             .start,
-                                //                     children: [
-                                //                       SizedBox(
-                                //                         height: 30,
-                                //                         child: Text(
-                                //                           taskDataFound[i][
-                                //                                       'task_name'] !=
-                                //                                   null
-                                //                               ? '${taskDataFound[i]['task_name']}'
-                                //                               : '',
-                                //                           style:
-                                //                               const TextStyle(
-                                //                             fontSize: 14,
-                                //                             fontWeight:
-                                //                                 FontWeight.w500,
-                                //                             color: Color(
-                                //                                 0xff2D2D2D),
-                                //                           ),
-                                //                         ),
-                                //                       ),
-                                //                       Container(
-                                //                         decoration:
-                                //                             BoxDecoration(
-                                //                           color: const Color(
-                                //                               0xffF2F2F2),
-                                //                           borderRadius:
-                                //                               BorderRadius
-                                //                                   .circular(10),
-                                //                         ),
-                                //                         width: 100,
-                                //                         height: 30,
-                                //                         padding:
-                                //                             EdgeInsets.all(3),
-                                //                         child: taskDataFound[i][
-                                //                                     'task_status'] !=
-                                //                                 null
-                                //                             ? taskDataFound[i][
-                                //                                         'task_status'] ==
-                                //                                     'Completed'
-                                //                                 ? Row(
-                                //                                     mainAxisAlignment:
-                                //                                         MainAxisAlignment
-                                //                                             .center,
-                                //                                     children: const [
-                                //                                       Icon(
-                                //                                         Icons
-                                //                                             .fiber_manual_record,
-                                //                                         color: Color(
-                                //                                             0xff117E22),
-                                //                                         size:
-                                //                                             10,
-                                //                                       ),
-                                //                                       Text(
-                                //                                         'Completed',
-                                //                                         style:
-                                //                                             TextStyle(
-                                //                                           fontSize:
-                                //                                               12,
-                                //                                           color:
-                                //                                               Color(0xff117E22),
-                                //                                         ),
-                                //                                       ),
-                                //                                     ],
-                                //                                   )
-                                //                                 : taskDataFound[i]
-                                //                                             [
-                                //                                             'task_status'] ==
-                                //                                         'Ongoing'
-                                //                                     ? Row(
-                                //                                         mainAxisAlignment:
-                                //                                             MainAxisAlignment.center,
-                                //                                         children: const [
-                                //                                           Icon(
-                                //                                             Icons.fiber_manual_record,
-                                //                                             color:
-                                //                                                 Color(0xffEBA900),
-                                //                                             size:
-                                //                                                 10,
-                                //                                           ),
-                                //                                           Text(
-                                //                                             'Ongoing',
-                                //                                             style:
-                                //                                                 TextStyle(
-                                //                                               fontSize: 12,
-                                //                                               color: Color(0xffEBA900),
-                                //                                             ),
-                                //                                           ),
-                                //                                         ],
-                                //                                       )
-                                //                                     : taskDataFound[i]['task_status'] ==
-                                //                                             'In-review'
-                                //                                         ? Row(
-                                //                                             mainAxisAlignment:
-                                //                                                 MainAxisAlignment.center,
-                                //                                             children: const [
-                                //                                               Icon(
-                                //                                                 Icons.fiber_manual_record,
-                                //                                                 color: Color(0xff006BFE),
-                                //                                                 size: 10,
-                                //                                               ),
-                                //                                               Text(
-                                //                                                 'In-review',
-                                //                                                 style: TextStyle(
-                                //                                                   fontSize: 12,
-                                //                                                   color: Color(0xff006BFE),
-                                //                                                 ),
-                                //                                               ),
-                                //                                             ],
-                                //                                           )
-                                //                                         : Container()
-                                //                             : Container(),
-                                //                       ),
-                                //                       SizedBox(
-                                //                         height: 30,
-                                //                         child: Text(
-                                //                           taskDataFound[i][
-                                //                                           'from_work_area'] !=
-                                //                                       null &&
-                                //                                   taskDataFound[
-                                //                                               i]
-                                //                                           [
-                                //                                           'to_work_area'] !=
-                                //                                       null
-                                //                               ? '${taskDataFound[i]['from_work_area']} to ${taskDataFound[i]['to_work_area']}'
-                                //                               : '',
-                                //                           style:
-                                //                               const TextStyle(
-                                //                             fontSize: 14,
-                                //                             fontWeight:
-                                //                                 FontWeight.w500,
-                                //                             color: Color(
-                                //                                 0xff2D2D2D),
-                                //                           ),
-                                //                         ),
-                                //                       ),
-                                //                       SizedBox(
-                                //                         height: 30,
-                                //                         child: Text(
-                                //                           taskDataFound[i][
-                                //                                       'zone'] !=
-                                //                                   null
-                                //                               ? '${taskDataFound[i]['zone']}'
-                                //                               : '',
-                                //                           style:
-                                //                               const TextStyle(
-                                //                             fontSize: 14,
-                                //                             fontWeight:
-                                //                                 FontWeight.w500,
-                                //                             color: Color(
-                                //                                 0xff2D2D2D),
-                                //                           ),
-                                //                         ),
-                                //                       ),
-                                //                       SizedBox(
-                                //                         height: 30,
-                                //                         child: Text(
-                                //                           taskDataFound[i][
-                                //                                       'ward'] !=
-                                //                                   null
-                                //                               ? '${taskDataFound[i]['ward']}'
-                                //                               : '',
-                                //                           style:
-                                //                               const TextStyle(
-                                //                             fontSize: 14,
-                                //                             fontWeight:
-                                //                                 FontWeight.w500,
-                                //                             color: Color(
-                                //                                 0xff2D2D2D),
-                                //                           ),
-                                //                         ),
-                                //                       ),
-                                //                       SizedBox(
-                                //                         height: 30,
-                                //                         child: Text(
-                                //                           taskDataFound[i][
-                                //                                       'sachivalyam'] !=
-                                //                                   null
-                                //                               ? '${taskDataFound[i]['sachivalyam']}'
-                                //                               : '',
-                                //                           style:
-                                //                               const TextStyle(
-                                //                             fontSize: 14,
-                                //                             fontWeight:
-                                //                                 FontWeight.w500,
-                                //                             color: Color(
-                                //                                 0xff2D2D2D),
-                                //                           ),
-                                //                         ),
-                                //                       ),
-                                //                       Column(
-                                //                         mainAxisAlignment:
-                                //                             MainAxisAlignment
-                                //                                 .start,
-                                //                         crossAxisAlignment:
-                                //                             CrossAxisAlignment
-                                //                                 .start,
-                                //                         children: [
-                                //                           if (taskDataFound[i][
-                                //                                   'assigned_worker'] !=
-                                //                               null)
-                                //                             for (int j = 0;
-                                //                                 j <
-                                //                                     taskDataFound[i]
-                                //                                             [
-                                //                                             'assigned_worker']
-                                //                                         .length;
-                                //                                 j++)
-                                //                               Text(
-                                //                                   "${j + 1}. ${taskDataFound[i]['assigned_worker'][j]}",
-                                //                                   style:
-                                //                                       const TextStyle(
-                                //                                     fontSize:
-                                //                                         14,
-                                //                                     fontWeight:
-                                //                                         FontWeight
-                                //                                             .w500,
-                                //                                     color: Color(
-                                //                                         0xff2D2D2D),
-                                //                                   ),
-                                //                                   textAlign:
-                                //                                       TextAlign
-                                //                                           .center),
-                                //                         ],
-                                //                       ),
-                                //                     ],
-                                //                   ),
-                                //                 ],
-                                //               ),
-                                //               const Padding(
-                                //                 padding: EdgeInsets.fromLTRB(
-                                //                     10, 0, 10, 0),
-                                //                 child: VerticalDivider(
-                                //                   width: 1,
-                                //                   color: Color(0xffD7D7D7),
-                                //                 ),
-                                //               ),
-                                //               Column(
-                                //                 children: [],
-                                //               ),
-                                //             ],
-                                //           )
-                                //           // const Text("Something went wrong\n",
-                                //           //     style: TextStyle(
-                                //           //       fontSize: 16,
-                                //           //       fontWeight: FontWeight.w500,
-                                //           //       color: Colors.black,
-                                //           //     ),
-                                //           //     textAlign: TextAlign.center),
-                                //           // Text("$message\n",
-                                //           //     style: const TextStyle(
-                                //           //       fontSize: 16,
-                                //           //       fontWeight: FontWeight.w500,
-                                //           //       color: Colors.black,
-                                //           //     ),
-                                //           //     textAlign: TextAlign.center),
-                                //           // const Text("Please try again later",
-                                //           //     style: TextStyle(
-                                //           //       fontSize: 14,
-                                //           //       fontWeight: FontWeight.w400,
-                                //           //       color: Colors.grey,
-                                //           //     ),
-                                //           //     textAlign: TextAlign.center),
-                                //         ],
-                                //       )),
-                                //       // actions: [closeButton, okButton],
-                                //     );
-                                //     // showDialog(
-                                //     //   barrierDismissible: true,
-                                //     //   context: context,
-                                //     //   builder: (BuildContext context) {
-                                //     //     return alert;
-                                //     //   },
-                                //     // );
-                                //   },
-                                //   child: const Icon(
-                                //     Icons.open_in_new,
-                                //     color: Color(0xff202020),
-                                //     size: 18,
-                                //   ),
-                                // )),
-                              ])
+                                                    ),
+                                                  ),
+                                                  Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      SizedBox(
+                                                        height: 30,
+                                                        child: Text(
+                                                          taskDataFound[i][
+                                                                      'task_name'] !=
+                                                                  null
+                                                              ? '${taskDataFound[i]['task_name']}'
+                                                              : '',
+                                                          style:
+                                                              const TextStyle(
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            color: Color(
+                                                                0xff2D2D2D),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: const Color(
+                                                              0xffF2F2F2),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                        ),
+                                                        width: 100,
+                                                        height: 30,
+                                                        padding:
+                                                            EdgeInsets.all(3),
+                                                        child: taskDataFound[i][
+                                                                    'task_status'] !=
+                                                                null
+                                                            ? taskDataFound[i][
+                                                                        'task_status'] ==
+                                                                    'Completed'
+                                                                ? Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .center,
+                                                                    children: const [
+                                                                      Icon(
+                                                                        Icons
+                                                                            .fiber_manual_record,
+                                                                        color: Color(
+                                                                            0xff117E22),
+                                                                        size:
+                                                                            10,
+                                                                      ),
+                                                                      Text(
+                                                                        'Completed',
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontSize:
+                                                                              12,
+                                                                          color:
+                                                                              Color(0xff117E22),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  )
+                                                                : taskDataFound[i]
+                                                                            [
+                                                                            'task_status'] ==
+                                                                        'Ongoing'
+                                                                    ? Row(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.center,
+                                                                        children: const [
+                                                                          Icon(
+                                                                            Icons.fiber_manual_record,
+                                                                            color:
+                                                                                Color(0xffEBA900),
+                                                                            size:
+                                                                                10,
+                                                                          ),
+                                                                          Text(
+                                                                            'Ongoing',
+                                                                            style:
+                                                                                TextStyle(
+                                                                              fontSize: 12,
+                                                                              color: Color(0xffEBA900),
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      )
+                                                                    : taskDataFound[i]['task_status'] ==
+                                                                            'In-review'
+                                                                        ? Row(
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.center,
+                                                                            children: const [
+                                                                              Icon(
+                                                                                Icons.fiber_manual_record,
+                                                                                color: Color(0xff006BFE),
+                                                                                size: 10,
+                                                                              ),
+                                                                              Text(
+                                                                                'In-review',
+                                                                                style: TextStyle(
+                                                                                  fontSize: 12,
+                                                                                  color: Color(0xff006BFE),
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          )
+                                                                        : Container()
+                                                            : Container(),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 30,
+                                                        width: 250,
+                                                        child: AutoSizeText(
+                                                          taskDataFound[i][
+                                                                          'from_work_area'] !=
+                                                                      null &&
+                                                                  taskDataFound[
+                                                                              i]
+                                                                          [
+                                                                          'to_work_area'] !=
+                                                                      null
+                                                              ? '${taskDataFound[i]['from_work_area']} to ${taskDataFound[i]['to_work_area']}'
+                                                              : '',
+                                                          maxLines: 1,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          style:
+                                                              const TextStyle(
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            color: Color(
+                                                                0xff2D2D2D),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 30,
+                                                        child: Text(
+                                                          taskDataFound[i][
+                                                                      'zone'] !=
+                                                                  null
+                                                              ? '${taskDataFound[i]['zone']}'
+                                                              : '',
+                                                          style:
+                                                              const TextStyle(
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            color: Color(
+                                                                0xff2D2D2D),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 30,
+                                                        child: Text(
+                                                          taskDataFound[i][
+                                                                      'ward'] !=
+                                                                  null
+                                                              ? '${taskDataFound[i]['ward']}'
+                                                              : '',
+                                                          style:
+                                                              const TextStyle(
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            color: Color(
+                                                                0xff2D2D2D),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 30,
+                                                        child: Text(
+                                                          taskDataFound[i][
+                                                                      'sachivalyam'] !=
+                                                                  null
+                                                              ? '${taskDataFound[i]['sachivalyam']}'
+                                                              : '',
+                                                          style:
+                                                              const TextStyle(
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            color: Color(
+                                                                0xff2D2D2D),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          if (taskDataFound[i][
+                                                                  'assigned_worker'] !=
+                                                              null)
+                                                            for (int j = 0;
+                                                                j <
+                                                                    taskDataFound[i]
+                                                                            [
+                                                                            'assigned_worker']
+                                                                        .length;
+                                                                j++)
+                                                              Text(
+                                                                  "${j + 1}. ${taskDataFound[i]['assigned_worker'][j]}",
+                                                                  style:
+                                                                      const TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    color: Color(
+                                                                        0xff2D2D2D),
+                                                                  ),
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsets.fromLTRB(
+                                                    10, 0, 10, 0),
+                                                child: VerticalDivider(
+                                                  width: 1,
+                                                  color: Color(0xffD7D7D7),
+                                                ),
+                                              ),
+                                              Expanded(
+                                                child: Column(
+                                                  children: [
+                                                    Expanded(
+                                                      child: Column(
+                                                        children: [
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              const Text(
+                                                                "Before Image",
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 14,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                  color: Color(
+                                                                      0xff2D2D2D),
+                                                                ),
+                                                              ),
+                                                              Text(
+                                                                taskDataFound[i]
+                                                                            [
+                                                                            'createdAt'] !=
+                                                                        null
+                                                                    ? DateFormat(
+                                                                            "d/M/y")
+                                                                        .format(DateTime.parse(taskDataFound[i]
+                                                                            [
+                                                                            'createdAt']))
+                                                                    : '',
+                                                                style:
+                                                                    const TextStyle(
+                                                                  fontSize: 14,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                  color: Color(
+                                                                      0xff2D2D2D),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          SingleChildScrollView(
+                                                            scrollDirection:
+                                                                Axis.horizontal,
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                if (taskDataFound[
+                                                                            i][
+                                                                        'before_image'] !=
+                                                                    null)
+                                                                  for (int k =
+                                                                          0;
+                                                                      k <
+                                                                          taskDataFound[i]['before_image']
+                                                                              .length;
+                                                                      k++)
+                                                                    ClipRRect(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              10),
+                                                                      child: Image
+                                                                          .network(
+                                                                        taskDataFound[i]
+                                                                            [
+                                                                            'before_image'][k],
+                                                                        width: MediaQuery.of(context).size.width *
+                                                                            0.07,
+                                                                        height: MediaQuery.of(context).size.width *
+                                                                            0.07,
+                                                                        fit: BoxFit
+                                                                            .cover,
+                                                                        errorBuilder: (BuildContext context,
+                                                                            Object
+                                                                                exception,
+                                                                            StackTrace?
+                                                                                stackTrace) {
+                                                                          return SizedBox(
+                                                                            width:
+                                                                                MediaQuery.of(context).size.width * 0.07,
+                                                                            height:
+                                                                                MediaQuery.of(context).size.width * 0.07,
+                                                                            child:
+                                                                                const Center(child: Text('Image Not Found')),
+                                                                          );
+                                                                        },
+                                                                      ),
+                                                                    )
+                                                              ],
+                                                            ),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      child: Column(
+                                                        children: [
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              const Text(
+                                                                "After Image",
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 14,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                  color: Color(
+                                                                      0xff2D2D2D),
+                                                                ),
+                                                              ),
+                                                              Text(
+                                                                taskDataFound[i]
+                                                                            [
+                                                                            'updatedAt'] !=
+                                                                        null
+                                                                    ? DateFormat(
+                                                                            "d/M/y")
+                                                                        .format(DateTime.parse(taskDataFound[i]
+                                                                            [
+                                                                            'updatedAt']))
+                                                                    : '',
+                                                                style:
+                                                                    const TextStyle(
+                                                                  fontSize: 14,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                  color: Color(
+                                                                      0xff2D2D2D),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          SingleChildScrollView(
+                                                            scrollDirection:
+                                                                Axis.horizontal,
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                if (taskDataFound[
+                                                                            i][
+                                                                        'after_image'] !=
+                                                                    null)
+                                                                  for (int k =
+                                                                          0;
+                                                                      k <
+                                                                          taskDataFound[i]['after_image']
+                                                                              .length;
+                                                                      k++)
+                                                                    ClipRRect(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              10),
+                                                                      child: Image
+                                                                          .network(
+                                                                        taskDataFound[i]
+                                                                            [
+                                                                            'after_image'][k],
+                                                                        width: MediaQuery.of(context).size.width *
+                                                                            0.07,
+                                                                        height: MediaQuery.of(context).size.width *
+                                                                            0.07,
+                                                                        fit: BoxFit
+                                                                            .cover,
+                                                                        errorBuilder: (BuildContext context,
+                                                                            Object
+                                                                                exception,
+                                                                            StackTrace?
+                                                                                stackTrace) {
+                                                                          return SizedBox(
+                                                                            width:
+                                                                                MediaQuery.of(context).size.width * 0.07,
+                                                                            height:
+                                                                                MediaQuery.of(context).size.width * 0.07,
+                                                                            child:
+                                                                                const Center(child: Text('Image Not Found')),
+                                                                          );
+                                                                        },
+                                                                      ),
+                                                                    )
+                                                              ],
+                                                            ),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  // actions: [closeButton, okButton],
+                                );
+                                showDialog(
+                                  barrierDismissible: true,
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return alert;
+                                  },
+                                );
+                              },
+                              child: const Icon(
+                                Icons.open_in_new,
+                                color: Color(0xff202020),
+                                size: 18,
+                              ),
+                            )),
+                          ])
                         else if (i == taskDataFound.length)
                           if (hasMore)
                             DataRow(cells: [
@@ -1684,6 +1879,9 @@ class _TaskWidgetState extends State<TaskWidget> {
                                   child: const CircularProgressIndicator(
                                     color: ThemeColor.kPrimaryGreen,
                                   ))),
+                              const DataCell(Text(
+                                '',
+                              )),
                               const DataCell(Text(
                                 '',
                               )),
