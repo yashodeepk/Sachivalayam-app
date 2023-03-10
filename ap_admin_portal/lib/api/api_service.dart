@@ -106,6 +106,23 @@ class APIService {
   static Future getAllZoneData() async {
     try {
       final response = await http.get(
+        Uri.http(globals.serverUrl, globals.allZoneDataPath),
+        headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+        },
+      );
+
+      return response;
+    } on Exception catch (err) {
+      return http.Response(
+          "{'message': 'Oops! Something went wrong','error': '$err'}", 503);
+    }
+  }
+
+  static Future getZoneData() async {
+    try {
+      final response = await http.get(
         Uri.http(globals.serverUrl, globals.zoneDataPath),
         headers: {
           'Content-type': 'application/json',

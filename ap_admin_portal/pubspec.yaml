@@ -107,6 +107,7 @@ dependencies:
   sidebarx: ^0.14.0
   data_table_2: ^2.3.10
   fl_chart: ^0.61.0
+  http: ^0.13.5
 
 dev_dependencies:
   flutter_test:

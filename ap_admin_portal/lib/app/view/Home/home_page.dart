@@ -249,7 +249,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
   }
 
   Future<void> zoneData() async {
-    var res = await APIService.getAllZoneData();
+    var res = await APIService.getZoneData();
     if (res.statusCode >= 200 && res.statusCode <= 300) {
       var resDecoded = jsonDecode(res.body);
       if (resDecoded['results'] != null) {

@@ -10,6 +10,7 @@ import 'package:sidebarx/sidebarx.dart';
 
 import 'package:ap_admin_portal/global/globals.dart' as globals;
 import 'app/view/Task/task_page.dart';
+import 'app/view/Zone/zone_page.dart';
 import 'app/view/auth/login/login-screen.dart';
 
 Future<void> main() async {
@@ -79,7 +80,8 @@ class _AppRootState extends State<AppRoot> {
   var pages = [
     const HomePageWidget(),
     const SecretaryWidget(),
-    const TaskWidget()
+    const TaskWidget(),
+    const ZoneWidget(),
   ];
 
   // String _getTitleByIndex(int index) {
@@ -180,13 +182,13 @@ class _AppRootState extends State<AppRoot> {
             _onItemTapped(2);
           },
         ),
-        // SidebarXItem(
-        //   icon: Icons.my_location,
-        //   label: 'Zone',
-        //   onTap: () {
-        //     // _onItemTapped(3);
-        //   },
-        // ),
+        SidebarXItem(
+          icon: Icons.my_location,
+          label: 'Zone',
+          onTap: () {
+            _onItemTapped(3);
+          },
+        ),
       ],
     );
   }

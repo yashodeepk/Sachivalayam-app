@@ -6,9 +6,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 
 class TaskWidget extends StatefulWidget {
   const TaskWidget({Key? key}) : super(key: key);
@@ -88,7 +87,7 @@ class _TaskWidgetState extends State<TaskWidget> {
         "Swachlayam": selectedSwachlayam,
       });
     }
-    var res = await APIService.getAllTaskData(jsonEncode(data));
+    http.Response res = await APIService.getAllTaskData(jsonEncode(data));
     if (res.statusCode >= 200 && res.statusCode <= 300) {
       var resDecoded = jsonDecode(res.body);
       // print(resDecoded);
@@ -107,7 +106,7 @@ class _TaskWidgetState extends State<TaskWidget> {
   }
 
   Future<void> zoneData() async {
-    var res = await APIService.getAllZoneData();
+    http.Response res = await APIService.getZoneData();
     if (res.statusCode >= 200 && res.statusCode <= 300) {
       var resDecoded = jsonDecode(res.body);
       if (resDecoded['results'] != null) {
