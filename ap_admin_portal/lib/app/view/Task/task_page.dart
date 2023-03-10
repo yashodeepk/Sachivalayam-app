@@ -1684,6 +1684,9 @@ class _TaskWidgetState extends State<TaskWidget> {
                                                             scrollDirection:
                                                                 Axis.horizontal,
                                                             child: Row(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .min,
                                                               mainAxisAlignment:
                                                                   MainAxisAlignment
                                                                       .start,

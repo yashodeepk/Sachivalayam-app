@@ -168,13 +168,13 @@ class _AppRootState extends State<AppRoot> {
             _onItemTapped(0);
           },
         ),
-        // SidebarXItem(
-        //   icon: Icons.people,
-        //   label: 'Secretary',
-        //   onTap: () {
-        //     _onItemTapped(1);
-        //   },
-        // ),
+        SidebarXItem(
+          icon: Icons.people,
+          label: 'Secretary',
+          onTap: () {
+            _onItemTapped(1);
+          },
+        ),
         SidebarXItem(
           icon: Icons.file_present_rounded,
           label: 'Tasks',
