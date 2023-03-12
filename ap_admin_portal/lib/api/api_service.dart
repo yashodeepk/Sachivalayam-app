@@ -35,13 +35,36 @@ class APIService {
     }
   }
 
+  static Future addUser(String payload) async {
+    try {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      String accessToken = pref.getString('ap_admin_portal_access_token') ?? '';
+      final response =
+          await http.post(Uri.http(globals.serverUrl, globals.signupDataPath),
+              headers: {
+                'Content-type': 'application/json',
+                'Accept': 'application/json',
+                'x-access-token': accessToken
+              },
+              body: payload);
+
+      return response;
+    } on Exception catch (err) {
+      return http.Response(
+          "{'message': 'Oops! Something went wrong','error': '$err'}", 503);
+    }
+  }
+
   static Future getTaskCount() async {
     try {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      String accessToken = pref.getString('ap_admin_portal_access_token') ?? '';
       final response = await http.get(
         Uri.http(globals.serverUrl, globals.statusCountPath),
         headers: {
           'Content-type': 'application/json',
           'Accept': 'application/json',
+          'x-access-token': accessToken
         },
       );
 
@@ -54,11 +77,14 @@ class APIService {
 
   static Future getBarGraphDataList(String encoded) async {
     try {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      String accessToken = pref.getString('ap_admin_portal_access_token') ?? '';
       final response =
           await http.post(Uri.http(globals.serverUrl, globals.barGraphDataPath),
               headers: {
                 'Content-type': 'application/json',
                 'Accept': 'application/json',
+                'x-access-token': accessToken
               },
               body: encoded);
 
@@ -71,11 +97,14 @@ class APIService {
 
   static Future getPieGraphDataList(String encoded) async {
     try {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      String accessToken = pref.getString('ap_admin_portal_access_token') ?? '';
       final response =
           await http.post(Uri.http(globals.serverUrl, globals.pieGraphDataPath),
               headers: {
                 'Content-type': 'application/json',
                 'Accept': 'application/json',
+                'x-access-token': accessToken
               },
               body: encoded);
 
@@ -88,11 +117,14 @@ class APIService {
 
   static Future getAllTaskData(String encoded) async {
     try {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      String accessToken = pref.getString('ap_admin_portal_access_token') ?? '';
       final response =
           await http.post(Uri.http(globals.serverUrl, globals.taskDataPath),
               headers: {
                 'Content-type': 'application/json',
                 'Accept': 'application/json',
+                'x-access-token': accessToken
               },
               body: encoded);
 
@@ -105,11 +137,14 @@ class APIService {
 
   static Future getAllZoneData() async {
     try {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      String accessToken = pref.getString('ap_admin_portal_access_token') ?? '';
       final response = await http.get(
         Uri.http(globals.serverUrl, globals.allZoneDataPath),
         headers: {
           'Content-type': 'application/json',
           'Accept': 'application/json',
+          'x-access-token': accessToken
         },
       );
 
@@ -122,11 +157,14 @@ class APIService {
 
   static Future getZoneData() async {
     try {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      String accessToken = pref.getString('ap_admin_portal_access_token') ?? '';
       final response = await http.get(
         Uri.http(globals.serverUrl, globals.zoneDataPath),
         headers: {
           'Content-type': 'application/json',
           'Accept': 'application/json',
+          'x-access-token': accessToken
         },
       );
 
@@ -139,13 +177,56 @@ class APIService {
 
   static Future getWorkerAttendanceData(String encoded) async {
     try {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      String accessToken = pref.getString('ap_admin_portal_access_token') ?? '';
       final response = await http.post(
           Uri.http(globals.serverUrl, globals.workerAttendanceDataPath),
           headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
+            'x-access-token': accessToken
           },
           body: encoded);
+
+      return response;
+    } on Exception catch (err) {
+      return http.Response(
+          "{'message': 'Oops! Something went wrong','error': '$err'}", 503);
+    }
+  }
+
+  static Future getSecretaryData(String encoded) async {
+    try {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      String accessToken = pref.getString('ap_admin_portal_access_token') ?? '';
+      final response = await http.post(
+          Uri.http(globals.serverUrl, globals.secretaryDataPath),
+          headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+            'x-access-token': accessToken
+          },
+          body: encoded);
+
+      return response;
+    } on Exception catch (err) {
+      return http.Response(
+          "{'message': 'Oops! Something went wrong','error': '$err'}", 503);
+    }
+  }
+
+  static Future deleteSecretaryData(String id) async {
+    try {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      String accessToken = pref.getString('ap_admin_portal_access_token') ?? '';
+      final response = await http.delete(
+        Uri.http(globals.serverUrl, '${globals.userDataPath}/$id'),
+        headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+          'x-access-token': accessToken
+        },
+      );
 
       return response;
     } on Exception catch (err) {

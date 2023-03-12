@@ -108,6 +108,7 @@ dependencies:
   data_table_2: ^2.3.10
   fl_chart: ^0.61.0
   http: ^0.13.5
+  flash: ^2.0.5+1
 
 dev_dependencies:
   flutter_test:
@@ -147,7 +148,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
+  fonts:
+    - family: CustomIcons
+      fonts:
+        - asset: fonts/CustomIcons.ttf
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf

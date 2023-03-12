@@ -135,9 +135,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
                                         ///password  input
                                         AppLabelledWidget(
-                                            label: Text(
+                                            label: const Text(
                                               "Password",
-                                              style: const TextStyle(
+                                              style: TextStyle(
                                                   fontFamily:
                                                       FontFamily.regular,
                                                   color:
@@ -248,8 +248,8 @@ class _LoginScreenState extends State<LoginScreen> {
         "password": _passwordController.text
       };
       http.Response res = await APIService.login(jsonEncode(data));
+      var resDecoded = jsonDecode(res.body);
       if (res.statusCode >= 200 && res.statusCode <= 300) {
-        var resDecoded = jsonDecode(res.body);
         if (resDecoded['results'] != null) {
           if (resDecoded['results']['data'] != null) {
             if (resDecoded['results']['data']['roles'] != null &&
@@ -326,116 +326,21 @@ class _LoginScreenState extends State<LoginScreen> {
               }
             }
           } else {
-            AlertDialog alert = AlertDialog(
-              shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(32.0))),
-              title: Center(
-                  child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text("Oops!",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xff165083),
-                      ),
-                      textAlign: TextAlign.center),
-                  SvgPicture.asset(
-                    'assets/images/error.svg',
-                    fit: BoxFit.fill,
-                  ),
-                  const Text("Something went wrong\n",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black,
-                      ),
-                      textAlign: TextAlign.center),
-                  const Text("Failed to receive data\n",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black,
-                      ),
-                      textAlign: TextAlign.center),
-                  const Text("Please try again later",
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.grey,
-                      ),
-                      textAlign: TextAlign.center),
-                ],
-              )),
-              // actions: [closeButton, okButton],
-            );
-
-            // show the dialog
             if (mounted) {
               Navigator.of(context).pop();
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return alert;
-                },
-              );
+              showErrorDialog(context, "Login Failed!", false);
             }
           }
         }
       } else if (res.statusCode == 503) {
-        AlertDialog alert = AlertDialog(
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(32.0))),
-          title: Center(
-              child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text("Oops!",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xff165083),
-                  ),
-                  textAlign: TextAlign.center),
-              SvgPicture.asset(
-                'assets/images/error.svg',
-                fit: BoxFit.fill,
-              ),
-              const Text("Something went wrong\n",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                  ),
-                  textAlign: TextAlign.center),
-              const Text("Failed while connecting to server\n",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                  ),
-                  textAlign: TextAlign.center),
-              const Text("Please try again later",
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.grey,
-                  ),
-                  textAlign: TextAlign.center),
-            ],
-          )),
-          // actions: [closeButton, okButton],
-        );
-
-        // show the dialog
         if (mounted) {
           Navigator.of(context).pop();
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return alert;
-            },
-          );
+          showErrorDialog(context, "Failed while connecting to server", true);
+        }
+      } else {
+        if (mounted) {
+          Navigator.of(context).pop();
+          showErrorDialog(context, "${resDecoded['message']}", false);
         }
       }
     }

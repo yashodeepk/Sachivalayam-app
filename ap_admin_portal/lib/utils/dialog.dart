@@ -2,7 +2,7 @@ import 'package:ap_admin_portal/utils/constants/theme_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-showErrorDialog(BuildContext context, String message) {
+showErrorDialog(BuildContext context, String message, bool tryLater) {
   AlertDialog alert = AlertDialog(
     shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(32.0))),
@@ -35,13 +35,14 @@ showErrorDialog(BuildContext context, String message) {
               color: Colors.black,
             ),
             textAlign: TextAlign.center),
-        const Text("Please try again later",
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-              color: Colors.grey,
-            ),
-            textAlign: TextAlign.center),
+        if (tryLater)
+          const Text("Please try again later",
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+                color: Colors.grey,
+              ),
+              textAlign: TextAlign.center),
       ],
     )),
     // actions: [closeButton, okButton],

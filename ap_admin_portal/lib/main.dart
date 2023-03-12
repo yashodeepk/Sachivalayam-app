@@ -12,6 +12,7 @@ import 'package:ap_admin_portal/global/globals.dart' as globals;
 import 'app/view/Task/task_page.dart';
 import 'app/view/Zone/zone_page.dart';
 import 'app/view/auth/login/login-screen.dart';
+import 'generated/custom_icons_icons.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -162,28 +163,28 @@ class _AppRootState extends State<AppRoot> {
       },
       items: [
         SidebarXItem(
-          icon: Icons.home,
+          icon: CustomIcons.home_2,
           label: 'Home',
           onTap: () {
             _onItemTapped(0);
           },
         ),
         SidebarXItem(
-          icon: Icons.people,
+          icon: CustomIcons.frame,
           label: 'Secretary',
           onTap: () {
             _onItemTapped(1);
           },
         ),
         SidebarXItem(
-          icon: Icons.file_present_rounded,
+          icon: CustomIcons.clipboard_text,
           label: 'Tasks',
           onTap: () {
             _onItemTapped(2);
           },
         ),
         SidebarXItem(
-          icon: Icons.my_location,
+          icon: CustomIcons.picture_frame,
           label: 'Zone',
           onTap: () {
             _onItemTapped(3);
