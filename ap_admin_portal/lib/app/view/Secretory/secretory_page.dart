@@ -1271,7 +1271,7 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
                                   padding:
                                       const EdgeInsets.fromLTRB(10, 10, 10, 0),
                                   child: SvgPicture.asset(
-                                    'images/success.svg',
+                                    'assets/images/success.svg',
                                     fit: BoxFit.contain,
                                   ),
                                 ),
@@ -1320,7 +1320,7 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
                                   padding:
                                       const EdgeInsets.fromLTRB(10, 10, 10, 0),
                                   child: SvgPicture.asset(
-                                    'images/success.svg',
+                                    'assets/images/success.svg',
                                     fit: BoxFit.contain,
                                   ),
                                 ),
@@ -1369,7 +1369,7 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
                                   padding:
                                       const EdgeInsets.fromLTRB(10, 10, 10, 0),
                                   child: SvgPicture.asset(
-                                    'images/deleted.svg',
+                                    'assets/images/deleted.svg',
                                     fit: BoxFit.contain,
                                   ),
                                 ),
@@ -1659,7 +1659,7 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
                                               CrossAxisAlignment.center,
                                           children: [
                                             SvgPicture.asset(
-                                              'images/delete_check.svg',
+                                              'assets/images/delete_check.svg',
                                               fit: BoxFit.fill,
                                             ),
                                             const Text(

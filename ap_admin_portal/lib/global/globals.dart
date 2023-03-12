@@ -1,8 +1,8 @@
 library booky_app.globals;
 
 bool isLoggedIn = false;
-// String serverUrl = 'ec2-65-0-138-213.ap-south-1.compute.amazonaws.com';
-String serverUrl = 'localhost:8080';
+String serverUrl = 'ec2-65-0-138-213.ap-south-1.compute.amazonaws.com';
+// String serverUrl = 'localhost:8080';
 String loginPath = '/api/auth/signin';
 String statusCountPath = '/api/task_status_count';
 String barGraphDataPath = '/api/task_BarGraph';

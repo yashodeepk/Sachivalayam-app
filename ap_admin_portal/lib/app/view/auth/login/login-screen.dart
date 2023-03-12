@@ -53,7 +53,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 ? MediaQuery.of(context).size.width * 0.5
                 : MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
-            // color: Colors.white,
             child: CustomScrollView(
               physics: const ClampingScrollPhysics(),
               slivers: [
