@@ -91,7 +91,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       switch (i) {
         case 0:
           return PieChartSectionData(
-            color: Color(0xffB6EEBD),
+            color: const Color(0xffB6EEBD),
             value: completedPresent,
             title: '$completedPresent%',
             radius: radius,
@@ -103,7 +103,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           );
         case 1:
           return PieChartSectionData(
-            color: Color(0xffF3F4B4),
+            color: const Color(0xffF3F4B4),
             value: inCompletedPresent,
             title: '$inCompletedPresent%',
             radius: radius,
@@ -342,9 +342,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 resDecoded['results']['data']['completedPercent'];
             completedPresent =
                 double.parse(completedPresent.toStringAsFixed(2));
-            inCompletedPresent = 100 - completedPresent;
+            inCompletedPresent =
+                double.parse((100 - completedPresent).toStringAsFixed(2));
           }
-          // barGraphDataList = resDecoded['results']['data'];
           setState(() {});
         }
       }

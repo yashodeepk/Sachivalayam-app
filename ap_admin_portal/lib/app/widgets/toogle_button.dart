@@ -20,6 +20,8 @@ class ToggleButton extends StatefulWidget {
   final VoidCallback onLeftToggleActive;
   final VoidCallback onRightToggleActive;
 
+  final bool selected;
+
   const ToggleButton(
       {Key? key,
       required this.width,
@@ -31,6 +33,7 @@ class ToggleButton extends StatefulWidget {
       required this.inactiveTextColor,
       required this.leftDescription,
       required this.rightDescription,
+      required this.selected,
       required this.onLeftToggleActive,
       required this.onRightToggleActive})
       : super(key: key);
@@ -49,8 +52,27 @@ class _ToggleButtonState extends State<ToggleButton> {
   void initState() {
     super.initState();
 
-    _leftDescriptionColor = widget.activeTextColor;
-    _rightDescriptionColor = widget.inactiveTextColor;
+    // _leftDescriptionColor = widget.activeTextColor;
+    // _rightDescriptionColor = widget.inactiveTextColor;
+    if (widget.selected) {
+      setState(
+        () {
+          _toggleXAlign = widget._leftToggleAlign;
+
+          _leftDescriptionColor = widget.activeTextColor;
+          _rightDescriptionColor = widget.inactiveTextColor;
+        },
+      );
+    } else {
+      setState(
+        () {
+          _toggleXAlign = widget._rightToggleAlign;
+
+          _leftDescriptionColor = widget.inactiveTextColor;
+          _rightDescriptionColor = widget.activeTextColor;
+        },
+      );
+    }
   }
 
   @override

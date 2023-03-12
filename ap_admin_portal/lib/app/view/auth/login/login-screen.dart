@@ -61,8 +61,22 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     //todo add logo
-                    const Center(
-                      child: Text('LOGO'),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+                      child: Center(
+                        child: Container(
+                          width: 160,
+                          height: 160,
+                          clipBehavior: Clip.antiAlias,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                          ),
+                          child: Image.asset(
+                            'assets/images/logo.png',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
                     ),
                     Expanded(
                       child: Form(
@@ -72,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           padding:
                               const EdgeInsets.symmetric(horizontal: sixteenDp),
                           margin: EdgeInsets.only(
-                              top: MediaQuery.of(context).size.height / 4),
+                              top: MediaQuery.of(context).size.height / 20),
                           decoration: BoxDecoration(
                               borderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(thirtyDp),
@@ -189,19 +203,24 @@ class _LoginScreenState extends State<LoginScreen> {
                                                       () => _showPassword =
                                                           !_showPassword),
                                                 ))),
-                                        Align(
-                                          alignment: Alignment.bottomRight,
-                                          child: InkWell(
-                                            onTap: () {},
-                                            // onForgotPasswordTapped(),
-                                            child: const Text("Forgot Password",
-                                                style: TextStyle(
-                                                    fontFamily:
-                                                        FontFamily.regular,
-                                                    color: ThemeColor
-                                                        .kLightBlack)),
-                                          ),
-                                        ),
+                                        // Align(
+                                        //   alignment: Alignment.bottomRight,
+                                        //   child: InkWell(
+                                        //     onTap: () {
+                                        //       Navigator.push(
+                                        //           context,
+                                        //           MaterialPageRoute(
+                                        //               builder: (context) =>
+                                        //                   const ForgotPasswordScreen()));
+                                        //     },
+                                        //     child: const Text("Forgot Password",
+                                        //         style: TextStyle(
+                                        //             fontFamily:
+                                        //                 FontFamily.regular,
+                                        //             color: ThemeColor
+                                        //                 .kLightBlack)),
+                                        //   ),
+                                        // ),
                                       ]),
                                 ),
                               ),

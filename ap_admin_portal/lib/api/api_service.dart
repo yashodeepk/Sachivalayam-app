@@ -55,6 +55,71 @@ class APIService {
     }
   }
 
+  static Future bulkUploadUser(String fileName, List<int> bytes) async {
+    try {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      String accessToken = pref.getString('ap_admin_portal_access_token') ?? '';
+      final request = http.MultipartRequest(
+        'POST',
+        Uri.http(globals.serverUrl, globals.bulUploadSecretoryDataPath),
+      );
+      request.headers.addAll({
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+        'x-access-token': accessToken
+      });
+      request.files.add(http.MultipartFile.fromBytes('worker_excel', bytes,
+          filename: fileName));
+      var streamedResponse = await request.send();
+      var response = await http.Response.fromStream(streamedResponse);
+      return response;
+    } on Exception catch (err) {
+      return http.Response(
+          "{'message': 'Oops! Something went wrong','error': '$err'}", 503);
+    }
+  }
+
+  static Future updateUser(String payload, String id) async {
+    try {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      String accessToken = pref.getString('ap_admin_portal_access_token') ?? '';
+      final response = await http.put(
+          Uri.http(globals.serverUrl, "${globals.userDataPath}/$id"),
+          headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+            'x-access-token': accessToken
+          },
+          body: payload);
+
+      return response;
+    } on Exception catch (err) {
+      return http.Response(
+          "{'message': 'Oops! Something went wrong','error': '$err'}", 503);
+    }
+  }
+
+  static Future getDownloadList() async {
+    try {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      String accessToken = pref.getString('ap_admin_portal_access_token') ?? '';
+      final response = await http.get(
+        Uri.http(globals.serverUrl, globals.getDownloadDataPath,
+            {'filename': globals.secretoryTemplateName}),
+        headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+          'x-access-token': accessToken
+        },
+      );
+
+      return response;
+    } on Exception catch (err) {
+      return http.Response(
+          "{'message': 'Oops! Something went wrong','error': '$err'}", 503);
+    }
+  }
+
   static Future getTaskCount() async {
     try {
       SharedPreferences pref = await SharedPreferences.getInstance();

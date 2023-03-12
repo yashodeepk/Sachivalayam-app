@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:html';
 
 import 'package:ap_admin_portal/api/api_service.dart';
 import 'package:ap_admin_portal/app/widgets/toogle_button.dart';
@@ -11,7 +12,9 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
@@ -35,6 +38,7 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
   List secretaryFound = [];
   final _scrollController = ScrollController();
   bool showAddedNotification = false;
+  bool showBulkUploadNotification = false;
   bool showUpdatedNotification = false;
   bool showDeleteNotification = false;
   Timer? _timer;
@@ -43,13 +47,19 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
   TextEditingController ageController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  List zoneDataList = [];
   List zoneItems = [];
-  String selectedZone = '';
+  String? selectedZone;
   List wardItems = [];
-  String selectedWard = '';
+  String? selectedWard;
   List swachlayamItems = [];
-  String selectedSwachlayam = '';
+  String? selectedSachivalyam;
   String selectedGender = 'male';
+  List<PlatformFile> _paths = [];
+
+  String totalAddedSecretory = '0';
+  String failedSecretory = '0';
+  String addedSecretory = '0';
 
   final _formKey = GlobalKey<FormState>();
   final _checkKey = GlobalKey<FormState>();
@@ -70,10 +80,12 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
   }
 
   void fetch() {
-    setState(() {
-      pageNo = pageNo + 1;
-    });
-    secretaryData();
+    if (hasMore) {
+      setState(() {
+        pageNo = pageNo + 1;
+      });
+      secretaryData();
+    }
   }
 
   @override
@@ -107,11 +119,54 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
     }
   }
 
+  Future<void> _downloadFiles() async {
+    showLoaderDialog(context);
+    http.Response res = await APIService.getDownloadList();
+    var resDecoded = jsonDecode(res.body);
+    // print(resDecoded);
+    if (res.statusCode >= 200 && res.statusCode <= 300) {
+      if (resDecoded['results'] != null) {
+        if (resDecoded['results']['data'] != null) {
+          if (resDecoded['results']['data']['link'] != null) {
+            try {
+              AnchorElement anchorElement =
+                  AnchorElement(href: resDecoded['results']['data']['link']);
+              anchorElement.setAttribute(
+                  'download', "${resDecoded['results']['data']['name']}.xlsx");
+              anchorElement.click();
+              anchorElement.remove();
+            } catch (e) {
+              if (mounted) {
+                Navigator.of(context).pop();
+                showErrorDialog(
+                    context, "Failed while connecting to server", true);
+              }
+            }
+          }
+        }
+      }
+    } else if (res.statusCode == 503) {
+      if (mounted) {
+        Navigator.of(context).pop();
+        showErrorDialog(context, "Failed while connecting to server", true);
+      }
+    } else {
+      if (mounted) {
+        Navigator.of(context).pop();
+        showErrorDialog(
+            context,
+            resDecoded['message'] == null ? '' : "${resDecoded['message']}",
+            false);
+      }
+    }
+  }
+
   Future<void> addSecretary() async {
     showLoaderDialog(context);
     setState(() {
       showDeleteNotification = false;
       showAddedNotification = false;
+      showBulkUploadNotification = false;
       showUpdatedNotification = false;
     });
     Map data = {
@@ -121,7 +176,7 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
       "phone": contactNumberController.text.trim(),
       "ward": selectedWard,
       "zone": selectedZone,
-      "sachivalyam": selectedSwachlayam,
+      "sachivalyam": selectedSachivalyam,
       "gender": selectedGender,
       "age": ageController.text.trim(),
       "roles": "secretary",
@@ -142,10 +197,180 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
               secretaryFound.add(resDecoded['results']['data']);
               secretaryCount = secretaryCount + 1;
             });
-            _timer = Timer(const Duration(seconds: 3), () {
+            _timer = Timer(const Duration(seconds: 5), () {
               setState(() {
                 showDeleteNotification = false;
                 showAddedNotification = false;
+                showBulkUploadNotification = false;
+                showUpdatedNotification = false;
+              });
+            });
+          }
+        } else {
+          if (mounted) {
+            Navigator.of(context).pop();
+            Navigator.of(context).pop();
+            setState(() {
+              secretaryFound = [];
+            });
+            secretaryData();
+          }
+        }
+      } else {
+        if (mounted) {
+          Navigator.of(context).pop();
+          Navigator.of(context).pop();
+          setState(() {
+            secretaryFound = [];
+          });
+          secretaryData();
+        }
+      }
+    } else if (res.statusCode == 503) {
+      if (mounted) {
+        Navigator.of(context).pop();
+        showErrorDialog(context, "Failed while connecting to server", true);
+      }
+    } else {
+      if (mounted) {
+        Navigator.of(context).pop();
+        showErrorDialog(
+            context,
+            resDecoded['message'] == null ? '' : "${resDecoded['message']}",
+            false);
+      }
+    }
+  }
+
+  Future<void> bulkUploadSecretary() async {
+    if (_paths.isNotEmpty) {
+      showLoaderDialog(context);
+      setState(() {
+        showDeleteNotification = false;
+        showAddedNotification = false;
+        showBulkUploadNotification = false;
+        showUpdatedNotification = false;
+      });
+      http.Response res = await APIService.bulkUploadUser(
+          _paths[0].name, _paths[0].bytes!.cast());
+      // print(res);
+      var resDecoded = jsonDecode(res.body);
+      // print(resDecoded);
+      if (res.statusCode >= 200 && res.statusCode <= 300) {
+        if (resDecoded['message'] != null) {
+          if (resDecoded['message'] == 'success') {
+            if (resDecoded['results'] != null) {
+              if (resDecoded['results']['data'] != null) {
+                if (resDecoded['results']['data']['totalCount'] != null) {
+                  totalAddedSecretory =
+                      resDecoded['results']['data']['totalCount'].toString();
+                }
+                if (resDecoded['results']['data']['addedCount'] != null) {
+                  addedSecretory =
+                      resDecoded['results']['data']['addedCount'].toString();
+                }
+                if (resDecoded['results']['data']['failedCount'] != null) {
+                  failedSecretory =
+                      resDecoded['results']['data']['failedCount'].toString();
+                }
+              }
+            }
+            if (mounted) {
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
+              setState(() {
+                showBulkUploadNotification = true;
+                secretaryFound = [];
+              });
+              secretaryData();
+              _timer = Timer(const Duration(seconds: 10), () {
+                setState(() {
+                  showDeleteNotification = false;
+                  showAddedNotification = false;
+                  showBulkUploadNotification = false;
+                  showUpdatedNotification = false;
+                });
+              });
+            }
+          } else {
+            if (mounted) {
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
+              setState(() {
+                secretaryFound = [];
+              });
+              secretaryData();
+            }
+          }
+        } else {
+          if (mounted) {
+            Navigator.of(context).pop();
+            Navigator.of(context).pop();
+            setState(() {
+              secretaryFound = [];
+            });
+            secretaryData();
+          }
+        }
+      } else if (res.statusCode == 503) {
+        if (mounted) {
+          Navigator.of(context).pop();
+          showErrorDialog(context, "Failed while connecting to server", true);
+        }
+      } else {
+        if (mounted) {
+          Navigator.of(context).pop();
+          showErrorDialog(
+              context,
+              resDecoded['message'] == null ? '' : "${resDecoded['message']}",
+              false);
+        }
+      }
+    }
+  }
+
+  Future<void> updateSecretary(String id) async {
+    showLoaderDialog(context);
+    setState(() {
+      showDeleteNotification = false;
+      showAddedNotification = false;
+      showBulkUploadNotification = false;
+      showUpdatedNotification = false;
+    });
+    Map data = {
+      "name": nameController.text.trim(),
+      "email": emailController.text.trim(),
+      "phone": contactNumberController.text.trim(),
+      "ward": selectedWard,
+      "zone": selectedZone,
+      "sachivalyam": selectedSachivalyam,
+      "gender": selectedGender,
+      "age": ageController.text.trim(),
+      "workingSlots": []
+    };
+    if (passwordController.text.trim().isNotEmpty) {
+      data.addAll({"password": passwordController.text.trim()});
+    }
+    http.Response res = await APIService.updateUser(jsonEncode(data), id);
+    // print(res.statusCode);
+    var resDecoded = jsonDecode(res.body);
+    // print(resDecoded);
+    if (res.statusCode >= 200 && res.statusCode <= 300) {
+      if (resDecoded['message'] != null) {
+        if (resDecoded['message'] == 'success') {
+          if (mounted) {
+            Navigator.of(context).pop();
+            Navigator.of(context).pop();
+            setState(() {
+              showUpdatedNotification = true;
+              secretaryFound = [];
+            });
+            secretaryData();
+            _timer = Timer(const Duration(seconds: 5), () {
+              setState(() {
+                showDeleteNotification = false;
+                showAddedNotification = false;
+                showBulkUploadNotification = false;
                 showUpdatedNotification = false;
               });
             });
@@ -190,6 +415,7 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
     setState(() {
       showDeleteNotification = false;
       showAddedNotification = false;
+      showBulkUploadNotification = false;
       showUpdatedNotification = false;
     });
     http.Response res = await APIService.deleteSecretaryData(id);
@@ -205,10 +431,11 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
               secretaryFound.removeAt(dataIndex);
               secretaryCount = secretaryCount - 1;
             });
-            _timer = Timer(const Duration(seconds: 3), () {
+            _timer = Timer(const Duration(seconds: 5), () {
               setState(() {
                 showDeleteNotification = false;
                 showAddedNotification = false;
+                showBulkUploadNotification = false;
                 showUpdatedNotification = false;
               });
             });
@@ -219,30 +446,25 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
   }
 
   Future<void> zoneData() async {
-    var res = await APIService.getZoneData();
+    var res = await APIService.getAllZoneData();
     if (res.statusCode >= 200 && res.statusCode <= 300) {
       var resDecoded = jsonDecode(res.body);
+      // print(resDecoded);
       if (resDecoded['results'] != null) {
         if (resDecoded['results']['data'] != null) {
-          if (resDecoded['results']['data'][0]['ward'] != null) {
-            List w = resDecoded['results']['data'][0]['ward'];
-            wardItems = w.map((e) => e.toString()).toList();
+          zoneItems = [];
+          for (int i = 0; i < resDecoded['results']['data'].length; i++) {
+            zoneItems.add(resDecoded['results']['data'][i]['name'].toString());
+            zoneDataList.add(resDecoded['results']['data'][i]);
           }
-          if (resDecoded['results']['data'][0]['zone'] != null) {
-            List z = resDecoded['results']['data'][0]['zone'];
-            zoneItems = z.map((e) => e.toString()).toList();
-          }
-          if (resDecoded['results']['data'][0]['sachivalyam'] != null) {
-            List s = resDecoded['results']['data'][0]['sachivalyam'];
-            swachlayamItems = s.map((e) => e.toString()).toList();
-          }
+          print(zoneItems);
           setState(() {});
         }
       }
     }
   }
 
-  addUserDialog() {
+  addUserDialog(bool edit, String? id) {
     AlertDialog alert = AlertDialog(
       key: _checkKey,
       shape: const RoundedRectangleBorder(
@@ -265,8 +487,8 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text("Add New Secretary",
-                          style: TextStyle(
+                      Text(edit ? "Edit Secretary" : "Add New Secretary",
+                          style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                             color: Color(0xff2D2D2D),
@@ -419,16 +641,26 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
                               child: TextFormField(
                                 controller: passwordController,
                                 validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'Please Enter Secretary password.';
-                                  }
-                                  if (value.length < 8) {
-                                    return 'Secretary password should be more that 8 character long.';
+                                  if (!edit) {
+                                    if (value!.isEmpty) {
+                                      return 'Please Enter Secretary password.';
+                                    }
+                                    if (value.length < 9) {
+                                      return 'Secretary password should be more that 8 character long.';
+                                    }
+                                  } else {
+                                    if (value!.isNotEmpty) {
+                                      if (value.length < 9) {
+                                        return 'Secretary password should be more that 8 character long.';
+                                      }
+                                    }
                                   }
                                   return null;
                                 },
                                 decoration: InputDecoration(
-                                  hintText: 'Enter Secretary password here',
+                                  hintText: edit
+                                      ? 'Enter New Secretary password here'
+                                      : 'Enter Secretary password here',
                                   hintStyle: const TextStyle(
                                       fontWeight: FontWeight.normal),
                                   enabledBorder: UnderlineInputBorder(
@@ -482,7 +714,7 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
                                   if (int.tryParse(value) == null) {
                                     return 'Contact number needs to be a number.';
                                   }
-                                  if (value.length < 10) {
+                                  if (value.length != 10) {
                                     return 'Contact number needs to be 10 character long.';
                                   }
                                   return null;
@@ -533,6 +765,7 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
                             child: ToggleButton(
                               width: 320.0,
                               height: 38.0,
+                              selected: true,
                               toggleBackgroundColor: const Color(0xffF8F8F8),
                               toggleBorderColor: Colors.transparent,
                               toggleColor: const Color(0xffEDF7FF),
@@ -624,253 +857,363 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
                       ),
                     ),
                     Expanded(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.fromLTRB(0, 0, 0, 15),
-                            child: Text(
-                              "Work Area Information",
+                      child: StatefulBuilder(builder: (context, setModelState) {
+                        return Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.fromLTRB(0, 0, 0, 15),
+                              child: Text(
+                                "Work Area Information",
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            const Text(
+                              "Zone",
                               textAlign: TextAlign.start,
                               style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold),
+                                  fontSize: 16, fontWeight: FontWeight.w500),
                             ),
-                          ),
-                          const Text(
-                            "Zone",
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w500),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 5, 0, 10),
-                            child: SizedBox(
-                              width: 320,
-                              child: DropdownButtonFormField2(
-                                decoration: InputDecoration(
-                                  //Add isDense true and zero Padding.
-                                  //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
-                                  isDense: true,
-                                  filled: true,
-                                  fillColor: const Color(0xffF8F8F8),
-                                  contentPadding: EdgeInsets.zero,
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius: BorderRadius.circular(10),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 5, 0, 10),
+                              child: SizedBox(
+                                width: 320,
+                                child: DropdownButtonFormField2(
+                                  decoration: InputDecoration(
+                                    //Add isDense true and zero Padding.
+                                    //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
+                                    isDense: true,
+                                    filled: true,
+                                    fillColor: const Color(0xffF8F8F8),
+                                    contentPadding: EdgeInsets.zero,
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide.none,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    //Add more decoration as you want here
+                                    //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
                                   ),
-                                  //Add more decoration as you want here
-                                  //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
-                                ),
-                                isExpanded: true,
-                                hint: const Text(
-                                  'Select work zone',
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                                items: zoneItems
-                                    .map((item) => DropdownMenuItem<String>(
-                                          value: item,
-                                          child: Text(
-                                            item,
-                                            style: const TextStyle(
-                                              fontSize: 14,
+                                  isExpanded: true,
+                                  value: selectedZone,
+                                  hint: const Text(
+                                    'Select work zone',
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                  items: zoneItems
+                                      .map((item) => DropdownMenuItem<String>(
+                                            value: item,
+                                            child: Text(
+                                              item,
+                                              style: const TextStyle(
+                                                fontSize: 14,
+                                              ),
                                             ),
-                                          ),
-                                        ))
-                                    .toList(),
-                                validator: (value) {
-                                  if (value == null) {
-                                    return 'Please select zone.';
-                                  }
-                                  return null;
-                                },
-                                onChanged: (value) {
-                                  //Do something when changing the item if you want.
-                                  setState(() {
-                                    selectedZone = value.toString();
-                                  });
-                                },
-                                onSaved: (value) {
-                                  setState(() {
-                                    selectedZone = value.toString();
-                                  });
-                                },
-                                buttonStyleData: const ButtonStyleData(
-                                  height: 60,
-                                  padding: EdgeInsets.only(left: 20, right: 10),
-                                ),
-                                iconStyleData: const IconStyleData(
-                                  icon: Icon(
-                                    Icons.keyboard_arrow_down,
-                                    color: Colors.black45,
+                                          ))
+                                      .toList(),
+                                  validator: (value) {
+                                    if (value == null || value == '') {
+                                      return 'Please select zone.';
+                                    }
+                                    return null;
+                                  },
+                                  onChanged: (value) {
+                                    //Do something when changing the item if you want.
+                                    if (value != null && value != '') {
+                                      List checkZone = zoneDataList
+                                          .where((element) =>
+                                              element['name'].toString() ==
+                                              value.toString())
+                                          .toList();
+                                      print(checkZone);
+                                      if (checkZone.isNotEmpty) {
+                                        setState(() {
+                                          selectedWard = null;
+                                          selectedSachivalyam = null;
+                                          selectedZone = value.toString();
+                                          wardItems = [];
+                                          swachlayamItems = [];
+                                          for (var i = 0;
+                                              i < checkZone[0]['ward'].length;
+                                              i++) {
+                                            wardItems.add(checkZone[0]['ward']
+                                                    [i]['name']
+                                                .toString());
+                                            // for (var j = 0;
+                                            //     j <
+                                            //         checkZone[0]['ward'][i]
+                                            //                 ['sachivalyam']
+                                            //             .length;
+                                            //     j++) {
+                                            //   swachlayamItems.add(checkZone[0]
+                                            //               ['ward'][i]
+                                            //           ['sachivalyam'][j]['name']
+                                            //       .toString());
+                                            // }
+                                          }
+                                        });
+                                        setModelState(() {});
+                                      }
+                                    }
+                                  },
+                                  onSaved: (value) {
+                                    if (value != null && value != '') {
+                                      List checkZone = zoneDataList
+                                          .where((element) =>
+                                              element['name'].toString() ==
+                                              value.toString())
+                                          .toList();
+                                      print(checkZone);
+                                      if (checkZone.isNotEmpty) {
+                                        setState(() {
+                                          selectedWard = null;
+                                          selectedSachivalyam = null;
+                                          selectedZone = value.toString();
+                                          wardItems = [];
+                                          swachlayamItems = [];
+                                          for (var i = 0;
+                                              i < checkZone[0]['ward'].length;
+                                              i++) {
+                                            wardItems.add(checkZone[0]['ward']
+                                                    [i]['name']
+                                                .toString());
+                                            // for (var j = 0;
+                                            //     j <
+                                            //         checkZone[0]['ward'][i]
+                                            //                 ['sachivalyam']
+                                            //             .length;
+                                            //     j++) {
+                                            //   swachlayamItems.add(checkZone[0]
+                                            //               ['ward'][i]
+                                            //           ['sachivalyam'][j]['name']
+                                            //       .toString());
+                                            // }
+                                          }
+                                        });
+                                        setModelState(() {});
+                                      }
+                                    }
+                                  },
+                                  buttonStyleData: const ButtonStyleData(
+                                    height: 60,
+                                    padding:
+                                        EdgeInsets.only(left: 20, right: 10),
                                   ),
-                                  iconSize: 30,
-                                ),
-                                dropdownStyleData: DropdownStyleData(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(15),
+                                  iconStyleData: const IconStyleData(
+                                    icon: Icon(
+                                      Icons.keyboard_arrow_down,
+                                      color: Colors.black45,
+                                    ),
+                                    iconSize: 30,
+                                  ),
+                                  dropdownStyleData: DropdownStyleData(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                          const Text(
-                            "Ward",
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w500),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 5, 0, 10),
-                            child: SizedBox(
-                              width: 320,
-                              child: DropdownButtonFormField2(
-                                decoration: InputDecoration(
-                                  //Add isDense true and zero Padding.
-                                  //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
-                                  isDense: true,
-                                  filled: true,
-                                  fillColor: const Color(0xffF8F8F8),
-                                  contentPadding: EdgeInsets.zero,
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius: BorderRadius.circular(10),
+                            const Text(
+                              "Ward",
+                              textAlign: TextAlign.start,
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w500),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 5, 0, 10),
+                              child: SizedBox(
+                                width: 320,
+                                child: DropdownButtonFormField2(
+                                  decoration: InputDecoration(
+                                    //Add isDense true and zero Padding.
+                                    //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
+                                    isDense: true,
+                                    filled: true,
+                                    fillColor: const Color(0xffF8F8F8),
+                                    contentPadding: EdgeInsets.zero,
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide.none,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    //Add more decoration as you want here
+                                    //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
                                   ),
-                                  //Add more decoration as you want here
-                                  //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
-                                ),
-                                isExpanded: true,
-                                hint: const Text(
-                                  'Select work ward',
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                                items: wardItems
-                                    .map((item) => DropdownMenuItem<String>(
-                                          value: item,
-                                          child: Text(
-                                            item,
-                                            style: const TextStyle(
-                                              fontSize: 14,
+                                  isExpanded: true,
+                                  value: selectedWard,
+                                  hint: const Text(
+                                    'Select work ward',
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                  items: wardItems
+                                      .map((item) => DropdownMenuItem<String>(
+                                            value: item,
+                                            child: Text(
+                                              item,
+                                              style: const TextStyle(
+                                                fontSize: 14,
+                                              ),
                                             ),
-                                          ),
-                                        ))
-                                    .toList(),
-                                validator: (value) {
-                                  if (value == null) {
-                                    return 'Please select ward.';
-                                  }
-                                  return null;
-                                },
-                                onChanged: (value) {
-                                  //Do something when changing the item if you want.
-                                  setState(() {
-                                    selectedWard = value.toString();
-                                  });
-                                },
-                                onSaved: (value) {
-                                  setState(() {
-                                    selectedWard = value.toString();
-                                  });
-                                },
-                                buttonStyleData: const ButtonStyleData(
-                                  height: 60,
-                                  padding: EdgeInsets.only(left: 20, right: 10),
-                                ),
-                                iconStyleData: const IconStyleData(
-                                  icon: Icon(
-                                    Icons.keyboard_arrow_down,
-                                    color: Colors.black45,
+                                          ))
+                                      .toList(),
+                                  validator: (value) {
+                                    if (value == null || value == '') {
+                                      return 'Please select ward.';
+                                    }
+                                    return null;
+                                  },
+                                  onChanged: (value) {
+                                    //Do something when changing the item if you want.
+                                    if (value != null && value != '') {
+                                      List checkZone = zoneDataList
+                                          .where((element) =>
+                                              element['name'].toString() ==
+                                              selectedZone)
+                                          .toList();
+                                      List checkWard = checkZone[0]['ward']
+                                          .where((element) =>
+                                              element['name'].toString() ==
+                                              value.toString())
+                                          .toList();
+                                      print(checkWard);
+                                      if (checkWard.isNotEmpty) {
+                                        setState(() {
+                                          selectedWard = value.toString();
+                                          selectedSachivalyam = null;
+                                          swachlayamItems = [];
+                                          for (var i = 0;
+                                              i <
+                                                  checkWard[0]['sachivalyam']
+                                                      .length;
+                                              i++) {
+                                            swachlayamItems.add(checkWard[0]
+                                                    ['sachivalyam'][i]['name']
+                                                .toString());
+                                          }
+                                        });
+                                        setModelState(() {});
+                                      }
+                                    }
+                                  },
+                                  onSaved: (value) {
+                                    if (value != null && value != '') {
+                                      setState(() {
+                                        selectedWard = value.toString();
+                                      });
+                                      setModelState(() {});
+                                    }
+                                  },
+                                  buttonStyleData: const ButtonStyleData(
+                                    height: 60,
+                                    padding:
+                                        EdgeInsets.only(left: 20, right: 10),
                                   ),
-                                  iconSize: 30,
-                                ),
-                                dropdownStyleData: DropdownStyleData(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(15),
+                                  iconStyleData: const IconStyleData(
+                                    icon: Icon(
+                                      Icons.keyboard_arrow_down,
+                                      color: Colors.black45,
+                                    ),
+                                    iconSize: 30,
+                                  ),
+                                  dropdownStyleData: DropdownStyleData(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                          const Text(
-                            "Swachlayam",
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w500),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 5, 0, 10),
-                            child: SizedBox(
-                              width: 320,
-                              child: DropdownButtonFormField2(
-                                decoration: InputDecoration(
-                                  //Add isDense true and zero Padding.
-                                  //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
-                                  isDense: true,
-                                  filled: true,
-                                  fillColor: const Color(0xffF8F8F8),
-                                  contentPadding: EdgeInsets.zero,
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius: BorderRadius.circular(10),
+                            const Text(
+                              "Swachlayam",
+                              textAlign: TextAlign.start,
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w500),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 5, 0, 10),
+                              child: SizedBox(
+                                width: 320,
+                                child: DropdownButtonFormField2(
+                                  decoration: InputDecoration(
+                                    //Add isDense true and zero Padding.
+                                    //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
+                                    isDense: true,
+                                    filled: true,
+                                    fillColor: const Color(0xffF8F8F8),
+                                    contentPadding: EdgeInsets.zero,
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide.none,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    //Add more decoration as you want here
+                                    //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
                                   ),
-                                  //Add more decoration as you want here
-                                  //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
-                                ),
-                                isExpanded: true,
-                                hint: const Text(
-                                  'Select work Swachlayam',
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                                items: swachlayamItems
-                                    .map((item) => DropdownMenuItem<String>(
-                                          value: item,
-                                          child: Text(
-                                            item,
-                                            style: const TextStyle(
-                                              fontSize: 14,
+                                  isExpanded: true,
+                                  value: selectedSachivalyam,
+                                  hint: const Text(
+                                    'Select work Swachlayam',
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                  items: swachlayamItems
+                                      .map((item) => DropdownMenuItem<String>(
+                                            value: item,
+                                            child: Text(
+                                              item,
+                                              style: const TextStyle(
+                                                fontSize: 14,
+                                              ),
                                             ),
-                                          ),
-                                        ))
-                                    .toList(),
-                                validator: (value) {
-                                  if (value == null) {
-                                    return 'Please select swachlayam.';
-                                  }
-                                  return null;
-                                },
-                                onChanged: (value) {
-                                  setState(() {
-                                    selectedSwachlayam = value.toString();
-                                  });
-                                  //Do something when changing the item if you want.
-                                },
-                                onSaved: (value) {
-                                  setState(() {
-                                    selectedSwachlayam = value.toString();
-                                  });
-                                },
-                                buttonStyleData: const ButtonStyleData(
-                                  height: 60,
-                                  padding: EdgeInsets.only(left: 20, right: 10),
-                                ),
-                                iconStyleData: const IconStyleData(
-                                  icon: Icon(
-                                    Icons.keyboard_arrow_down,
-                                    color: Colors.black45,
+                                          ))
+                                      .toList(),
+                                  validator: (value) {
+                                    if (value == null || value == '') {
+                                      return 'Please select swachlayam.';
+                                    }
+                                    return null;
+                                  },
+                                  onChanged: (value) {
+                                    if (value != null && value != '') {
+                                      setState(() {
+                                        selectedSachivalyam = value.toString();
+                                      });
+                                      setModelState(() {});
+                                    }
+                                    //Do something when changing the item if you want.
+                                  },
+                                  onSaved: (value) {
+                                    if (value != null && value != '') {
+                                      setState(() {
+                                        selectedSachivalyam = value.toString();
+                                      });
+                                      setModelState(() {});
+                                    }
+                                  },
+                                  buttonStyleData: const ButtonStyleData(
+                                    height: 60,
+                                    padding:
+                                        EdgeInsets.only(left: 20, right: 10),
                                   ),
-                                  iconSize: 30,
-                                ),
-                                dropdownStyleData: DropdownStyleData(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(15),
+                                  iconStyleData: const IconStyleData(
+                                    icon: Icon(
+                                      Icons.keyboard_arrow_down,
+                                      color: Colors.black45,
+                                    ),
+                                    iconSize: 30,
+                                  ),
+                                  dropdownStyleData: DropdownStyleData(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
+                          ],
+                        );
+                      }),
                     ),
                   ],
                 ),
@@ -878,28 +1221,29 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
                   padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                   child: Row(
                     children: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          Future.delayed(Duration.zero, () {
-                            bulkUploadUserDialog();
-                          });
-                        },
-                        style: TextButton.styleFrom(
-                            backgroundColor: Colors.transparent,
-                            minimumSize: const Size(130, 50),
-                            shape: RoundedRectangleBorder(
-                                side: const BorderSide(
-                                    color: ThemeColor.kPrimaryGreen),
-                                borderRadius: BorderRadius.circular(10))),
-                        child: const Text(
-                          'Bulk Upload',
-                          style: TextStyle(
-                              color: ThemeColor.kPrimaryGreen,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500),
+                      if (!edit)
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            Future.delayed(Duration.zero, () {
+                              bulkUploadUserDialog();
+                            });
+                          },
+                          style: TextButton.styleFrom(
+                              backgroundColor: Colors.transparent,
+                              minimumSize: const Size(130, 50),
+                              shape: RoundedRectangleBorder(
+                                  side: const BorderSide(
+                                      color: ThemeColor.kPrimaryGreen),
+                                  borderRadius: BorderRadius.circular(10))),
+                          child: const Text(
+                            'Bulk Upload',
+                            style: TextStyle(
+                                color: ThemeColor.kPrimaryGreen,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500),
+                          ),
                         ),
-                      ),
                       const Spacer(),
                       Row(
                         children: [
@@ -921,8 +1265,12 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
                           ),
                           TextButton(
                             onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                addSecretary();
+                              if (!edit) {
+                                if (_formKey.currentState!.validate()) {
+                                  addSecretary();
+                                }
+                              } else {
+                                updateSecretary(id!);
                               }
                             },
                             style: TextButton.styleFrom(
@@ -930,9 +1278,9 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
                                 minimumSize: const Size(130, 50),
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10))),
-                            child: const Text(
-                              'Add Secretary',
-                              style: TextStyle(
+                            child: Text(
+                              edit ? 'Save' : 'Add Secretary',
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 18,
                                   fontWeight: FontWeight.w500),
@@ -967,8 +1315,7 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
       titlePadding: EdgeInsets.zero,
       title: Container(
         width: MediaQuery.of(context).size.width * 0.59,
-        height: MediaQuery.of(context).size.height * 0.89,
-        // padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
+        height: MediaQuery.of(context).size.height * 0.85,
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -985,7 +1332,7 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
                         if (mounted) {
                           Navigator.of(context).pop();
                           Future.delayed(Duration.zero, () {
-                            addUserDialog();
+                            addUserDialog(false, null);
                           });
                         }
                       },
@@ -1047,7 +1394,7 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
                             width: (MediaQuery.of(context).size.width * 0.59) *
                                 0.45,
                             height:
-                                (MediaQuery.of(context).size.height * 0.89) *
+                                (MediaQuery.of(context).size.height * 0.85) *
                                     0.6,
                             decoration: BoxDecoration(
                                 color: const Color(0xffF8F8F8),
@@ -1073,7 +1420,9 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
                                           fontWeight: FontWeight.w400)),
                                 ),
                                 InkWell(
-                                  onTap: () {},
+                                  onTap: () {
+                                    _downloadFiles();
+                                  },
                                   child: const Text('Download',
                                       style: TextStyle(
                                           decoration: TextDecoration.underline,
@@ -1098,80 +1447,154 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
                       ),
                     ),
                     Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.fromLTRB(0, 0, 0, 15),
-                            child: Text(
-                              "Upload Secretary List",
-                              textAlign: TextAlign.start,
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          DottedBorder(
-                            dashPattern: [6, 6],
-                            color: const Color(0xff6D6D6D),
-                            radius: Radius.circular(10),
-                            borderType: BorderType.RRect,
-                            strokeCap: StrokeCap.round,
-                            child: Container(
-                              width:
-                                  (MediaQuery.of(context).size.width * 0.59) *
-                                      0.45,
-                              height:
-                                  (MediaQuery.of(context).size.height * 0.89) *
-                                      0.6,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const Icon(
-                                    CustomIcons.file,
-                                    color: Color(0xffC7C7C7),
-                                    size: 50,
-                                  ),
-                                  const Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Text('Upload secretary list here',
-                                        maxLines: 2,
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            color: Color(0xff6D6D6D),
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w400)),
-                                  ),
-                                  InkWell(
-                                    onTap: () {},
-                                    child: const Text('Upload',
-                                        style: TextStyle(
-                                            decoration:
-                                                TextDecoration.underline,
-                                            color: Color(0xff165083),
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w400)),
-                                  ),
-                                  const Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Text('Or drop a file here',
-                                        maxLines: 2,
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            color: Color(0xff6D6D6D),
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w400)),
-                                  ),
-                                ],
+                      child: StatefulBuilder(builder: (context, setModelState) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.fromLTRB(0, 0, 0, 15),
+                              child: Text(
+                                "Upload Secretary List",
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
+                            DottedBorder(
+                              dashPattern: [6, 6],
+                              color: const Color(0xff6D6D6D),
+                              radius: Radius.circular(10),
+                              borderType: BorderType.RRect,
+                              strokeCap: StrokeCap.round,
+                              child: Container(
+                                width:
+                                    (MediaQuery.of(context).size.width * 0.59) *
+                                        0.45,
+                                height: (MediaQuery.of(context).size.height *
+                                        0.85) *
+                                    0.6,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    const Icon(
+                                      CustomIcons.file,
+                                      color: Color(0xffC7C7C7),
+                                      size: 50,
+                                    ),
+                                    const Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Text('Upload secretary list here',
+                                          maxLines: 2,
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: Color(0xff6D6D6D),
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w400)),
+                                    ),
+                                    InkWell(
+                                      onTap: () async {
+                                        try {
+                                          _paths = (await FilePicker.platform
+                                                  .pickFiles(
+                                                      type: FileType.custom,
+                                                      allowMultiple: false,
+                                                      onFileLoading:
+                                                          (FilePickerStatus
+                                                                  status) =>
+                                                              print(status),
+                                                      allowedExtensions: [
+                                                "xls",
+                                                "xlsx",
+                                                "xlsb",
+                                                "xltx",
+                                                "xltm",
+                                                "xls",
+                                                "xlt",
+                                                "xml",
+                                                'csv'
+                                              ]))!
+                                              .files;
+                                          // print(_paths);
+                                          print(_paths[0].name);
+                                        } on PlatformException catch (e) {
+                                          print(e);
+                                        } catch (e) {
+                                          print(e);
+                                        }
+                                        if (mounted) {
+                                          setState(() {});
+                                          setModelState(() {});
+                                        }
+                                      },
+                                      child: Container(
+                                        width: 110,
+                                        height: 40,
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: const Color(0xff165083),
+                                            ),
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(40))),
+                                        child: const Center(
+                                          child: Text('Upload',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  color: Color(0xff165083),
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w400)),
+                                        ),
+                                      ),
+                                    ),
+                                    if (_paths.isNotEmpty)
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Container(
+                                          height: 50,
+                                          padding: const EdgeInsets.all(8.0),
+                                          decoration: const BoxDecoration(
+                                              color: Color(0xffEDF7FF),
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10))),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(_paths[0].name,
+                                                  maxLines: 2,
+                                                  textAlign: TextAlign.center,
+                                                  style: const TextStyle(
+                                                      color: Color(0xff165083),
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w400)),
+                                              InkWell(
+                                                  onTap: () {
+                                                    _paths.clear();
+                                                    if (mounted) {
+                                                      setState(() {});
+                                                      setModelState(() {});
+                                                    }
+                                                  },
+                                                  child: const Icon(
+                                                      CustomIcons.cancel,
+                                                      color: Color(0xffFF5151)))
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      }),
                     ),
                   ],
                 ),
@@ -1201,9 +1624,7 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
                         ),
                         TextButton(
                           onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              addSecretary();
-                            }
+                            bulkUploadSecretary();
                           },
                           style: TextButton.styleFrom(
                               backgroundColor: const Color(0xff558F60),
@@ -1288,6 +1709,56 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
                                     onTap: () {
                                       setState(() {
                                         showAddedNotification = false;
+                                      });
+                                    },
+                                    child: const Icon(
+                                      CustomIcons.cancel,
+                                      size: 23,
+                                      color: Color(0xffFF5151),
+                                    ),
+                                  ),
+                                )
+                              ]),
+                        ),
+                      ),
+              ),
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 500),
+                child: !showBulkUploadNotification
+                    ? const SizedBox.shrink()
+                    : Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 8.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border:
+                                  Border.all(color: const Color(0xff8FDA9B)),
+                              color: const Color(0xffCCF0D2),
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                                  child: SvgPicture.asset(
+                                    'assets/images/success.svg',
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    'Bulk Upload Completed, Total Secretory Found: $totalAddedSecretory, Added: $addedSecretory, Failed: $failedSecretory',
+                                    textAlign: TextAlign.left,
+                                    style: const TextStyle(
+                                        color: Color(0xff1C6428)),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(10),
+                                  child: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        showBulkUploadNotification = false;
                                       });
                                     },
                                     child: const Icon(
@@ -1429,7 +1900,18 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
                           const EdgeInsetsDirectional.fromSTEB(40, 0, 0, 0),
                       child: TextButton(
                         onPressed: () {
-                          addUserDialog();
+                          setState(() {
+                            nameController.text = '';
+                            emailController.text = '';
+                            passwordController.text = '';
+                            contactNumberController.text = '';
+                            ageController.text = '';
+                            selectedGender = 'male';
+                            selectedZone = null;
+                            selectedWard = null;
+                            selectedSachivalyam = null;
+                          });
+                          addUserDialog(false, null);
                         },
                         style: TextButton.styleFrom(
                             backgroundColor: const Color(0xff558F60),
@@ -1471,9 +1953,20 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
                         ),
                       ),
                       DataColumn2(
-                        fixedWidth: MediaQuery.of(context).size.width * 0.15,
+                        fixedWidth: MediaQuery.of(context).size.width * 0.12,
                         label: const Text(
                           'Name',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      DataColumn2(
+                        fixedWidth: MediaQuery.of(context).size.width * 0.12,
+                        label: const Text(
+                          'Email',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 14,
@@ -1502,6 +1995,7 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
                         ),
                       ),
                       const DataColumn2(
+                        fixedWidth: 70,
                         label: Text(
                           'Age',
                           textAlign: TextAlign.center,
@@ -1512,6 +2006,7 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
                         ),
                       ),
                       const DataColumn2(
+                        fixedWidth: 70,
                         label: Text(
                           'Zone',
                           textAlign: TextAlign.center,
@@ -1522,6 +2017,7 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
                         ),
                       ),
                       const DataColumn2(
+                        fixedWidth: 70,
                         label: Text(
                           'Ward',
                           textAlign: TextAlign.center,
@@ -1563,6 +2059,16 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
                             DataCell(Text(
                               secretaryFound[i]['name'] != null
                                   ? '${secretaryFound[i]['name']}'
+                                  : '',
+                              textAlign: TextAlign.start,
+                              style: const TextStyle(
+                                fontSize: 12,
+                                color: Color(0xff202020),
+                              ),
+                            )),
+                            DataCell(Text(
+                              secretaryFound[i]['email'] != null
+                                  ? '${secretaryFound[i]['email']}'
                                   : '',
                               textAlign: TextAlign.start,
                               style: const TextStyle(
@@ -1634,7 +2140,96 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 InkWell(
-                                  onTap: () {},
+                                  onTap: () {
+                                    setState(() {
+                                      if (secretaryFound[i]['name'] != null) {
+                                        nameController.text = secretaryFound[i]
+                                                ['name']
+                                            .toString();
+                                      }
+                                      if (secretaryFound[i]['phone'] != null) {
+                                        contactNumberController.text =
+                                            secretaryFound[i]['phone']
+                                                .toString();
+                                      }
+                                      if (secretaryFound[i]['gender'] != null) {
+                                        selectedGender = secretaryFound[i]
+                                                ['gender']
+                                            .toString();
+                                      }
+                                      if (secretaryFound[i]['age'] != null) {
+                                        ageController.text =
+                                            secretaryFound[i]['age'].toString();
+                                      }
+                                      if (secretaryFound[i]['email'] != null) {
+                                        emailController.text = secretaryFound[i]
+                                                ['email']
+                                            .toString();
+                                      }
+                                      zoneItems = [];
+                                      for (var element in zoneDataList) {
+                                        zoneItems.add(element['name']);
+                                      }
+                                      List zoneCheck = zoneDataList
+                                          .where((element) =>
+                                              element['name'] ==
+                                              secretaryFound[i]['zone']
+                                                  .toString())
+                                          .toList();
+                                      if (zoneCheck.isNotEmpty) {
+                                        if (secretaryFound[i]['zone'] != null) {
+                                          selectedZone = secretaryFound[i]
+                                                  ['zone']
+                                              .toString();
+                                        }
+                                        wardItems = [];
+                                        for (var element in zoneCheck[0]
+                                            ['ward']) {
+                                          wardItems.add(element['name']);
+                                        }
+                                        List wardCheck = zoneCheck[0]['ward']
+                                            .where((element) =>
+                                                element['name'] ==
+                                                secretaryFound[i]['ward']
+                                                    .toString())
+                                            .toList();
+                                        if (wardCheck.isNotEmpty) {
+                                          if (secretaryFound[i]['ward'] !=
+                                              null) {
+                                            selectedWard = secretaryFound[i]
+                                                    ['ward']
+                                                .toString();
+                                          }
+                                          swachlayamItems = [];
+                                          for (var element in wardCheck[0]
+                                              ['sachivalyam']) {
+                                            swachlayamItems
+                                                .add(element['name']);
+                                          }
+                                          List sachivalyamCheck = wardCheck[0]
+                                                  ['sachivalyam']
+                                              .where((element) =>
+                                                  element['name'] ==
+                                                  secretaryFound[i]
+                                                          ['sachivalyam']
+                                                      .toString())
+                                              .toList();
+                                          if (sachivalyamCheck.isNotEmpty) {
+                                            if (secretaryFound[i]
+                                                    ['sachivalyam'] !=
+                                                null) {
+                                              selectedSachivalyam =
+                                                  secretaryFound[i]
+                                                          ['sachivalyam']
+                                                      .toString();
+                                            }
+                                          }
+                                        }
+                                      }
+                                    });
+                                    addUserDialog(
+                                        true, secretaryFound[i]['_id']);
+                                  },
                                   child: const Icon(
                                     CustomIcons.edit,
                                     color: Color(0xff165083),
@@ -1784,6 +2379,9 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
                         else if (i == secretaryFound.length)
                           if (hasMore)
                             DataRow(cells: [
+                              const DataCell(Text(
+                                '',
+                              )),
                               const DataCell(Text(
                                 '',
                               )),
