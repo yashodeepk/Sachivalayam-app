@@ -52,7 +52,7 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
   String? selectedZone;
   List wardItems = [];
   String? selectedWard;
-  List swachlayamItems = [];
+  List sachivalyamItems = [];
   String? selectedSachivalyam;
   String selectedGender = 'male';
   List<PlatformFile> _paths = [];
@@ -135,6 +135,9 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
                   'download', "${resDecoded['results']['data']['name']}.xlsx");
               anchorElement.click();
               anchorElement.remove();
+              if (mounted) {
+                Navigator.of(context).pop();
+              }
             } catch (e) {
               if (mounted) {
                 Navigator.of(context).pop();
@@ -935,7 +938,7 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
                                           selectedSachivalyam = null;
                                           selectedZone = value.toString();
                                           wardItems = [];
-                                          swachlayamItems = [];
+                                          sachivalyamItems = [];
                                           for (var i = 0;
                                               i < checkZone[0]['ward'].length;
                                               i++) {
@@ -948,7 +951,7 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
                                             //                 ['sachivalyam']
                                             //             .length;
                                             //     j++) {
-                                            //   swachlayamItems.add(checkZone[0]
+                                            //   sachivalyamItems.add(checkZone[0]
                                             //               ['ward'][i]
                                             //           ['sachivalyam'][j]['name']
                                             //       .toString());
@@ -973,7 +976,7 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
                                           selectedSachivalyam = null;
                                           selectedZone = value.toString();
                                           wardItems = [];
-                                          swachlayamItems = [];
+                                          sachivalyamItems = [];
                                           for (var i = 0;
                                               i < checkZone[0]['ward'].length;
                                               i++) {
@@ -986,7 +989,7 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
                                             //                 ['sachivalyam']
                                             //             .length;
                                             //     j++) {
-                                            //   swachlayamItems.add(checkZone[0]
+                                            //   sachivalyamItems.add(checkZone[0]
                                             //               ['ward'][i]
                                             //           ['sachivalyam'][j]['name']
                                             //       .toString());
@@ -1083,13 +1086,13 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
                                         setState(() {
                                           selectedWard = value.toString();
                                           selectedSachivalyam = null;
-                                          swachlayamItems = [];
+                                          sachivalyamItems = [];
                                           for (var i = 0;
                                               i <
                                                   checkWard[0]['sachivalyam']
                                                       .length;
                                               i++) {
-                                            swachlayamItems.add(checkWard[0]
+                                            sachivalyamItems.add(checkWard[0]
                                                     ['sachivalyam'][i]['name']
                                                 .toString());
                                           }
@@ -1127,7 +1130,7 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
                               ),
                             ),
                             const Text(
-                              "Swachlayam",
+                              "Sachivalyam",
                               textAlign: TextAlign.start,
                               style: TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.w500),
@@ -1154,10 +1157,10 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
                                   isExpanded: true,
                                   value: selectedSachivalyam,
                                   hint: const Text(
-                                    'Select work Swachlayam',
+                                    'Select work Sachivalyam',
                                     style: TextStyle(fontSize: 16),
                                   ),
-                                  items: swachlayamItems
+                                  items: sachivalyamItems
                                       .map((item) => DropdownMenuItem<String>(
                                             value: item,
                                             child: Text(
@@ -1170,7 +1173,7 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
                                       .toList(),
                                   validator: (value) {
                                     if (value == null || value == '') {
-                                      return 'Please select swachlayam.';
+                                      return 'Please select Sachivalyam.';
                                     }
                                     return null;
                                   },
@@ -2029,7 +2032,7 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
                       ),
                       const DataColumn2(
                         label: Text(
-                          'Swachlaym',
+                          'Sachivalyam',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 14,
@@ -2200,10 +2203,10 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
                                                     ['ward']
                                                 .toString();
                                           }
-                                          swachlayamItems = [];
+                                          sachivalyamItems = [];
                                           for (var element in wardCheck[0]
                                               ['sachivalyam']) {
-                                            swachlayamItems
+                                            sachivalyamItems
                                                 .add(element['name']);
                                           }
                                           List sachivalyamCheck = wardCheck[0]

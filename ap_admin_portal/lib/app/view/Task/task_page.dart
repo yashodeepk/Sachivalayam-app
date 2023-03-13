@@ -28,12 +28,12 @@ class _TaskWidgetState extends State<TaskWidget> {
 
   List<String> zoneItems = [];
   List<String> wardItems = [];
-  List<String> swachlayamItems = [];
+  List<String> sachivalyamItems = [];
   List<String> statusItems = ['Ongoing', 'Completed', 'In-review'];
   List<String> selectedZone = [];
   List<String> selectedStatus = [];
   List<String> selectedWard = [];
-  List<String> selectedSwachlayam = [];
+  List<String> selectedSachivalyam = [];
   DateTime selectedDate = DateTime.now();
 
   @override
@@ -82,9 +82,9 @@ class _TaskWidgetState extends State<TaskWidget> {
         "Ward": selectedWard,
       });
     }
-    if (selectedSwachlayam.isNotEmpty) {
+    if (selectedSachivalyam.isNotEmpty) {
       data.addAll({
-        "Swachlayam": selectedSwachlayam,
+        "Sachivalyam": selectedSachivalyam,
       });
     }
     http.Response res = await APIService.getAllTaskData(jsonEncode(data));
@@ -121,7 +121,7 @@ class _TaskWidgetState extends State<TaskWidget> {
           }
           if (resDecoded['results']['data'][0]['sachivalyam'] != null) {
             List s = resDecoded['results']['data'][0]['sachivalyam'];
-            swachlayamItems = s.map((e) => e.toString()).toList();
+            sachivalyamItems = s.map((e) => e.toString()).toList();
           }
           setState(() {});
         }
@@ -677,7 +677,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                                       hint: Align(
                                         alignment: AlignmentDirectional.center,
                                         child: Text(
-                                          'Swachlayam',
+                                          'Sachivalyam',
                                           style: TextStyle(
                                             fontSize: 14,
                                             color: Theme.of(context).hintColor,
@@ -699,7 +699,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                                             thumbVisibility:
                                                 MaterialStateProperty.all(true),
                                           )),
-                                      items: swachlayamItems.map((item) {
+                                      items: sachivalyamItems.map((item) {
                                         return DropdownMenuItem<String>(
                                           value: item,
                                           //disable default onTap to avoid closing menu when selecting an item
@@ -707,14 +707,14 @@ class _TaskWidgetState extends State<TaskWidget> {
                                           child: StatefulBuilder(
                                             builder: (context, menuSetState) {
                                               final _isSelected =
-                                                  selectedSwachlayam
+                                                  selectedSachivalyam
                                                       .contains(item);
                                               return InkWell(
                                                 onTap: () {
                                                   _isSelected
-                                                      ? selectedSwachlayam
+                                                      ? selectedSachivalyam
                                                           .remove(item)
-                                                      : selectedSwachlayam
+                                                      : selectedSachivalyam
                                                           .add(item);
                                                   //This rebuilds the StatefulWidget to update the button's text
                                                   setState(() {});
@@ -757,18 +757,18 @@ class _TaskWidgetState extends State<TaskWidget> {
                                         );
                                       }).toList(),
                                       //Use last selected item as the current value so if we've limited menu height, it scroll to last item.
-                                      value: selectedSwachlayam.isEmpty
+                                      value: selectedSachivalyam.isEmpty
                                           ? null
-                                          : selectedSwachlayam.last,
+                                          : selectedSachivalyam.last,
                                       onChanged: (value) {},
                                       selectedItemBuilder: (context) {
-                                        return swachlayamItems.map(
+                                        return sachivalyamItems.map(
                                           (item) {
                                             return Container(
                                               alignment:
                                                   AlignmentDirectional.center,
                                               child: Text(
-                                                selectedSwachlayam.join(', '),
+                                                selectedSachivalyam.join(', '),
                                                 textAlign: TextAlign.center,
                                                 style: const TextStyle(
                                                   fontSize: 14,
@@ -833,7 +833,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                                       selectedZone = [];
                                       selectedStatus = [];
                                       selectedWard = [];
-                                      selectedSwachlayam = [];
+                                      selectedSachivalyam = [];
                                       taskDataFound = [];
                                     });
                                     taskData();
@@ -927,7 +927,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                       DataColumn2(
                         fixedWidth: 120,
                         label: Text(
-                          'Swachlaym',
+                          'Sachivalyam',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 14,
@@ -1252,7 +1252,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                                                       SizedBox(
                                                         height: 30,
                                                         child: Text(
-                                                          'Swachlaym',
+                                                          'Sachivalyam',
                                                           style: TextStyle(
                                                             fontSize: 14,
                                                             fontWeight:

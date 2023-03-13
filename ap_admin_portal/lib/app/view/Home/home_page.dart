@@ -35,14 +35,14 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
   List<String> zoneItems = [];
   List<String> wardItems = [];
-  List<String> swachlayamItems = [];
+  List<String> sachivalyamItems = [];
   List<String> selectedZone = [];
   List<String> selectedWard = [];
-  List<String> selectedSwachlayam = [];
+  List<String> selectedSachivalyam = [];
 
   List<String> selectedZone2 = [];
   List<String> selectedWard2 = [];
-  List<String> selectedSwachlayam2 = [];
+  List<String> selectedSachivalyam2 = [];
 
   int totalWorkers = 0;
   int presentWorkers = 0;
@@ -188,9 +188,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
         "Ward": selectedWard2,
       });
     }
-    if (selectedSwachlayam2.isNotEmpty) {
+    if (selectedSachivalyam2.isNotEmpty) {
       data.addAll({
-        "Swachlayam": selectedSwachlayam2,
+        "Sachivalyam": selectedSachivalyam2,
       });
     }
     var res = await APIService.getWorkerAttendanceData(jsonEncode(data));
@@ -264,7 +264,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           }
           if (resDecoded['results']['data'][0]['sachivalyam'] != null) {
             List s = resDecoded['results']['data'][0]['sachivalyam'];
-            swachlayamItems = s.map((e) => e.toString()).toList();
+            sachivalyamItems = s.map((e) => e.toString()).toList();
           }
           setState(() {});
         }
@@ -291,9 +291,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
         "Ward": selectedWard,
       });
     }
-    if (selectedSwachlayam.isNotEmpty) {
+    if (selectedSachivalyam.isNotEmpty) {
       dataToEncode.addAll({
-        "Swachlayam": selectedSwachlayam,
+        "Sachivalyam": selectedSachivalyam,
       });
     }
     var res = await APIService.getBarGraphDataList(jsonEncode(dataToEncode));
@@ -327,9 +327,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
         "Ward": selectedWard2,
       });
     }
-    if (selectedSwachlayam2.isNotEmpty) {
+    if (selectedSachivalyam2.isNotEmpty) {
       dataToEncode.addAll({
-        "Swachlayam": selectedSwachlayam2,
+        "Sachivalyam": selectedSachivalyam2,
       });
     }
     var res = await APIService.getPieGraphDataList(jsonEncode(dataToEncode));
@@ -1299,7 +1299,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                         AlignmentDirectional
                                                                             .center,
                                                                     child: Text(
-                                                                      'Swachlayam',
+                                                                      'Sachivalyam',
                                                                       style:
                                                                           TextStyle(
                                                                         fontSize:
@@ -1331,7 +1331,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                             thumbVisibility:
                                                                                 MaterialStateProperty.all(true),
                                                                           )),
-                                                                  items: swachlayamItems
+                                                                  items: sachivalyamItems
                                                                       .map(
                                                                           (item) {
                                                                     return DropdownMenuItem<
@@ -1347,11 +1347,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                             (context,
                                                                                 menuSetState) {
                                                                           final _isSelected =
-                                                                              selectedSwachlayam.contains(item);
+                                                                              selectedSachivalyam.contains(item);
                                                                           return InkWell(
                                                                             onTap:
                                                                                 () {
-                                                                              _isSelected ? selectedSwachlayam.remove(item) : selectedSwachlayam.add(item);
+                                                                              _isSelected ? selectedSachivalyam.remove(item) : selectedSachivalyam.add(item);
                                                                               //This rebuilds the StatefulWidget to update the button's text
                                                                               setState(() {});
                                                                               //This rebuilds the dropdownMenu Widget to update the check mark
@@ -1389,16 +1389,16 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                     );
                                                                   }).toList(),
                                                                   //Use last selected item as the current value so if we've limited menu height, it scroll to last item.
-                                                                  value: selectedSwachlayam
+                                                                  value: selectedSachivalyam
                                                                           .isEmpty
                                                                       ? null
-                                                                      : selectedSwachlayam
+                                                                      : selectedSachivalyam
                                                                           .last,
                                                                   onChanged:
                                                                       (value) {},
                                                                   selectedItemBuilder:
                                                                       (context) {
-                                                                    return swachlayamItems
+                                                                    return sachivalyamItems
                                                                         .map(
                                                                       (item) {
                                                                         return Container(
@@ -1406,7 +1406,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                               AlignmentDirectional.center,
                                                                           child:
                                                                               Text(
-                                                                            selectedSwachlayam.join(', '),
+                                                                            selectedSachivalyam.join(', '),
                                                                             textAlign:
                                                                                 TextAlign.center,
                                                                             style:
@@ -1485,7 +1485,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                             setState(() {
                                                               selectedZone = [];
                                                               selectedWard = [];
-                                                              selectedSwachlayam =
+                                                              selectedSachivalyam =
                                                                   [];
                                                             });
                                                             barGraphData();
@@ -2275,7 +2275,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                         AlignmentDirectional
                                                                             .center,
                                                                     child: Text(
-                                                                      'Swachlayam',
+                                                                      'Sachivalyam',
                                                                       style:
                                                                           TextStyle(
                                                                         fontSize:
@@ -2307,7 +2307,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                             thumbVisibility:
                                                                                 MaterialStateProperty.all(true),
                                                                           )),
-                                                                  items: swachlayamItems
+                                                                  items: sachivalyamItems
                                                                       .map(
                                                                           (item) {
                                                                     return DropdownMenuItem<
@@ -2323,11 +2323,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                             (context,
                                                                                 menuSetState) {
                                                                           final _isSelected =
-                                                                              selectedSwachlayam2.contains(item);
+                                                                              selectedSachivalyam2.contains(item);
                                                                           return InkWell(
                                                                             onTap:
                                                                                 () {
-                                                                              _isSelected ? selectedSwachlayam2.remove(item) : selectedSwachlayam2.add(item);
+                                                                              _isSelected ? selectedSachivalyam2.remove(item) : selectedSachivalyam2.add(item);
                                                                               //This rebuilds the StatefulWidget to update the button's text
                                                                               setState(() {});
                                                                               //This rebuilds the dropdownMenu Widget to update the check mark
@@ -2365,16 +2365,16 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                     );
                                                                   }).toList(),
                                                                   //Use last selected item as the current value so if we've limited menu height, it scroll to last item.
-                                                                  value: selectedSwachlayam2
+                                                                  value: selectedSachivalyam2
                                                                           .isEmpty
                                                                       ? null
-                                                                      : selectedSwachlayam2
+                                                                      : selectedSachivalyam2
                                                                           .last,
                                                                   onChanged:
                                                                       (value) {},
                                                                   selectedItemBuilder:
                                                                       (context) {
-                                                                    return swachlayamItems
+                                                                    return sachivalyamItems
                                                                         .map(
                                                                       (item) {
                                                                         return Container(
@@ -2382,7 +2382,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                               AlignmentDirectional.center,
                                                                           child:
                                                                               Text(
-                                                                            selectedSwachlayam2.join(', '),
+                                                                            selectedSachivalyam2.join(', '),
                                                                             textAlign:
                                                                                 TextAlign.center,
                                                                             style:
@@ -2464,7 +2464,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                   [];
                                                               selectedWard2 =
                                                                   [];
-                                                              selectedSwachlayam2 =
+                                                              selectedSachivalyam2 =
                                                                   [];
                                                             });
                                                             pieGraphData();
