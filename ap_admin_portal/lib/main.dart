@@ -142,22 +142,17 @@ class _AppRootState extends State<AppRoot> {
       headerBuilder: (context, extended) {
         return Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Row(
-            children: [
-              Expanded(
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  children: const [
-                    AutoSizeText(
-                      "Logo",
-                      overflow: TextOverflow.ellipsis,
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-                    ),
-                  ],
-                ),
-              )
-            ],
+          child: Container(
+            width: 40,
+            height: 40,
+            clipBehavior: Clip.antiAlias,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+            ),
+            child: Image.asset(
+              'assets/images/logo.png',
+              fit: BoxFit.cover,
+            ),
           ),
         );
       },
@@ -222,146 +217,62 @@ class _AppRootState extends State<AppRoot> {
                               onPressed: () {
                                 _scaffoldKey.currentState?.openDrawer();
                               }),
+                        const Spacer(),
                         Padding(
                           padding: !isSmallScreen
                               ? const EdgeInsetsDirectional.fromSTEB(
-                                  30, 10, 0, 10)
+                                  30, 20, 20, 20)
                               : const EdgeInsetsDirectional.fromSTEB(
-                                  0, 10, 0, 10),
-                          child: Container(
-                            width: 320,
-                            child: TextFormField(
-                              controller: searchController,
-                              autofocus: true,
-                              obscureText: false,
-                              decoration: InputDecoration(
-                                hintText: 'Search',
-                                hintStyle: const TextStyle(
-                                    fontWeight: FontWeight.normal),
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                errorBorder: UnderlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                focusedErrorBorder: UnderlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                filled: true,
-                                fillColor: const Color(0xFFF5F5F5),
-                                prefixIcon: const Icon(
-                                  Icons.search,
-                                  size: 18,
+                                  10, 20, 20, 20),
+                          child: PopupMenuButton<int>(
+                            itemBuilder: (context) => [
+                              // popupmenu item 1
+                              PopupMenuItem(
+                                value: 1,
+                                onTap: () async {
+                                  await APIService.logout();
+                                  if (mounted) {
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const LoginScreen()));
+                                  }
+                                },
+                                // row has two child icon and text.
+                                child: Row(
+                                  children: const [
+                                    Icon(
+                                      Icons.logout_outlined,
+                                      size: 18,
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text("Logout",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 14))
+                                  ],
                                 ),
                               ),
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.normal),
+                            ],
+                            offset: Offset(50, 50),
+                            // color: Colors.grey,
+                            elevation: 2,
+                            child: Container(
+                              width: 40,
+                              height: 40,
+                              clipBehavior: Clip.antiAlias,
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                              ),
+                              child: Image.asset(
+                                'assets/images/Ellipse_123.png',
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
-                        ),
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFFF5F5F5),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: IconButton(
-                                  // borderColor: Colors.transparent,
-                                  // borderRadius: 30,
-                                  // borderWidth: 1,
-                                  // buttonSize: 40,
-                                  color: Colors.transparent,
-                                  icon: const FaIcon(
-                                    FontAwesomeIcons.bell,
-                                    color: Color(0xff101213),
-                                    size: 18,
-                                  ),
-                                  onPressed: () {
-                                    print('IconButton pressed ...');
-                                  },
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: !isSmallScreen
-                                  ? const EdgeInsetsDirectional.fromSTEB(
-                                      30, 20, 20, 20)
-                                  : const EdgeInsetsDirectional.fromSTEB(
-                                      10, 20, 20, 20),
-                              child: PopupMenuButton<int>(
-                                itemBuilder: (context) => [
-                                  // popupmenu item 1
-                                  PopupMenuItem(
-                                    value: 1,
-                                    onTap: () async {
-                                      await APIService.logout();
-                                      if (mounted) {
-                                        Navigator.pushReplacement(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const LoginScreen()));
-                                      }
-                                    },
-                                    // row has two child icon and text.
-                                    child: Row(
-                                      children: const [
-                                        Icon(
-                                          Icons.logout_outlined,
-                                          size: 18,
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text("Logout",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.normal,
-                                                fontSize: 14))
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                                offset: Offset(50, 50),
-                                // color: Colors.grey,
-                                elevation: 2,
-                                child: Container(
-                                  width: 40,
-                                  height: 40,
-                                  clipBehavior: Clip.antiAlias,
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Image.asset(
-                                    'assets/images/Ellipse_123.png',
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
                         ),
                       ],
                     ),
