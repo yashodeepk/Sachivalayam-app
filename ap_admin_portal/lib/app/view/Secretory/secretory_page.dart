@@ -255,7 +255,7 @@ class _SecretaryWidgetState extends State<SecretaryWidget> {
         showUpdatedNotification = false;
       });
       http.Response res = await APIService.bulkUploadUser(
-          _paths[0].name, _paths[0].bytes!.cast());
+          "secretory_template.xlsx", _paths[0].bytes!.cast());
       // print(res);
       var resDecoded = jsonDecode(res.body);
       // print(resDecoded);
